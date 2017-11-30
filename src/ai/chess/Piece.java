@@ -6,7 +6,6 @@ import java.util.*;
 
 enum PieceColor {Black,White};
 
-
 abstract public class Piece {
     public int xPos;
     public int yPos;
@@ -16,16 +15,40 @@ abstract public class Piece {
     //piece motion
     //change xpos w ypos if possible
     abstract public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck);
-
     //piece killing other one
     //killer take killed's place
-    abstract public void kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist); 
+    abstract public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist); 
+    public boolean KingCheckThreat (int curx,int cury,ChessBoard board,ArrayList<Piece>pieceslist){
+        ChessBoard tempboard = new ChessBoard ();
+        for (int i=0;i<8;i++){
+            for (int j = 0; j < 8; j++) {
+                if(i==curx && j==cury){
+                    tempboard.Squares[i][j].ContainPiece=false;
+                }
+                else{
+                    tempboard.Squares[i][j].ContainPiece = board.Squares[i][j].ContainPiece;
+                    
+                }
+            }
+        }
+        int tmpKingXpos=-1,tmpKingYpos=-1;
+        for (int i = 0; i < pieceslist.size(); i++) {
+            if(pieceslist.get(i).priority==30){
+                tmpKingXpos=pieceslist.get(i).xPos;
+                tmpKingYpos=pieceslist.get(i).yPos;
+            }
+        }
+        for (int i=0;i<pieceslist.size();i++){
+            if (move(tmpKingXpos,tmpKingYpos,tempboard,pieceslist,true)){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
-class Pawn extends Piece{
-    
+class Pawn extends Piece{    
     public boolean canMoveTwice;
-    
     public Pawn(int xpos , int ypos , PieceColor color , int priority) {
         this.xPos = xpos;
         this.yPos = ypos;
@@ -34,8 +57,10 @@ class Pawn extends Piece{
         this.canMoveTwice = true;
     }
     public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
-        //for first move
         if(canMoveTwice && Math.abs(xdespos-this.xPos)==2 && !board.Squares[xdespos][ydespos].ContainPiece && !board.Squares[xdespos-1][ydespos-1].ContainPiece && !Kingcheck){
+            if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+            }
             this.canMoveTwice=false;
             this.xPos = xdespos;
             board.Squares[xdespos][ydespos].ContainPiece=true;
@@ -45,6 +70,9 @@ class Pawn extends Piece{
         //for all moves
         //check lw eletnen ele odamy fdeen 34an 2t7rk 7araka aw etnen
         else if (Math.abs(xdespos-xPos)==1 && !board.Squares[xdespos][ydespos].ContainPiece && !Kingcheck){
+            if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+            }
             board.Squares[this.xPos][this.yPos].ContainPiece=false;
             this.xPos=xdespos;
             board.Squares[xdespos][ydespos].ContainPiece=true;
@@ -53,8 +81,14 @@ class Pawn extends Piece{
         }
         return false;
     }
-    public void kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) {
+    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) {
+        if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+        }
         if(Math.abs(killed.xPos-this.xPos)==1 && Math.abs(killed.yPos-this.yPos)==1 && board.Squares[killed.xPos][killed.yPos].ContainPiece && killed.color!=this.color ){
+            if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+            }
             board.Squares[this.xPos][this.yPos].ContainPiece=false;
             this.xPos=killed.xPos;
             this.yPos=killed.yPos;
@@ -64,11 +98,13 @@ class Pawn extends Piece{
                 }
             }
         }
+        return true;
     }
 }
 
+
+
 class Rook extends Piece {
-    
     public Rook(int xpos , int ypos , PieceColor color , int priority) {
         this.xPos = xpos;
         this.yPos = ypos;
@@ -120,7 +156,10 @@ class Rook extends Piece {
         }
         return true;
 }
-    public void kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist){
+    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist){
+        if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+        }
         if (killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for (int i=0;i<pieceslist.size();i++){
             if(pieceslist.get(i).xPos==killed.xPos && pieceslist.get(i).yPos==killed.yPos){
@@ -132,17 +171,13 @@ class Rook extends Piece {
 }
 
 class Bishop extends Piece{
-
     public Bishop(int xpos , int ypos , PieceColor color , int priority) {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
     }
-
-    @Override
     public boolean move(int xdespos, int ydespos, ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
-        
         if(Math.abs(this.yPos-ydespos)/Math.abs(this.xPos-xdespos)==1){
         if(xdespos > this.xPos && ydespos > this.yPos){
             int start = this.xPos;
@@ -193,7 +228,10 @@ class Bishop extends Piece{
         }
         return true;
     }
-    public void kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+        if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                return false;
+        }
         if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for (int i=0;i<pieceslist.size();i++){
             if(pieceslist.get(i).xPos==killed.xPos && pieceslist.get(i).yPos==killed.yPos){
@@ -214,7 +252,6 @@ class King extends Piece{
         this.color = color;
         this.priority = priority;
     }
-    
     public boolean move(int xdespos, int ydespos, ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
        if (Math.abs(xdespos-this.xPos)==1 || Math.abs(ydespos-this.yPos)==1 ||(Math.abs(ydespos-this.yPos)==1 && Math.abs(xdespos-this.xPos)==1))
        if(!board.Squares[xdespos][ydespos].ContainPiece){
@@ -226,18 +263,17 @@ class King extends Piece{
        }
           return false;
     }
-
-    
-    public void kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
         if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for(int i=0;i<pieceslist.size();i++){
-                if(!pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
-                    return;
+                if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
+                    return false;
                 }
             }
+        
         }
         else
-            return;
+            return false;
         board.Squares[this.xPos][this.yPos].ContainPiece=false;
         this.xPos=killed.xPos;
         this.yPos=killed.yPos;
