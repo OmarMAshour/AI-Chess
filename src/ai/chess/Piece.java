@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 //chess pieces model
@@ -22,11 +24,11 @@ abstract public class Piece {
     
     //piece motion
     //change xpos w ypos if possible
-    abstract public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck);
+    abstract public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) throws Exception;
     //piece killing other one
     //killer take killed's place
-    abstract public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist); 
-    public boolean KingCheckThreat (int curx,int cury,ChessBoard board,ArrayList<Piece>pieceslist) throws IOException{
+    abstract public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) throws Exception; 
+    public boolean KingCheckThreat (int curx,int cury,ChessBoard board,ArrayList<Piece>pieceslist) throws IOException, Exception{
         ChessBoard tempboard = new ChessBoard ();
         for (int i=0;i<8;i++){
             for (int j = 0; j < 8; j++) {
@@ -66,10 +68,15 @@ class Pawn extends Piece{
         this.blackImage = ImageIO.read(new File("src/Images/pawnBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/pawnWhite.png"));
     }
-    public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
+    @Override
+    public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) throws Exception{
         if(canMoveTwice && Math.abs(xdespos-this.xPos)==2 && !board.Squares[xdespos][ydespos].ContainPiece && !board.Squares[xdespos-1][ydespos-1].ContainPiece && !Kingcheck){
-            if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
-                return false;
+            try {
+                if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
+                    return false;
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Pawn.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.canMoveTwice=false;
             this.xPos = xdespos;
@@ -91,7 +98,8 @@ class Pawn extends Piece{
         }
         return false;
     }
-    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) {
+    @Override
+    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) throws Exception{
         if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
                 return false;
         }
@@ -169,7 +177,7 @@ class Rook extends Piece {
         }
         return true;
 }
-    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist){
+    public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist) throws Exception{
         if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
                 return false;
         }
@@ -244,7 +252,7 @@ class Bishop extends Piece{
         }
         return true;
     }
-    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) throws Exception {
         if(!KingCheckThreat(this.xPos,this.yPos,board,pieceslist)){
                 return false;
         }
@@ -282,7 +290,7 @@ class King extends Piece{
        }
           return false;
     }
-    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) throws Exception {
         if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for(int i=0;i<pieceslist.size();i++){
                 if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
@@ -402,7 +410,7 @@ class Queen extends Piece {
     }
 
     
-    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) throws Exception {
      if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for(int i=0;i<pieceslist.size();i++){
                 if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
@@ -460,7 +468,7 @@ class Knight extends Piece {
         }
         return true;
     }
-    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) throws Exception {
          if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
             for(int i=0;i<pieceslist.size();i++){
                 if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){

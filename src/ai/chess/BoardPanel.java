@@ -26,9 +26,9 @@ public class BoardPanel extends javax.swing.JPanel {
     
     private Timer piecesDrawingTimer; 
     
-    public BoardPanel() {
+    public BoardPanel(ChessBoard chessBoard1) {
         initComponents();
-        
+        this.chessBoard=chessBoard1;
         piecesDrawingTimer = new Timer(100, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,17 +51,17 @@ public class BoardPanel extends javax.swing.JPanel {
         });
     }
 
-//    @Override
-//    public void paint(Graphics g) {
-//        super.paint(g); //To change body of generated methods, choose Tools | Templates.
-//        for(Piece piece: chessBoard.pieces){
-//            if(piece.color==PieceColor.Black){
-//                g.drawImage(piece.blackImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
-//            }else if(piece.color==PieceColor.White){
-//                g.drawImage(piece.whiteImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
-//            }
-//        }
-//    }
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g); //To change body of generated methods, choose Tools | Templates.
+        for(Piece piece: chessBoard.pieces){
+            if(piece.color==PieceColor.Black){
+                g.drawImage(piece.blackImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
+            }else if(piece.color==PieceColor.White){
+                g.drawImage(piece.whiteImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
+            }
+        }
+    }
 
     
        

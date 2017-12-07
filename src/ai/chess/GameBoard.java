@@ -16,13 +16,15 @@ public class GameBoard extends javax.swing.JFrame {
      * Creates new form GameBoard
      */
     BoardPanel boardPanel;
-    public GameBoard() {
+    public GameBoard(ChessBoard chessBoard) {
         initComponents();
         
-        boardPanel = new BoardPanel();
+        boardPanel = new BoardPanel(chessBoard);
         boardPanel.setBounds(0, 0, 500, 500);
         add(boardPanel);
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
