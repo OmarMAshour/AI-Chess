@@ -17,7 +17,7 @@ abstract public class Piece {
     public PieceColor color;
     public int priority;
     
-    public Image blackImage;// = ImageIO.read(new File("HULK_0.png"));
+    public Image blackImage;
     public Image whiteImage;
     
     //piece motion
