@@ -1,7 +1,12 @@
 package ai.chess;
 import java.math.*;
 import ai.chess.*;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 //chess pieces model
 
 enum PieceColor {Black,White};
@@ -11,6 +16,9 @@ abstract public class Piece {
     public int yPos;
     public PieceColor color;
     public int priority;
+    
+    public Image blackImage;// = ImageIO.read(new File("HULK_0.png"));
+    public Image whiteImage;
     
     //piece motion
     //change xpos w ypos if possible
@@ -49,12 +57,14 @@ abstract public class Piece {
 
 class Pawn extends Piece{    
     public boolean canMoveTwice;
-    public Pawn(int xpos , int ypos , PieceColor color , int priority) {
+    public Pawn(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
         this.canMoveTwice = true;
+        this.blackImage = ImageIO.read(new File("src/Images/pawnBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/pawnWhite.png"));
     }
     public boolean move(int xdespos , int ydespos,ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
         if(canMoveTwice && Math.abs(xdespos-this.xPos)==2 && !board.Squares[xdespos][ydespos].ContainPiece && !board.Squares[xdespos-1][ydespos-1].ContainPiece && !Kingcheck){
@@ -105,11 +115,14 @@ class Pawn extends Piece{
 
 
 class Rook extends Piece {
-    public Rook(int xpos , int ypos , PieceColor color , int priority) {
+    public Rook(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/rookBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/rookWhite.png"));
+
     }
     public boolean move (int xdespos,int ydespos , ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck){
         if(this.yPos-ydespos==0){
@@ -172,11 +185,13 @@ class Rook extends Piece {
 }
 
 class Bishop extends Piece{
-    public Bishop(int xpos , int ypos , PieceColor color , int priority) {
+    public Bishop(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/bishopBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/bishopWhite.png"));
     }
     public boolean move(int xdespos, int ydespos, ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
         if(Math.abs(this.yPos-ydespos)/Math.abs(this.xPos-xdespos)==1){
@@ -248,11 +263,13 @@ class Bishop extends Piece{
 class King extends Piece{
     
     
-    public King(int xpos , int ypos , PieceColor color , int priority) {
+    public King(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
     }
     public boolean move(int xdespos, int ydespos, ChessBoard board,ArrayList<Piece>pieceslist,boolean Kingcheck) {
        if (Math.abs(xdespos-this.xPos)==1 || Math.abs(ydespos-this.yPos)==1 ||(Math.abs(ydespos-this.yPos)==1 && Math.abs(xdespos-this.xPos)==1))
@@ -291,11 +308,13 @@ class King extends Piece{
 }
 
 class Queen extends Piece {
-     public Queen(int xpos , int ypos , PieceColor color , int priority) {
+     public Queen(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/queenBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board, ArrayList<Piece> pieceslist, boolean Kingcheck) {
@@ -407,11 +426,13 @@ class Queen extends Piece {
     }
 }
 class Knight extends Piece {
-    public Knight(int xpos , int ypos , PieceColor color , int priority) {
+    public Knight(int xpos , int ypos , PieceColor color , int priority) throws IOException {
         this.xPos = xpos;
         this.yPos = ypos;
         this.color = color;
         this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/knightBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/knightWhite.png"));
     }
 
     
