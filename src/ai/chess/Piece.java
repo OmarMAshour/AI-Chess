@@ -26,7 +26,7 @@ abstract public class Piece {
     //piece killing other one
     //killer take killed's place
     abstract public boolean kill(Piece killed,ChessBoard board,ArrayList<Piece>pieceslist); 
-    public boolean KingCheckThreat (int curx,int cury,ChessBoard board,ArrayList<Piece>pieceslist){
+    public boolean KingCheckThreat (int curx,int cury,ChessBoard board,ArrayList<Piece>pieceslist) throws IOException{
         ChessBoard tempboard = new ChessBoard ();
         for (int i=0;i<8;i++){
             for (int j = 0; j < 8; j++) {
