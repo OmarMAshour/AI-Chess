@@ -22,6 +22,8 @@ public class GameBoard extends javax.swing.JFrame {
         boardPanel = new BoardPanel(chessBoard);
         boardPanel.setBounds(0, 0, 500, 500);
         add(boardPanel);
+        this.setLocationRelativeTo(null);
+
     }
 
     
