@@ -167,6 +167,7 @@ class Rook extends Piece {
                 }
             }
         }
+        return true;
     } 
 }
 
@@ -239,6 +240,7 @@ class Bishop extends Piece{
                 }
             }
         }
+        return true;
     }
 }
 
@@ -283,8 +285,180 @@ class King extends Piece{
                     pieceslist.remove(pieceslist.get(i));
                 }
             }
-        
+        return true;
       }
     
 }
 
+class Queen extends Piece {
+     public Queen(int xpos , int ypos , PieceColor color , int priority) {
+        this.xPos = xpos;
+        this.yPos = ypos;
+        this.color = color;
+        this.priority = priority;
+    }
+
+    public boolean move(int xdespos, int ydespos, ChessBoard board, ArrayList<Piece> pieceslist, boolean Kingcheck) {
+          if(Math.abs(this.yPos-ydespos)/Math.abs(this.xPos-xdespos)==1){
+        if(xdespos > this.xPos && ydespos > this.yPos){
+            int start = this.xPos;
+            int end = xdespos;
+            for (int counter = start; counter <= end; counter++) {
+                if(board.Squares[counter][counter].ContainPiece)
+                    return false;
+            }
+        }
+        //up left
+        else if(xdespos > this.xPos && ydespos < this.yPos){
+            int start = this.xPos;
+            int end = xdespos;
+            for (int i = start,negCounter=start ; i <= end; i++,negCounter--) {
+                if(board.Squares[i][negCounter].ContainPiece)
+                    return false;
+            }
+        }
+        //down right
+        else if(xdespos < this.xPos && ydespos > this.yPos){
+            int start = this.yPos;
+            int end = ydespos;
+            for (int i = start,negCounter=start ; i <= end; i++,negCounter--) {
+                if(board.Squares[negCounter][i].ContainPiece)
+                    return false;
+            }
+            
+        }
+        //down left
+        else if(xdespos < this.xPos && ydespos < this.yPos){
+            int start = xdespos;
+            int end = this.xPos;
+            for (int counter = start; counter <= end; counter--) {
+                if(board.Squares[counter][counter].ContainPiece)
+                    return false;
+            }
+        }
+        }
+          else if(this.yPos-ydespos==0){
+        if (xdespos>this.xPos){
+            for (int i=this.xPos;i<=xdespos;i++){
+                if (board.Squares[i][this.yPos].ContainPiece){
+                    return false;
+                }
+            }
+        }
+          if (xdespos<this.xPos){
+            for (int i=this.xPos;i>=xdespos;i--){
+                if (board.Squares[i][this.yPos].ContainPiece){
+                    return false ;
+                }
+            }
+    }
+        }
+        else if(this.xPos-xdespos==0){
+            if (ydespos>this.yPos){
+            for (int i=this.yPos;i<=ydespos;i++){
+                if (board.Squares[this.xPos][i].ContainPiece){
+                    return false ;
+                }
+            }
+            }  
+            if (ydespos<this.yPos){
+            for (int i=this.yPos;i>=ydespos;i--){
+                if (board.Squares[this.xPos][i].ContainPiece){
+                    return false ;
+                }
+            }
+            }
+        }
+        else{
+            return false;
+        }
+        if(!Kingcheck){
+        board.Squares[this.xPos][this.yPos].ContainPiece=false;
+        this.xPos=xdespos;
+        this.yPos=ydespos;
+        board.Squares[xdespos][ydespos].ContainPiece=true;
+        return true;
+        }
+        return true;
+    }
+
+    
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+     if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
+            for(int i=0;i<pieceslist.size();i++){
+                if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
+                    return false;
+                }
+            }
+        
+        }
+        else
+            return false;
+        board.Squares[this.xPos][this.yPos].ContainPiece=false;
+        this.xPos=killed.xPos;
+        this.yPos=killed.yPos;
+        board.Squares[killed.xPos][killed.yPos].ContainPiece=true;
+            for (int i=0;i<pieceslist.size();i++){
+            if(pieceslist.get(i).xPos==killed.xPos && pieceslist.get(i).yPos==killed.yPos){
+                    pieceslist.remove(pieceslist.get(i));
+                }
+            }
+        return true;
+    }
+}
+class Knight extends Piece {
+    public Knight(int xpos , int ypos , PieceColor color , int priority) {
+        this.xPos = xpos;
+        this.yPos = ypos;
+        this.color = color;
+        this.priority = priority;
+    }
+
+    
+    public boolean move(int xdespos, int ydespos, ChessBoard board, ArrayList<Piece> pieceslist, boolean Kingcheck) {
+        if(Math.abs(this.xPos-xdespos)==2 && Math.abs(this.yPos-ydespos)==1){
+            if(this.xPos>xdespos){
+                if(board.Squares[this.xPos-1][this.yPos].ContainPiece || board.Squares[this.xPos-2][this.yPos].ContainPiece || board.Squares[xdespos][ydespos].ContainPiece){
+                    return false;
+                }
+            }
+            else if (this.xPos<xdespos){
+                 if(board.Squares[this.xPos+1][this.yPos].ContainPiece || board.Squares[this.xPos+2][this.yPos].ContainPiece || board.Squares[xdespos][ydespos].ContainPiece){
+                    return false;
+                }
+            } 
+        }
+        else 
+            return false;
+        if(!Kingcheck){
+        board.Squares[this.xPos][this.yPos].ContainPiece=false;
+        this.xPos=xdespos;
+        this.yPos=ydespos;
+        board.Squares[xdespos][ydespos].ContainPiece=true;
+        return true;
+        }
+        return true;
+    }
+    public boolean kill(Piece killed, ChessBoard board, ArrayList<Piece> pieceslist) {
+         if(killed.color!=this.color && move(killed.xPos,killed.yPos,board,pieceslist,false)){
+            for(int i=0;i<pieceslist.size();i++){
+                if(pieceslist.get(i).move(killed.xPos, killed.yPos, board,pieceslist,true)){
+                    return false;
+                }
+            }
+        
+        }
+        else
+            return false;
+        board.Squares[this.xPos][this.yPos].ContainPiece=false;
+        this.xPos=killed.xPos;
+        this.yPos=killed.yPos;
+        board.Squares[killed.xPos][killed.yPos].ContainPiece=true;
+            for (int i=0;i<pieceslist.size();i++){
+            if(pieceslist.get(i).xPos==killed.xPos && pieceslist.get(i).yPos==killed.yPos){
+                    pieceslist.remove(pieceslist.get(i));
+                }
+            }
+        return true;
+    }
+}
