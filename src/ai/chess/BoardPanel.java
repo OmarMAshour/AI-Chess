@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -67,23 +69,30 @@ public class BoardPanel extends javax.swing.JPanel {
                         }
                     }
                 }
-                
-                
+
 //                //in case that the playe just clicked on a piece
 //                if (selectedPieceIndex != -1 && !playerSelectedOneOfHisPieces) {
 //                    playerSelectedOneOfHisPieces = true;
 //
 //                    return;
 //                }
-
                 //in case that the player clicked on a piece before and now is taking the next action
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
-                    playerSelectedOneOfHisPieces = true;
-                    chessBoard.pieces.get(selectedPieceIndex).xPos=pieceX;
-                    chessBoard.pieces.get(selectedPieceIndex).yPos=pieceY;
-                    selectedPieceIndex=-1;
-                    playerSelectedOneOfHisPieces=false;
-                    return;
+                    try {
+                        if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard, chessBoard.pieces, false)) {
+                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).xPos][chessBoard.pieces.get(selectedPieceIndex).yPos].ContainPiece = false;
+                            chessBoard.pieces.get(selectedPieceIndex).xPos = pieceX;
+                            chessBoard.pieces.get(selectedPieceIndex).yPos = pieceY;
+                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).xPos][chessBoard.pieces.get(selectedPieceIndex).yPos].ContainPiece = true;
+                            selectedPieceIndex = -1;
+                            playerSelectedOneOfHisPieces = false;
+                        }
+
+                    } catch (Exception ex) {
+                        System.err.println(ex.getMessage());
+                    } finally {
+                        return;
+                    }
                 }
 
             }
