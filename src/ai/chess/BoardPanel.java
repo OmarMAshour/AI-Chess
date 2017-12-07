@@ -56,9 +56,9 @@ public class BoardPanel extends javax.swing.JPanel {
         super.paint(g); //To change body of generated methods, choose Tools | Templates.
         for(Piece piece: chessBoard.pieces){
             if(piece.color==PieceColor.Black){
-                g.drawImage(piece.blackImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
+                g.drawImage(piece.blackImage, (piece.xPos*60)+10, (piece.yPos*60)+10, 60, 60, null);
             }else if(piece.color==PieceColor.White){
-                g.drawImage(piece.whiteImage, piece.xPos*60, piece.yPos*60, 60, 60, null);
+                g.drawImage(piece.whiteImage, (piece.xPos*60)+10, (piece.yPos*60)+10, 60, 60, null);
             }
         }
     }
