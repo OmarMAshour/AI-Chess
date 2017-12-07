@@ -95,6 +95,7 @@ public class BoardPanel extends javax.swing.JPanel {
                     }
                 }
 
+                System.out.println("Mouse Clicked!!!!!");
             }
 
         });
