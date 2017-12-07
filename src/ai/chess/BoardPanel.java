@@ -47,6 +47,7 @@ public class BoardPanel extends javax.swing.JPanel {
                 super.mouseClicked(e); //To change body of generated methods, choose Tools | Templates.
                 int clickedX = e.getX();
                 int clickedY = e.getY();
+                System.out.println("Mouse Clicked!!!!!");
 
                 int pieceX = (clickedX - 10) / 60;
                 int pieceY = (clickedY - 10) / 60;
@@ -95,7 +96,6 @@ public class BoardPanel extends javax.swing.JPanel {
                     }
                 }
 
-                System.out.println("Mouse Clicked!!!!!");
             }
 
         });
