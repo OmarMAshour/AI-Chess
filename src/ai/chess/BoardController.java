@@ -74,7 +74,8 @@ class ChessBoard {
         this.Squares[0][2].ContainPiece = true;
         Bishop bi1 = new Bishop(0, 5, PieceColor.Black, 3);
         this.Squares[0][5].ContainPiece = true;
-//        Queen Q = new Queen(3, 0, PieceColor.Black, 9);
+        Queen Q = new Queen(0, 3, PieceColor.Black, 9);
+        this.Squares[0][3].ContainPiece=true;
 //        King K = new King(4, 0, PieceColor.Black, 10);
         pieces.add(r);
         pieces.add(r1);
@@ -82,7 +83,7 @@ class ChessBoard {
 //        pieces.add(k1);
         pieces.add(bi);
         pieces.add(bi1);
-//        pieces.add(Q);
+        pieces.add(Q);
 //        pieces.add(K);
         //initializing white soldiers
         for (int i = 0; i < 8; i++) {
@@ -101,7 +102,8 @@ class ChessBoard {
         this.Squares[7][2].ContainPiece = true;
         bi1 = new Bishop(7, 5, PieceColor.White, 3);
         this.Squares[7][5].ContainPiece=true;
-//        Q = new Queen(3, 7, PieceColor.White, 9);
+         Q = new Queen(7, 3, PieceColor.White, 9);
+         this.Squares[7][3].ContainPiece=true;
 //        K = new King(4, 7, PieceColor.White, 10);
         pieces.add(r);
         pieces.add(r1);
@@ -109,7 +111,7 @@ class ChessBoard {
 //        pieces.add(k1);
         pieces.add(bi);
         pieces.add(bi1);
-//        pieces.add(Q);
+        pieces.add(Q);
 //        pieces.add(K);
 
     }

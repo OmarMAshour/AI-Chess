@@ -357,6 +357,223 @@ class Bishop extends Piece {
     }
 }
 
+
+class Queen extends Piece {
+    public Queen(int ypos, int xpos, PieceColor color, int priority) throws IOException {
+        this.xPos = xpos;
+        this.yPos = ypos;
+        this.color = color;
+        this.priority = priority;
+        this.blackImage = ImageIO.read(new File("src/Images/queenBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
+    }
+    public boolean move(int xdespos, int ydespos, ChessBoard board) {
+        
+        //x dir 
+        if (ydespos == this.yPos) {
+            //right
+            if (xdespos > this.xPos) {
+                for (int i = this.xPos + 1; i <= xdespos; i++) {
+                    //lw fih 7aga fl seka
+                    if (board.Squares[this.yPos][i].ContainPiece && i != xdespos) {
+                        return false;
+                    } //kill
+                    else if (board.Squares[this.yPos][i].ContainPiece
+                            && i == xdespos
+                            && board.getPiece(this.yPos, i).color != this.color) {
+                        board.pieces.remove(board.getPiece(ydespos, xdespos));
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    } //normal move
+                    else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        board.Squares[ydespos][xdespos].ContainPiece = true;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    }
+                }
+            } //left
+            else {
+                for (int i = this.xPos - 1; i >= xdespos; i--) {
+                    //lw fih 7aga fl seka
+                    if (board.Squares[this.yPos][i].ContainPiece && i != xdespos) {
+                        return false;
+                    } //kill
+                    else if (board.Squares[this.yPos][i].ContainPiece
+                            && i == xdespos
+                            && board.getPiece(this.yPos, i).color != this.color) {
+                        board.pieces.remove(board.getPiece(ydespos, xdespos));
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    }//normal move
+                    else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        board.Squares[ydespos][xdespos].ContainPiece = true;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    }
+
+                }
+            }
+        } //y dir
+        else if (xdespos == this.xPos) {
+            // down 
+            if (ydespos > this.yPos) {
+                for (int i = this.yPos + 1; i <= ydespos; i++) {
+                    //lw fih 7aga fl seka
+                    if (board.Squares[i][this.xPos].ContainPiece && i != ydespos) {
+                        return false;
+                    } //kill
+                    else if (board.Squares[i][this.xPos].ContainPiece
+                            && i == ydespos
+                            && board.getPiece(i, this.xPos).color != this.color) {
+                        board.pieces.remove(board.getPiece(ydespos, xdespos));
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    } //normal move
+                    else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        board.Squares[ydespos][xdespos].ContainPiece = true;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    }
+                }
+            } //up
+            else {
+                for (int i = this.yPos - 1; i >= ydespos; i--) {
+                    //lw fih 7aga fl seka
+                    if (board.Squares[i][this.xPos].ContainPiece && i != ydespos) {
+                        return false;
+                    } //kill
+                    else if (board.Squares[i][this.xPos].ContainPiece
+                            && i == ydespos
+                            && board.getPiece(i, this.xPos).color != this.color) {
+                        board.pieces.remove(board.getPiece(ydespos, xdespos));
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    } //normal move
+                    else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
+                        board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                        board.Squares[ydespos][xdespos].ContainPiece = true;
+                        this.yPos = ydespos;
+                        this.xPos = xdespos;
+                        return true;
+                    }
+                }
+
+            }
+        }
+        if (!(Math.abs(ydespos - this.yPos) == Math.abs(xdespos - this.xPos))) {
+            return false;
+        }
+        //up right
+        if (ydespos < this.yPos && xdespos > this.xPos) {
+            int counter = this.yPos - 1;
+            for (int i = this.xPos + 1; i <= xdespos; i++) {
+                if (board.Squares[counter][i].ContainPiece && i != xdespos) {
+                    return false;
+                } //KILL!!
+                else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
+                    board.pieces.remove(board.getPiece(ydespos, xdespos));
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    board.Squares[ydespos][xdespos].ContainPiece = true;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                }
+                counter--;
+            }
+        } //up left 
+        else if (ydespos < this.yPos && xdespos < this.xPos) {
+
+            int counter = this.yPos - 1;
+            for (int i = this.xPos - 1; i >= xdespos; i--) {
+                if (board.Squares[counter][i].ContainPiece && i != xdespos) {
+                    return false;
+                } //KILL!!
+                else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
+                    board.pieces.remove(board.getPiece(ydespos, xdespos));
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    board.Squares[ydespos][xdespos].ContainPiece = true;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                }
+                counter--;
+            }
+        } //down right 
+        else if (ydespos > this.yPos && xdespos > this.xPos) {
+
+            int counter = this.yPos + 1;
+            for (int i = this.xPos + 1; i <= xdespos; i++) {
+                if (board.Squares[counter][i].ContainPiece && i != xdespos) {
+                    return false;
+                } //KILL!!
+                else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
+                    board.pieces.remove(board.getPiece(ydespos, xdespos));
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    board.Squares[ydespos][xdespos].ContainPiece = true;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                }
+                counter++;
+            }
+        } //down left
+        else if (ydespos > this.yPos && xdespos < this.xPos) {
+
+            int counter = this.yPos + 1;
+            for (int i = this.xPos - 1; i >= xdespos; i--) {
+                if (board.Squares[counter][i].ContainPiece && i != xdespos) {
+                    return false;
+                } //KILL!!
+                else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
+                    board.pieces.remove(board.getPiece(ydespos, xdespos));
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
+                    board.Squares[this.yPos][this.xPos].ContainPiece = false;
+                    board.Squares[ydespos][xdespos].ContainPiece = true;
+                    this.yPos = ydespos;
+                    this.xPos = xdespos;
+                    return true;
+                }
+                counter++;
+            }
+        }
+        return false;
+    }
+}
+
+//--------------------------------------ele fadel ---------------------------------
 class King extends Piece {
     public King(int xpos, int ypos, PieceColor color, int priority) throws IOException {
         this.xPos = xpos;
@@ -377,91 +594,6 @@ class King extends Piece {
             }
         }
         return false;
-    }
-}
-
-class Queen extends Piece {
-    public Queen(int xpos, int ypos, PieceColor color, int priority) throws IOException {
-        this.xPos = xpos;
-        this.yPos = ypos;
-        this.color = color;
-        this.priority = priority;
-        this.blackImage = ImageIO.read(new File("src/Images/queenBlack.png"));
-        this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
-    }
-    public boolean move(int xdespos, int ydespos, ChessBoard board) {
-        if (Math.abs(this.xPos - xdespos) / Math.abs(this.yPos - ydespos) == 1) {
-            if (ydespos > this.yPos && xdespos > this.xPos) {
-                int start = this.yPos;
-                int end = ydespos;
-                for (int counter = start; counter <= end; counter++) {
-                    if (board.Squares[counter][counter].ContainPiece) {
-                        return false;
-                    }
-                }
-            } //up left
-            else if (ydespos > this.yPos && xdespos < this.xPos) {
-                int start = this.yPos;
-                int end = ydespos;
-                for (int i = start, negCounter = start; i <= end; i++, negCounter--) {
-                    if (board.Squares[negCounter][i].ContainPiece) {
-                        return false;
-                    }
-                }
-            } //down right
-            else if (ydespos < this.yPos && xdespos > this.xPos) {
-                int start = this.xPos;
-                int end = xdespos;
-                for (int i = start, negCounter = start; i <= end; i++, negCounter--) {
-                    if (board.Squares[i][negCounter].ContainPiece) {
-                        return false;
-                    }
-                }
-
-            } //down left
-            else if (ydespos < this.yPos && xdespos < this.xPos) {
-                int start = ydespos;
-                int end = this.yPos;
-                for (int counter = start; counter <= end; counter--) {
-                    if (board.Squares[counter][counter].ContainPiece) {
-                        return false;
-                    }
-                }
-            }
-        } else if (this.xPos - xdespos == 0) {
-            if (ydespos > this.yPos) {
-                for (int i = this.yPos; i <= ydespos; i++) {
-                    if (board.Squares[this.xPos][i].ContainPiece) {
-                        return false;
-                    }
-                }
-            }
-            if (ydespos < this.yPos) {
-                for (int i = this.yPos; i >= ydespos; i--) {
-                    if (board.Squares[this.xPos][i].ContainPiece) {
-                        return false;
-                    }
-                }
-            }
-        } else if (this.yPos - ydespos == 0) {
-            if (xdespos > this.xPos) {
-                for (int i = this.xPos; i <= xdespos; i++) {
-                    if (board.Squares[i][this.yPos].ContainPiece) {
-                        return false;
-                    }
-                }
-            }
-            if (xdespos < this.xPos) {
-                for (int i = this.xPos; i >= xdespos; i--) {
-                    if (board.Squares[i][this.yPos].ContainPiece) {
-                        return false;
-                    }
-                }
-            }
-        } else {
-            return false;
-        }
-        return true;
     }
 }
 
