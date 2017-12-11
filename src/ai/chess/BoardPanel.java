@@ -47,11 +47,12 @@ public class BoardPanel extends javax.swing.JPanel {
                 super.mouseClicked(e); //To change body of generated methods, choose Tools | Templates.
                 int clickedX = e.getX();
                 int clickedY = e.getY();
-                System.out.println("Mouse Clicked!!!!!");
-
+                
                 int pieceX = (clickedX - 10) / 60;
                 int pieceY = (clickedY - 10) / 60;
 
+                System.out.println("Mouse Clicked!!!!! x= "+pieceX+" y= "+pieceY);
+                
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
                     if (AIChess.isPlayerWhite) {
@@ -80,11 +81,11 @@ public class BoardPanel extends javax.swing.JPanel {
                 //in case that the player clicked on a piece before and now is taking the next action
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
-                        if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard, chessBoard.pieces, false)) {
-                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).xPos][chessBoard.pieces.get(selectedPieceIndex).yPos].ContainPiece = false;
+                        if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
+                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
                             chessBoard.pieces.get(selectedPieceIndex).xPos = pieceX;
                             chessBoard.pieces.get(selectedPieceIndex).yPos = pieceY;
-                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).xPos][chessBoard.pieces.get(selectedPieceIndex).yPos].ContainPiece = true;
+                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
                         }
