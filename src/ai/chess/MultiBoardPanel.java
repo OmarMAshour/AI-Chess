@@ -6,6 +6,7 @@
 package ai.chess;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,12 +14,13 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
+import javax.swing.JPanel;
 
 /**
  *
  * @author omarashour
  */
-public class BoardPanel extends javax.swing.JPanel {
+public class MultiBoardPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form BoardPanel
@@ -29,14 +31,17 @@ public class BoardPanel extends javax.swing.JPanel {
 
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
+    private boolean whitePlayerTurn;
 
-    public BoardPanel(ChessBoard chessBoard1) {
+    public MultiBoardPanel(ChessBoard chessBoard) {
         initComponents();
-        this.chessBoard = chessBoard1;
-        piecesDrawingTimer = new Timer(100, new ActionListener() {
+        this.chessBoard = chessBoard;
+        this.whitePlayerTurn=true;
+        piecesDrawingTimer = new Timer(1, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaint();
+                
             }
         });
         piecesDrawingTimer.start();
@@ -55,14 +60,14 @@ public class BoardPanel extends javax.swing.JPanel {
                 
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
-                    if (AIChess.isPlayerWhite) {
+                    if (whitePlayerTurn) {
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
                             playerSelectedOneOfHisPieces = true;
                             selectedPieceIndex = i;
                             //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
                             return;
                         }
-                    } else if (!AIChess.isPlayerWhite) {
+                    } else if (!whitePlayerTurn) {
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
                             playerSelectedOneOfHisPieces = true;
                             selectedPieceIndex = i;
@@ -82,20 +87,28 @@ public class BoardPanel extends javax.swing.JPanel {
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
-                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
+//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
                             chessBoard.pieces.get(selectedPieceIndex).xPos = pieceX;
                             chessBoard.pieces.get(selectedPieceIndex).yPos = pieceY;
-                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
+//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
+                            if(whitePlayerTurn){
+                                whitePlayerTurn=false;
+                            }else if(!whitePlayerTurn){
+                                whitePlayerTurn=true;
+                            }
+                            System.out.println("Pieces numbers: "+chessBoard.pieces.size());
                         }
 
                     } catch (Exception ex) {
                         System.err.println(ex.getMessage());
-                    } finally {
+                    } finally { 
                         return;
                     }
                 }
+                piecesDrawingTimer.stop();
+                piecesDrawingTimer.start();
 
             }
 
@@ -105,14 +118,32 @@ public class BoardPanel extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g); //To change body of generated methods, choose Tools | Templates.
-        for (Piece piece : chessBoard.pieces) {
-            if (piece.color == PieceColor.Black) {
-                g.drawImage(piece.blackImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
-            } else if (piece.color == PieceColor.White) {
-                g.drawImage(piece.whiteImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
+         for(int i =0;i<chessBoard.pieces.size();i++){
+            if (chessBoard.pieces.get(i).color == PieceColor.Black) {
+                g.drawImage(chessBoard.pieces.get(i).blackImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
+            } else if (chessBoard.pieces.get(i).color == PieceColor.White) {
+                g.drawImage(chessBoard.pieces.get(i).whiteImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             }
         }
+        
+//        paintComponent(g);
     }
+
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+//        for (Piece piece : chessBoard.pieces) {
+//            if (piece.color == PieceColor.Black) {
+//                g.drawImage(piece.blackImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
+//            } else if (piece.color == PieceColor.White) {
+//                g.drawImage(piece.whiteImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
+//            }
+//        }
+//    }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

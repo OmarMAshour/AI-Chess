@@ -23,7 +23,7 @@ public class GameIntro extends javax.swing.JFrame {
      */
     public GameIntro() {
         initComponents();
-            this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -41,6 +41,7 @@ public class GameIntro extends javax.swing.JFrame {
         startBtn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         startBtn1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,9 +55,9 @@ public class GameIntro extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(194, 36, 36));
         jLabel3.setText("Only Legends Can Defeat This ;) ");
 
-        startBtn.setFont(new java.awt.Font("Ubuntu", 3, 24)); // NOI18N
+        startBtn.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
         startBtn.setForeground(new java.awt.Color(195, 134, 45));
-        startBtn.setText("Start ???!!");
+        startBtn.setText("Singleplayer");
         startBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startBtnActionPerformed(evt);
@@ -77,6 +78,15 @@ public class GameIntro extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(51, 51, 255));
+        jButton1.setText("Multiplayer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -86,13 +96,7 @@ public class GameIntro extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jLabel3))
@@ -100,6 +104,13 @@ public class GameIntro extends javax.swing.JFrame {
                         .addGap(115, 115, 115)
                         .addComponent(jLabel2)))
                 .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(146, 146, 146))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,13 +120,15 @@ public class GameIntro extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(startBtn1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
-                    .addComponent(startBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
+                .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -127,23 +140,23 @@ public class GameIntro extends javax.swing.JFrame {
             String[] options = {"White", "Black"};
             int choice = JOptionPane.showOptionDialog(null, "Choose Whether you want to play with White or Black?", "",
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            
-            if(choice==0)
-            {                  
-                AIChess.isPlayerWhite=true;
+
+            if (choice == 0) {
+
                 ChessBoard chessBoard = new ChessBoard();
-                GameBoard gb = new GameBoard(chessBoard);
+                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard, true);
+                GameBoard gb = new GameBoard(boardPanel);
                 gb.setVisible(true);
-            }else if(choice==1){
-                AIChess.isPlayerWhite=false;
+            } else if (choice == 1) {
                 ChessBoard chessBoard = new ChessBoard();
-                GameBoard gb = new GameBoard(chessBoard);
+                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard, false);
+                GameBoard gb = new GameBoard(boardPanel);
+                this.setVisible(false);
                 gb.setVisible(true);
-            }else{
+            } else {
                 System.exit(0);
             }
-            
-            
+
         } catch (IOException ex) {
             System.out.println("Exception in Class GameIntro.java in the part from line 123 to 144");
         }
@@ -154,12 +167,27 @@ public class GameIntro extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_startBtn1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ChessBoard chessBoard;
+        try {
+            chessBoard = new ChessBoard();
+            MultiBoardPanel multiBoardPanel = new MultiBoardPanel(chessBoard);
+            GameBoard gb = new GameBoard(multiBoardPanel);
+            this.setVisible(false);
+            gb.setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(GameIntro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

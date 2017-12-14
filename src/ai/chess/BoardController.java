@@ -46,13 +46,10 @@ class ChessBoard {
                     } else {
                         this.Squares[j][i] = new boardSquare(BoardSquareColor.White, false);
                     }
+                } else if ((j * 8 + i) % 2 == 0) {
+                    this.Squares[j][i] = new boardSquare(BoardSquareColor.White, false);
                 } else {
-                    if ((j * 8 + i) % 2 == 0) {
-                        this.Squares[j][i] = new boardSquare(BoardSquareColor.White, false);
-                    } else {
-                        this.Squares[j][i] = new boardSquare(BoardSquareColor.Black, false);
-                    }
-
+                    this.Squares[j][i] = new boardSquare(BoardSquareColor.Black, false);
                 }
             }
         }
@@ -110,10 +107,8 @@ class ChessBoard {
         this.Squares[7][5].ContainPiece = true;
         Q = new Queen(7, 3, PieceColor.White, 9);
         this.Squares[7][3].ContainPiece = true;
-
         K = new King(7, 4, PieceColor.White, 10);
         this.Squares[7][4].ContainPiece = true;
-
         pieces.add(r);
         pieces.add(r1);
         pieces.add(k);
@@ -125,14 +120,18 @@ class ChessBoard {
         pieces.add(K);
 
     }
+
     //view Board Status
     public void viewBoard() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                System.out.println(this.Squares[i][j] + " x pos= " + i + " y pos= " + j + " Contain 7aga = " + this.Squares[i][j].ContainPiece);
+                if (this.Squares[i][j].ContainPiece) {
+                    System.out.println("Piece Name: " + this.getPiece(i, j).Name + " " + this.Squares[i][j] + " y pos= " + i + " x pos= " + j + " Contain 7aga = " + this.Squares[i][j].ContainPiece);
+                }
             }
         }
     }
+
     //board cpy
     public Piece getPiece(int ydespos, int xdespos) {
         for (int i = 0; i < this.pieces.size(); i++) {
@@ -142,6 +141,7 @@ class ChessBoard {
         }
         return null;
     }
+
     public void copyBoard(ChessBoard desBoard) {
         //copy squares
         for (int i = 0; i < 8; i++) {
@@ -152,6 +152,7 @@ class ChessBoard {
         }
         Collections.copy(desBoard.pieces, this.pieces);
     }
+
     public void clearAllAvailableMoves() {
         for (int i = 0; i < this.pieces.size(); i++) {
             this.pieces.get(i).availableDes.clear();

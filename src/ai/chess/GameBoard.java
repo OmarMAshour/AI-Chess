@@ -15,13 +15,24 @@ public class GameBoard extends javax.swing.JFrame {
     /**
      * Creates new form GameBoard
      */
-    BoardPanel boardPanel;
-    public GameBoard(ChessBoard chessBoard) {
+    SingleBoardPanel boardPanel;
+    MultiBoardPanel multiBoardPanel;
+    public GameBoard(SingleBoardPanel boardPanel) {
         initComponents();
         
-        boardPanel = new BoardPanel(chessBoard);
+        this.boardPanel = boardPanel;
         boardPanel.setBounds(0, 0, 500, 500);
         add(boardPanel);
+        this.setLocationRelativeTo(null);
+
+    }
+    
+    public GameBoard(MultiBoardPanel multiBoardPanel) {
+        initComponents();
+        
+        this.multiBoardPanel = multiBoardPanel;
+        multiBoardPanel.setBounds(0, 0, 500, 500);
+        add(multiBoardPanel);
         this.setLocationRelativeTo(null);
 
     }

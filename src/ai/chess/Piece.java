@@ -26,6 +26,7 @@ abstract public class Piece {
     public Image blackImage;
     public Image whiteImage;
     ArrayList<Points> availableDes;
+    protected String Name;
 
     //piece motion
     //change xpos w ypos if possible
@@ -35,7 +36,8 @@ abstract public class Piece {
         return "Xpos " + this.xPos + "\nYpos " + this.yPos;
     }
 
-/*    abstract public void CalculateAllPossibleMoves(ChessBoard board);
+
+    /*    abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
     public boolean halelmalekfe5atar(ChessBoard board) {
 
@@ -81,7 +83,7 @@ abstract public class Piece {
         }
         return false;
     }
-*/
+     */
 }
 
 class Pawn extends Piece {
@@ -89,6 +91,7 @@ class Pawn extends Piece {
     public boolean canMoveTwice;
 
     public Pawn(int ypos, int xpos, PieceColor color, int priority) throws IOException {
+
         this.yPos = ypos;
         this.xPos = xpos;
         this.color = color;
@@ -97,9 +100,15 @@ class Pawn extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/pawnBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/pawnWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "Pawn";
     }
 
-/*    public void CalculateAllPossibleMoves(ChessBoard board) {
+    public String getName() {
+        return this.Name;
+    }
+
+
+    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
         //black move
         if (this.color == PieceColor.Black) {
             //first move (2 moves)
@@ -131,7 +140,7 @@ class Pawn extends Piece {
             }
         }
     }
-*/
+     */
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception {
         //black move
         if (this.color == PieceColor.Black) {
@@ -184,44 +193,42 @@ class Pawn extends Piece {
             }
 
         } //white move
-        else {
-            //first move (2 moves)
-            if (Math.abs(ydespos - this.yPos) == 2
-                    && ydespos < this.yPos
-                    && this.xPos == xdespos
-                    && this.canMoveTwice
-                    && !board.Squares[this.yPos - 1][this.xPos].ContainPiece
-                    && !board.Squares[this.yPos - 2][this.xPos].ContainPiece) {
-                this.canMoveTwice = false;
-                board.Squares[this.yPos][this.xPos].ContainPiece = false;
-                board.Squares[ydespos][xdespos].ContainPiece = true;
-                this.yPos = ydespos;
-                this.xPos = xdespos;
-                return true;
-            } //normal move (1 move)
-            else if (Math.abs(ydespos - this.yPos) == 1
-                    && ydespos < this.yPos
-                    && this.xPos == xdespos
-                    && !board.Squares[ydespos][xdespos].ContainPiece) {
-                this.canMoveTwice = false;
-                board.Squares[this.yPos][this.xPos].ContainPiece = false;
-                board.Squares[ydespos][xdespos].ContainPiece = true;
-                this.yPos = ydespos;
-                this.xPos = xdespos;
-                return true;
-            } //KILL!!!!!!!
-            else if (Math.abs(ydespos - this.yPos) == 1
-                    && ydespos < this.yPos
-                    && Math.abs(xdespos - this.xPos) == 1
-                    && board.Squares[ydespos][xdespos].ContainPiece
-                    && board.getPiece(ydespos, xdespos).color != this.color) {
-                this.canMoveTwice = false;
-                board.pieces.remove(board.getPiece(ydespos, xdespos));
-                board.Squares[this.yPos][this.xPos].ContainPiece = false;
-                this.yPos = ydespos;
-                this.xPos = xdespos;
-                return true;
-            }
+        else //first move (2 moves)
+        if (Math.abs(ydespos - this.yPos) == 2
+                && ydespos < this.yPos
+                && this.xPos == xdespos
+                && this.canMoveTwice
+                && !board.Squares[this.yPos - 1][this.xPos].ContainPiece
+                && !board.Squares[this.yPos - 2][this.xPos].ContainPiece) {
+            this.canMoveTwice = false;
+            board.Squares[this.yPos][this.xPos].ContainPiece = false;
+            board.Squares[ydespos][xdespos].ContainPiece = true;
+            this.yPos = ydespos;
+            this.xPos = xdespos;
+            return true;
+        } //normal move (1 move)
+        else if (Math.abs(ydespos - this.yPos) == 1
+                && ydespos < this.yPos
+                && this.xPos == xdespos
+                && !board.Squares[ydespos][xdespos].ContainPiece) {
+            this.canMoveTwice = false;
+            board.Squares[this.yPos][this.xPos].ContainPiece = false;
+            board.Squares[ydespos][xdespos].ContainPiece = true;
+            this.yPos = ydespos;
+            this.xPos = xdespos;
+            return true;
+        } //KILL!!!!!!!
+        else if (Math.abs(ydespos - this.yPos) == 1
+                && ydespos < this.yPos
+                && Math.abs(xdespos - this.xPos) == 1
+                && board.Squares[ydespos][xdespos].ContainPiece
+                && board.getPiece(ydespos, xdespos).color != this.color) {
+            this.canMoveTwice = false;
+            board.pieces.remove(board.getPiece(ydespos, xdespos));
+            board.Squares[this.yPos][this.xPos].ContainPiece = false;
+            this.yPos = ydespos;
+            this.xPos = xdespos;
+            return true;
         }
         return false;
 
@@ -238,6 +245,11 @@ class Rook extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/rookBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/rookWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "Rook";
+    }
+
+    public String getName() {
+        return this.Name;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
@@ -255,11 +267,13 @@ class Rook extends Piece {
 //                        if (!this.overallCheck(board, ydespos, xdespos)) {
 //                            return false;
 //                        }
-
-                        board.pieces.remove(board.getPiece(ydespos, xdespos));
+                       board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
                         this.xPos = xdespos;
+                        
+// 
+
                         return true;
                     } //normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
@@ -354,7 +368,6 @@ class Rook extends Piece {
 //                        if (!this.overallCheck(board, ydespos, xdespos)) {
 //                            return false;
 //                        }
-
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
@@ -380,7 +393,7 @@ class Rook extends Piece {
         return false;
     }
 
-/*    public void CalculateAllPossibleMoves(ChessBoard board) {
+    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
 
         for (int i = this.xPos + 1; i < 8; i++) {
@@ -427,6 +440,11 @@ class Bishop extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/bishopBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/bishopWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "Bishop";
+    }
+
+    public String getName() {
+        return this.Name;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException, IOException, IOException {
@@ -568,7 +586,7 @@ class Bishop extends Piece {
         return false;
     }
 
-/*    public void CalculateAllPossibleMoves(ChessBoard board) {
+    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
         //up right
 
         int counter = this.yPos - 1;
@@ -624,9 +642,15 @@ class Queen extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/queenBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "Queen";
     }
 
-/*    public void CalculateAllPossibleMoves(ChessBoard board) {
+    public String getName() {
+        return this.Name;
+    }
+
+
+    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
 
         for (int i = this.xPos + 1; i < 8; i++) {
@@ -701,7 +725,6 @@ class Queen extends Piece {
             }
         }
     }*/
-
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
 
         //x dir 
@@ -981,6 +1004,11 @@ class Knight extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/knightBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/knightWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "Knight";
+    }
+
+    public String getName() {
+        return this.Name;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
@@ -1013,7 +1041,7 @@ class Knight extends Piece {
         }
         return false;
     }
-/*
+    /*
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //2 up 1 right
         if (!board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece) {
@@ -1048,7 +1076,7 @@ class Knight extends Piece {
             this.availableDes.add(new Points(yPos - 1, xPos - 2));
         }
     }
-*/
+     */
 }
 
 class King extends Piece {
@@ -1061,6 +1089,11 @@ class King extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
         this.availableDes = new ArrayList<>();
+        this.Name = "King";
+    }
+
+    public String getName() {
+        return this.Name;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
