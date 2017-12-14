@@ -5,6 +5,7 @@
  */
 package ai.chess;
 
+import Pieces.*;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -108,9 +109,9 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     public void paint(Graphics g) {
         super.paint(g); //To change body of generated methods, choose Tools | Templates.
 //        for (Piece piece : chessBoard.pieces) {
-//            if (piece.color == PieceColor.Black) {
+//            if (piece.color == Piece.Black) {
 //                g.drawImage(piece.blackImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
-//            } else if (piece.color == PieceColor.White) {
+//            } else if (piece.color == Piece.White) {
 //                g.drawImage(piece.whiteImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
 //            }
 //        }
