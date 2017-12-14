@@ -118,7 +118,7 @@ public class ChessBoard {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (this.Squares[i][j].ContainPiece) {
-                    System.out.println("Piece Name: " + this.getPiece(i, j).Name + " " + this.Squares[i][j] + " y pos= " + i + " x pos= " + j + " Contain 7aga = " + this.Squares[i][j].ContainPiece);
+                    System.out.println("Piece Name: " + this.getPiece(i, j).getName() + " " + this.Squares[i][j] + " y pos= " + i + " x pos= " + j + " Contain 7aga = " + this.Squares[i][j].ContainPiece);
                 }
             }
         }

@@ -15,8 +15,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 //chess pieces model
 
-
-
 abstract public class Piece {
 
     public int yPos; //row
@@ -84,6 +82,7 @@ abstract public class Piece {
         return false;
     }
      */
+    public String getName() {
+        return Name;
+    }
 }
-
-
