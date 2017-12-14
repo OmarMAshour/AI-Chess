@@ -718,9 +718,9 @@ class Queen extends Piece {
                     else if (board.Squares[this.yPos][i].ContainPiece
                             && i == xdespos
                             && board.getPiece(this.yPos, i).color != this.color) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -729,9 +729,9 @@ class Queen extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -750,9 +750,9 @@ class Queen extends Piece {
                     else if (board.Squares[this.yPos][i].ContainPiece
                             && i == xdespos
                             && board.getPiece(this.yPos, i).color != this.color) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -761,9 +761,9 @@ class Queen extends Piece {
                         return true;
                     }//normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -785,9 +785,9 @@ class Queen extends Piece {
                     else if (board.Squares[i][this.xPos].ContainPiece
                             && i == ydespos
                             && board.getPiece(i, this.xPos).color != this.color) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -796,9 +796,9 @@ class Queen extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -817,9 +817,9 @@ class Queen extends Piece {
                     else if (board.Squares[i][this.xPos].ContainPiece
                             && i == ydespos
                             && board.getPiece(i, this.xPos).color != this.color) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -828,9 +828,9 @@ class Queen extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
-                            return false;
-                        }
+//                        if (!this.overallCheck(board, ydespos, xdespos)) {
+//                            return false;
+//                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -853,9 +853,9 @@ class Queen extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -863,9 +863,9 @@ class Queen extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -884,9 +884,9 @@ class Queen extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -895,9 +895,9 @@ class Queen extends Piece {
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
 
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
                     this.yPos = ydespos;
@@ -915,9 +915,9 @@ class Queen extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -925,9 +925,9 @@ class Queen extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -946,9 +946,9 @@ class Queen extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -956,9 +956,9 @@ class Queen extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                    if (!this.overallCheck(board, ydespos, xdespos)) {
-                        return false;
-                    }
+//                    if (!this.overallCheck(board, ydespos, xdespos)) {
+//                        return false;
+//                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -991,9 +991,9 @@ class Knight extends Piece {
                 || (Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(this.xPos - xdespos) == 2)) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
-                if (!this.overallCheck(board, ydespos, xdespos)) {
-                    return false;
-                }
+//                if (!this.overallCheck(board, ydespos, xdespos)) {
+//                    return false;
+//                }
 
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -1002,9 +1002,9 @@ class Knight extends Piece {
                 return true;
             } //kill
             else {
-                if (!this.overallCheck(board, ydespos, xdespos)) {
-                    return false;
-                }
+//                if (!this.overallCheck(board, ydespos, xdespos)) {
+//                    return false;
+//                }
 
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -1072,18 +1072,18 @@ class King extends Piece {
                 || (Math.abs(this.yPos - ydespos) == 0
                 && Math.abs(xdespos - this.xPos) == 1)) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
-                if (!this.overallCheck(board, ydespos, xdespos)) {
-                    return false;
-                }
+//                if (!this.overallCheck(board, ydespos, xdespos)) {
+//                    return false;
+//                }
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 board.Squares[ydespos][xdespos].ContainPiece = true;
                 this.xPos = xdespos;
                 this.yPos = ydespos;
                 return true;
             } else if (board.Squares[ydespos][xdespos].ContainPiece && board.getPiece(ydespos, xdespos).color != this.color) {
-                if (!this.overallCheck(board, ydespos, xdespos)) {
-                    return false;
-                }
+//                if (!this.overallCheck(board, ydespos, xdespos)) {
+//                    return false;
+//                }
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 this.yPos = ydespos;
