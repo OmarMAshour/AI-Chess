@@ -39,7 +39,6 @@ public class SingleBoardPanel extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaint();
-                System.out.println(chessBoard.pieces.size());
             }
         });
         piecesDrawingTimer.start();
@@ -86,8 +85,6 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                     try {
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
 //                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
-                            chessBoard.pieces.get(selectedPieceIndex).xPos = pieceX;
-                            chessBoard.pieces.get(selectedPieceIndex).yPos = pieceY;
 //                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;

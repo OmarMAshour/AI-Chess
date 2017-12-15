@@ -46,13 +46,7 @@ public class ChessBoard {
             }
         }
         //initialize pieces
-        //initializing black soldiers
-        for (int i = 0; i < 8; i++) {
-            Pawn p = new Pawn(1, i, PieceColor.Black, 1);
-            pieces.add(p);
-            this.Squares[1][i].ContainPiece = true;
-        }
-        // initializing all other black pieces 
+        // initializing black pieces
         Rook r = new Rook(0, 0, PieceColor.Black, 5);
         this.Squares[0][0].ContainPiece = true;
         Rook r1 = new Rook(0, 7, PieceColor.Black, 5);
@@ -71,13 +65,21 @@ public class ChessBoard {
         this.Squares[0][4].ContainPiece = true;
 
         pieces.add(r);
-        pieces.add(r1);
         pieces.add(k);
-        pieces.add(k1);
         pieces.add(bi);
-        pieces.add(bi1);
         pieces.add(Q);
         pieces.add(K);
+        pieces.add(bi1);
+        pieces.add(k1);
+        pieces.add(r1);
+        
+        //initializing black soldiers
+        for (int i = 0; i < 8; i++) {
+            Pawn p = new Pawn(1, i, PieceColor.Black, 1);
+            pieces.add(p);
+            this.Squares[1][i].ContainPiece = true;
+        }
+        
         //initializing white soldiers
         for (int i = 0; i < 8; i++) {
             Pawn p = new Pawn(6, i, PieceColor.White, 1);
@@ -102,14 +104,13 @@ public class ChessBoard {
         K = new King(7, 4, PieceColor.White, 10);
         this.Squares[7][4].ContainPiece = true;
         pieces.add(r);
-        pieces.add(r1);
         pieces.add(k);
-        pieces.add(k1);
         pieces.add(bi);
-        pieces.add(bi1);
         pieces.add(Q);
-
         pieces.add(K);
+        pieces.add(bi1);
+        pieces.add(k1);
+        pieces.add(r1);
 
     }
 
