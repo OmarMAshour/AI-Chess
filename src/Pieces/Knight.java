@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Pieces;
 
+import Pieces.Piece;
+import Pieces.PieceColor;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-
-/**
- *
- * @author root
- */
 
 public class Knight extends Piece {
 
@@ -30,19 +22,15 @@ public class Knight extends Piece {
         this.Name = "Knight";
     }
 
-    public String getName() {
-        return this.Name;
-    }
-
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
         if ((Math.abs(this.yPos - ydespos) == 2
                 && Math.abs(this.xPos - xdespos) == 1)
                 || (Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(this.xPos - xdespos) == 2)) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
-//                if (!this.overallCheck(board, ydespos, xdespos)) {
-//                    return false;
-//                }
+                if (this.overallCheck(board, ydespos, xdespos)) {
+                    return false;
+                }
 
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -51,9 +39,9 @@ public class Knight extends Piece {
                 return true;
             } //kill
             else {
-               if (this.overallCheck(board, ydespos, xdespos)) {
-               return false;
-            }
+                if (this.overallCheck(board, ydespos, xdespos)) {
+                    return false;
+                }
 
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -64,41 +52,76 @@ public class Knight extends Piece {
         }
         return false;
     }
-    
+
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //2 up 1 right
-        if (!board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece) {
+        if (this.xPos + 1 < 8 && this.yPos + 2 < 8 && !board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos + 2, xPos + 1));
+        } else if (this.xPos + 1 < 8 && this.yPos + 2 < 8) {
+            if (board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece && board.getPiece(this.yPos + 2, this.xPos + 1).color != this.color) {
+                this.availableDes.add(new Points(this.yPos + 2, this.xPos + 1));
+            }
         }
         //2 up 1 left
-        if (!board.Squares[this.yPos + 2][this.xPos - 1].ContainPiece) {
+        if (this.xPos - 1 >= 0 && this.yPos + 2 < 8 && !board.Squares[this.yPos + 2][this.xPos - 1].ContainPiece) {
             this.availableDes.add(new Points(yPos + 2, xPos - 1));
+        } else if (this.xPos - 1 >= 0 && this.yPos + 2 < 8) {
+            if (board.Squares[this.yPos + 2][this.xPos - 1].ContainPiece && board.getPiece(this.yPos + 2, this.xPos - 1).color != this.color) {
+                this.availableDes.add(new Points(this.yPos + 2, this.xPos - 1));
+            }
         }
         //2 down 1 right
-        if (!board.Squares[this.yPos - 2][this.xPos + 1].ContainPiece) {
+        if (this.xPos + 1 < 8 && this.yPos - 2 >= 0 && !board.Squares[this.yPos - 2][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos - 2, xPos + 1));
+        } else if (this.xPos + 1 < 8 && this.yPos - 2 >= 0) {
+            if (board.Squares[this.yPos - 2][this.xPos + 1].ContainPiece && board.getPiece(this.yPos - 2, this.xPos + 1).color != this.color) {
+                this.availableDes.add(new Points(this.yPos - 2, this.xPos + 1));
+            }
         }
         //2 down 1 left
-        if (!board.Squares[this.yPos - 2][this.xPos - 1].ContainPiece) {
+        if (this.xPos - 1 >= 0 && this.yPos - 2 >= 0 && !board.Squares[this.yPos - 2][this.xPos - 1].ContainPiece) {
             this.availableDes.add(new Points(yPos - 2, xPos - 1));
+        } else if (this.xPos - 1 >= 0 && this.yPos - 2 >= 0) {
+            if (board.Squares[this.yPos - 2][this.xPos - 1].ContainPiece && board.getPiece(this.yPos - 2, this.xPos - 1).color != this.color) {
+                this.availableDes.add(new Points(this.yPos - 2, this.xPos - 1));
+            }
         }
         //1 up 2 right
-        if (!board.Squares[this.yPos + 1][this.xPos + 2].ContainPiece) {
+        if (this.xPos + 2 < 8 && this.yPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos + 2].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos + 2));
+        } else if (this.xPos + 2 < 8 && this.yPos + 1 < 8) {
+            if (board.Squares[this.yPos + 1][this.xPos + 2].ContainPiece && board.getPiece(this.yPos + 1, this.xPos + 2).color != this.color) {
+                this.availableDes.add(new Points(this.yPos + 1, this.xPos + 2));
+            }
         }
+
         //1 up 2 left
-        if (!board.Squares[this.yPos + 1][this.xPos - 2].ContainPiece) {
+        if (this.xPos - 2 >= 0 && this.yPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos - 2].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos - 2));
+        } else if (this.xPos - 2 >= 0 && this.yPos + 1 < 8) {
+            if (board.Squares[this.yPos + 1][this.xPos - 2].ContainPiece && board.getPiece(this.yPos + 1, this.xPos - 2).color != this.color) {
+                this.availableDes.add(new Points(this.yPos + 2, this.xPos - 1));
+            }
         }
+
         //1 down 2 right
-        if (!board.Squares[this.yPos - 1][this.xPos + 2].ContainPiece) {
+        if (this.xPos + 2 < 8 && this.yPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos + 2].ContainPiece) {
             this.availableDes.add(new Points(yPos - 1, xPos + 2));
+        } else if (this.xPos + 2 < 8 && this.yPos - 1 >= 0) {
+            if (board.Squares[this.yPos - 1][this.xPos + 2].ContainPiece && board.getPiece(this.yPos - 1, this.xPos + 2).color != this.color) {
+                this.availableDes.add(new Points(this.yPos - 1, this.xPos + 2));
+            }
         }
         //1 down 2 left
-        if (!board.Squares[this.yPos - 1][this.xPos - 2].ContainPiece) {
+        if (this.xPos - 2 >= 0 && this.yPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos - 2].ContainPiece) {
             this.availableDes.add(new Points(yPos - 1, xPos - 2));
+        } else if (this.xPos - 2 >= 0 && this.yPos - 1 >= 0) {
+            if (board.Squares[this.yPos - 1][this.xPos - 2].ContainPiece) {
+                if (board.getPiece(this.yPos - 1, this.xPos - 2).color != this.color) {
+                    this.availableDes.add(new Points(this.yPos - 2, this.xPos - 1));
+                }
+            }
         }
     }
-    
-}
 
+}

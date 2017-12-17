@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Pieces;
-
+import ai.chess.ChessBoard;
+import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import ai.chess.*;
 
-/**
- *
- * @author root
- */
 public class Rook extends Piece {
-
     public Rook(int ypos, int xpos, PieceColor color, int priority) throws IOException {
         this.yPos = ypos;
         this.xPos = xpos;
@@ -27,11 +17,6 @@ public class Rook extends Piece {
         this.availableDes = new ArrayList<>();
         this.Name = "Rook";
     }
-
-    public String getName() {
-        return this.Name;
-    }
-
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
         if (ydespos == this.yPos) {
             //right
@@ -47,12 +32,11 @@ public class Rook extends Piece {
                         if (this.overallCheck(board, ydespos, xdespos)) {
                             return false;
                         }
+
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
                         this.xPos = xdespos;
-
-// 
                         return true;
                     } //normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
@@ -124,7 +108,7 @@ public class Rook extends Piece {
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
                         if (this.overallCheck(board, ydespos, xdespos)) {
-                           return false;
+                            return false;
                         }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -147,6 +131,7 @@ public class Rook extends Piece {
                         if (this.overallCheck(board, ydespos, xdespos)) {
                             return false;
                         }
+
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
@@ -171,13 +156,15 @@ public class Rook extends Piece {
 
         return false;
     }
-
-        public void CalculateAllPossibleMoves(ChessBoard board) {
+    public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
 
         for (int i = this.xPos + 1; i < 8; i++) {
             if (!board.Squares[this.yPos][i].ContainPiece) {
                 this.availableDes.add(new Points(this.yPos, i));
+            } else if (board.Squares[this.yPos][i].ContainPiece && board.getPiece(this.yPos, i).color != this.color) {
+                this.availableDes.add(new Points(this.yPos, i));
+                break;
             } else {
                 break;
             }
@@ -186,6 +173,9 @@ public class Rook extends Piece {
         for (int i = this.xPos - 1; i >= 0; i--) {
             if (!board.Squares[this.yPos][i].ContainPiece) {
                 this.availableDes.add(new Points(this.yPos, i));
+            } else if (board.Squares[this.yPos][i].ContainPiece && board.getPiece(this.yPos, i).color != this.color) {
+                this.availableDes.add(new Points(this.yPos, i));
+                break;
             } else {
                 break;
             }
@@ -194,6 +184,9 @@ public class Rook extends Piece {
         for (int i = this.yPos + 1; i < 8; i++) {
             if (!board.Squares[i][this.xPos].ContainPiece) {
                 this.availableDes.add(new Points(i, this.xPos));
+            } else if (board.Squares[i][this.xPos].ContainPiece && board.getPiece(i, this.xPos).color != this.color) {
+                this.availableDes.add(new Points(i, this.xPos));
+                break;
             } else {
                 break;
             }
@@ -201,6 +194,9 @@ public class Rook extends Piece {
         for (int i = this.yPos - 1; i >= 0; i--) {
             if (!board.Squares[i][this.xPos].ContainPiece) {
                 this.availableDes.add(new Points(i, this.xPos));
+            } else if (board.Squares[i][this.xPos].ContainPiece && board.getPiece(i, this.xPos).color != this.color) {
+                this.availableDes.add(new Points(i, this.xPos));
+                break;
             } else {
                 break;
             }

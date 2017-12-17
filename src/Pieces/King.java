@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Pieces;
-
+import Pieces.Piece;
+import Pieces.PieceColor;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-
-/**
- *
- * @author root
- */
 
 public class King extends Piece {
 
@@ -27,11 +18,7 @@ public class King extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
         this.availableDes = new ArrayList<>();
-        this.Name = "King";
-    }
-
-    public String getName() {
-        return this.Name;
+        this.Name="King";
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
@@ -42,18 +29,18 @@ public class King extends Piece {
                 || (Math.abs(this.yPos - ydespos) == 0
                 && Math.abs(xdespos - this.xPos) == 1)) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
-//                if (!this.overallCheck(board, ydespos, xdespos)) {
-//                    return false;
-//                }
+                if (this.overallCheck(board, ydespos, xdespos)) {
+                    return false;
+                }
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 board.Squares[ydespos][xdespos].ContainPiece = true;
                 this.xPos = xdespos;
                 this.yPos = ydespos;
                 return true;
             } else if (board.Squares[ydespos][xdespos].ContainPiece && board.getPiece(ydespos, xdespos).color != this.color) {
-//                if (!this.overallCheck(board, ydespos, xdespos)) {
-//                    return false;
-//                }
+                if (!this.overallCheck(board, ydespos, xdespos)) {
+                    return false;
+                }
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 this.yPos = ydespos;
@@ -66,36 +53,36 @@ public class King extends Piece {
     }
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
-        //up
-        if (!board.Squares[this.yPos + 1][this.xPos].ContainPiece) {
+        //down
+        if (this.yPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos));
         }
-        //down
-        if (!board.Squares[this.yPos - 1][this.xPos].ContainPiece) {
+        //up
+        if (this.yPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos].ContainPiece) {
             this.availableDes.add(new Points(yPos - 1, xPos));
         }
         //left
-        if (!board.Squares[this.yPos][this.xPos - 1].ContainPiece) {
+        if (this.xPos - 1 >= 0 && !board.Squares[this.yPos][this.xPos - 1].ContainPiece) {
             this.availableDes.add(new Points(yPos, xPos - 1));
         }
         //right
-        if (!board.Squares[this.yPos][this.xPos + 1].ContainPiece) {
+        if (this.xPos + 1 < 8 && !board.Squares[this.yPos][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos, xPos + 1));
         }
         //up right
-        if (!board.Squares[this.yPos - 1][this.xPos + 1].ContainPiece) {
+        if (this.yPos - 1 >= 0 && this.xPos + 1 < 8 && !board.Squares[this.yPos - 1][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos - 1, xPos + 1));
         }
         //up left
-        if (!board.Squares[this.yPos - 1][this.xPos - 1].ContainPiece) {
+        if (this.yPos - 1 >= 0 && this.xPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos - 1].ContainPiece) {
             this.availableDes.add(new Points(yPos - 1, xPos - 1));
         }
         //down right
-        if (!board.Squares[this.yPos + 1][this.xPos + 1].ContainPiece) {
+        if (this.yPos + 1 < 8 && this.xPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos + 1));
         }
         //down left
-        if (!board.Squares[this.yPos + 1][this.xPos - 1].ContainPiece) {
+        if (this.yPos + 1 < 8 && this.xPos - 1 >= 0 && !board.Squares[this.yPos + 1][this.xPos - 1].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos - 1));
         }
     }

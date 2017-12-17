@@ -1,12 +1,17 @@
-package Pieces;
-
-import ai.chess.ChessBoard;
-import ai.chess.Points;
+package Pieces ;
+import java.math.*;
+import ai.chess.*;
 import java.awt.Image;
 import java.awt.Point;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 //chess pieces model
+
 
 abstract public class Piece {
 
@@ -17,8 +22,7 @@ abstract public class Piece {
     public Image blackImage;
     public Image whiteImage;
     public ArrayList<Points> availableDes;
-    protected String Name;
-
+    public String Name;
     //piece motion
     //change xpos w ypos if possible
     abstract public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception;
@@ -27,8 +31,7 @@ abstract public class Piece {
         return "Xpos " + this.xPos + "\nYpos " + this.yPos;
     }
 
-
-        abstract public void CalculateAllPossibleMoves(ChessBoard board);
+    abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
     public boolean halelmalekfe5atar(ChessBoard board) {
 
@@ -51,6 +54,7 @@ abstract public class Piece {
         for (int i = 0; i < board.pieces.size(); i++) {
             for (int j = 0; j < board.pieces.get(i).availableDes.size(); j++) {
                 if (board.pieces.get(i).availableDes.get(j).xPos == kingXpos && board.pieces.get(i).availableDes.get(j).yPos == kingYpos) {
+                    System.out.println("yewsal");
                     return true;
                 }
             }
@@ -64,18 +68,26 @@ abstract public class Piece {
         board.copyBoard(tmpBoard);
         tmpBoard.Squares[this.yPos][this.xPos].ContainPiece = false;
         tmpBoard.Squares[ydespos][xdespos].ContainPiece = true;
-        Piece tmpPiece = tmpBoard.getPiece(this.xPos, this.yPos);
+        Piece tmpPiece = tmpBoard.getPiece(this.yPos, this.xPos);
         tmpPiece.yPos = ydespos;
         tmpPiece.xPos = xdespos;
         this.CalculateAllPossibleMoves(tmpBoard);
         boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard);
         if (fe5atar) {
+            System.out.println("Overall returned true");
             return true;
         }
+         System.out.println("Overall returned false");
         return false;
     }
+
     
-    public String getName() {
-        return Name;
-    }
 }
+
+
+
+
+
+
+
+

@@ -80,6 +80,9 @@ public class ChessBoard {
 
         //initializing white soldiers
         for (int i = 0; i < 8; i++) {
+            if(i==7){
+                break;
+            }
             Pawn p = new Pawn(6, i, PieceColor.White, 1);
             pieces.add(p);
             this.Squares[6][i].ContainPiece = true;
@@ -114,16 +117,9 @@ public class ChessBoard {
 
     //view Board Status
     public void viewBoard() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (this.Squares[i][j].ContainPiece) {
-                    System.out.println("Piece Name: " + this.getPiece(i, j).getName() + " " + this.Squares[i][j] + " y pos= " + i + " x pos= " + j + " Contain 7aga = " + this.Squares[i][j].ContainPiece);
-                }
-            }
-        }
+
     }
 
-    //board cpy
     public Piece getPiece(int ydespos, int xdespos) {
         for (int i = 0; i < this.pieces.size(); i++) {
             if (this.pieces.get(i).yPos == ydespos && this.pieces.get(i).xPos == xdespos) {
@@ -133,6 +129,7 @@ public class ChessBoard {
         return null;
     }
 
+    //board cpy
     public void copyBoard(ChessBoard desBoard) {
         //copy squares
         for (int i = 0; i < 8; i++) {
@@ -141,7 +138,34 @@ public class ChessBoard {
                 desBoard.Squares[i][j].color = this.Squares[i][j].color;
             }
         }
-        Collections.copy(desBoard.pieces, this.pieces);
+        //Collections.copy(desBoard.pieces, this.pieces);
+        desBoard.pieces = new ArrayList<>();
+        try {
+            for (int i = 0; i < this.pieces.size(); i++) {
+                if (this.pieces.get(i).priority == 10) {
+                    desBoard.pieces.add(new King(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,10));
+                }
+                else if (this.pieces.get(i).priority == 9) {
+                    desBoard.pieces.add(new Queen(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,9));
+                }
+                else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("knight")) {
+                    desBoard.pieces.add(new Knight(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,3));
+                }
+                else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("Bishop")) {
+                    desBoard.pieces.add(new Bishop(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,3));
+                }
+                else if (this.pieces.get(i).priority == 5 ) {
+                    desBoard.pieces.add(new Rook(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,5));
+                }
+                else if (this.pieces.get(i).priority == 1) {
+                    desBoard.pieces.add(new Pawn(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,1));
+                }
+                
+            }
+        } 
+        catch (Exception e) {
+            
+        }
     }
 
     public void clearAllAvailableMoves() {
@@ -149,7 +173,8 @@ public class ChessBoard {
             this.pieces.get(i).availableDes.clear();
         }
     }
-  public boolean checkMate(boolean isPlayerWhite) {
+
+    public boolean checkMate(boolean isPlayerWhite) {
         //white move
         int counter = 0;
         King tmpKing = null;
@@ -200,6 +225,5 @@ public class ChessBoard {
         }
         return false;
     }
-  
 
 }
