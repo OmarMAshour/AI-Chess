@@ -18,6 +18,7 @@ public class Bishop extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/bishopWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Bishop";
+        this.value=6;
     }
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException, IOException, IOException {
         if (!(Math.abs(ydespos - this.yPos) == Math.abs(xdespos - this.xPos))) {

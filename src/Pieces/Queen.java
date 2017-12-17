@@ -19,6 +19,7 @@ public class Queen extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Queen";
+        this.value=20;
     }
 
     public void CalculateAllPossibleMoves(ChessBoard board) {

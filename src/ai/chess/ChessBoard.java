@@ -80,9 +80,9 @@ public class ChessBoard {
 
         //initializing white soldiers
         for (int i = 0; i < 8; i++) {
-            if(i==7){
-                break;
-            }
+//            if(i==7){
+//                break;
+//            }
             Pawn p = new Pawn(6, i, PieceColor.White, 1);
             pieces.add(p);
             this.Squares[6][i].ContainPiece = true;

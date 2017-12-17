@@ -19,6 +19,7 @@ public class King extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name="King";
+        this.value=200;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
@@ -38,7 +39,7 @@ public class King extends Piece {
                 this.yPos = ydespos;
                 return true;
             } else if (board.Squares[ydespos][xdespos].ContainPiece && board.getPiece(ydespos, xdespos).color != this.color) {
-                if (!this.overallCheck(board, ydespos, xdespos)) {
+                if (this.overallCheck(board, ydespos, xdespos)) {
                     return false;
                 }
                 board.pieces.remove(board.getPiece(ydespos, xdespos));

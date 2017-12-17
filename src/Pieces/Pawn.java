@@ -18,7 +18,9 @@ public class Pawn extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/pawnWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Pawn";
+        this.value=2;
     }
+    @Override
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //black move
         if (this.color == PieceColor.Black) {
