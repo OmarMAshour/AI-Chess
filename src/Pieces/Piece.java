@@ -92,8 +92,7 @@ abstract public class Piece {
     }
 
     public boolean overallCheck(ChessBoard board, int ydespos, int xdespos) throws IOException {
-        ChessBoard tmpBoard = new ChessBoard();
-        board.copyBoard(tmpBoard);
+        ChessBoard tmpBoard = board.copyBoard();
         tmpBoard.Squares[this.yPos][this.xPos].ContainPiece = false;
         
         if(tmpBoard.Squares[ydespos][xdespos].ContainPiece){

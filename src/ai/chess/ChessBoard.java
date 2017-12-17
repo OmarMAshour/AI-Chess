@@ -115,6 +115,11 @@ public class ChessBoard {
 
     }
 
+    public ChessBoard(BoardSquare[][] squares, ArrayList<Piece> pieces) {
+        this.Squares = squares;
+        this.pieces = pieces;
+    }
+
     //view Board Status
     public void viewBoard() {
 
@@ -130,42 +135,39 @@ public class ChessBoard {
     }
 
     //board cpy
-    public void copyBoard(ChessBoard desBoard) {
-        //copy squares
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                desBoard.Squares[i][j].ContainPiece = this.Squares[i][j].ContainPiece;
-                desBoard.Squares[i][j].color = this.Squares[i][j].color;
-            }
-        }
-        //Collections.copy(desBoard.pieces, this.pieces);
-        desBoard.pieces = new ArrayList<>();
+    public ChessBoard copyBoard() {
         try {
+            ChessBoard desBoard = new ChessBoard();
+            //copy squares
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    desBoard.Squares[i][j].ContainPiece = this.Squares[i][j].ContainPiece;
+                    desBoard.Squares[i][j].color = this.Squares[i][j].color;
+                }
+            }
+            //Collections.copy(desBoard.pieces, this.pieces);
+            desBoard.pieces = new ArrayList<>();
             for (int i = 0; i < this.pieces.size(); i++) {
                 if (this.pieces.get(i).priority == 10) {
-                    desBoard.pieces.add(new King(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,10));
+                    desBoard.pieces.add(new King(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 10));
+                } else if (this.pieces.get(i).priority == 9) {
+                    desBoard.pieces.add(new Queen(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 9));
+                } else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("knight")) {
+                    desBoard.pieces.add(new Knight(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 3));
+                } else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("Bishop")) {
+                    desBoard.pieces.add(new Bishop(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 3));
+                } else if (this.pieces.get(i).priority == 5) {
+                    desBoard.pieces.add(new Rook(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 5));
+                } else if (this.pieces.get(i).priority == 1) {
+                    desBoard.pieces.add(new Pawn(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 1));
                 }
-                else if (this.pieces.get(i).priority == 9) {
-                    desBoard.pieces.add(new Queen(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,9));
-                }
-                else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("knight")) {
-                    desBoard.pieces.add(new Knight(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,3));
-                }
-                else if (this.pieces.get(i).priority == 3 && this.pieces.get(i).Name.equalsIgnoreCase("Bishop")) {
-                    desBoard.pieces.add(new Bishop(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,3));
-                }
-                else if (this.pieces.get(i).priority == 5 ) {
-                    desBoard.pieces.add(new Rook(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,5));
-                }
-                else if (this.pieces.get(i).priority == 1) {
-                    desBoard.pieces.add(new Pawn(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color,1));
-                }
-                
+
             }
-        } 
-        catch (Exception e) {
-            
+            return desBoard;
+        } catch (Exception e) {
+
         }
+        return null;
     }
 
     public void clearAllAvailableMoves() {
