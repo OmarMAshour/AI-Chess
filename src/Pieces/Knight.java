@@ -6,6 +6,7 @@
 package Pieces;
 
 import ai.chess.ChessBoard;
+import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,9 +51,9 @@ public class Knight extends Piece {
                 return true;
             } //kill
             else {
-//                if (!this.overallCheck(board, ydespos, xdespos)) {
-//                    return false;
-//                }
+               if (this.overallCheck(board, ydespos, xdespos)) {
+               return false;
+            }
 
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -63,7 +64,7 @@ public class Knight extends Piece {
         }
         return false;
     }
-    /*
+    
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //2 up 1 right
         if (!board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece) {
@@ -98,6 +99,6 @@ public class Knight extends Piece {
             this.availableDes.add(new Points(yPos - 1, xPos - 2));
         }
     }
-     */
+    
 }
 

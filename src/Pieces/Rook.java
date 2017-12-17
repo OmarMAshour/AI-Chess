@@ -44,9 +44,9 @@ public class Rook extends Piece {
                     else if (board.Squares[this.yPos][i].ContainPiece
                             && i == xdespos
                             && board.getPiece(this.yPos, i).color != this.color) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
@@ -56,9 +56,9 @@ public class Rook extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
                         this.yPos = ydespos;
@@ -76,9 +76,9 @@ public class Rook extends Piece {
                     else if (board.Squares[this.yPos][i].ContainPiece
                             && i == xdespos
                             && board.getPiece(this.yPos, i).color != this.color) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -87,9 +87,9 @@ public class Rook extends Piece {
                         return true;
                     }//normal move
                     else if (!board.Squares[this.yPos][i].ContainPiece && i == xdespos) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -112,9 +112,9 @@ public class Rook extends Piece {
                     else if (board.Squares[i][this.xPos].ContainPiece
                             && i == ydespos
                             && board.getPiece(i, this.xPos).color != this.color) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
 
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -123,9 +123,9 @@ public class Rook extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                           return false;
+                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -144,9 +144,9 @@ public class Rook extends Piece {
                     else if (board.Squares[i][this.xPos].ContainPiece
                             && i == ydespos
                             && board.getPiece(i, this.xPos).color != this.color) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
                         board.pieces.remove(board.getPiece(ydespos, xdespos));
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         this.yPos = ydespos;
@@ -154,9 +154,9 @@ public class Rook extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
-//                        if (!this.overallCheck(board, ydespos, xdespos)) {
-//                            return false;
-//                        }
+                        if (this.overallCheck(board, ydespos, xdespos)) {
+                            return false;
+                        }
 
                         board.Squares[this.yPos][this.xPos].ContainPiece = false;
                         board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -172,7 +172,7 @@ public class Rook extends Piece {
         return false;
     }
 
-    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
+        public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
 
         for (int i = this.xPos + 1; i < 8; i++) {
@@ -206,5 +206,5 @@ public class Rook extends Piece {
             }
         }
 
-    }*/
+    }
 }

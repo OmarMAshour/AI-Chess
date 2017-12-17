@@ -3,6 +3,8 @@ package Pieces;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.awt.Image;
+import java.awt.Point;
+import java.io.IOException;
 import java.util.*;
 //chess pieces model
 

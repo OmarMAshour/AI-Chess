@@ -6,6 +6,7 @@
 package Pieces;
 
 import ai.chess.ChessBoard;
+import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,11 +40,11 @@ public class Bishop extends Piece {
             return false;
         }
 
-//        boolean fe5atar = this.halelmalekfe5atar(board);
-//        if (fe5atar) {
-//            board.clearAllAvailableMoves();
-//            return false;
-//        }
+       boolean fe5atar = this.halelmalekfe5atar(board);
+        if (fe5atar) {
+           board.clearAllAvailableMoves();
+            return false;
+        }
         //up right
         if (ydespos < this.yPos && xdespos > this.xPos) {
             int counter = this.yPos - 1;
@@ -52,9 +53,9 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -62,9 +63,9 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -83,9 +84,9 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -93,9 +94,9 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -115,9 +116,9 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -125,9 +126,9 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -147,9 +148,9 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                   if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.pieces.remove(board.getPiece(ydespos, xdespos));
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -157,9 +158,9 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-//                    if (!this.overallCheck(board, ydespos, xdespos)) {
-//                        return false;
-//                    }
+                    if (this.overallCheck(board, ydespos, xdespos)) {
+                        return false;
+                    }
 
                     board.Squares[this.yPos][this.xPos].ContainPiece = false;
                     board.Squares[ydespos][xdespos].ContainPiece = true;
@@ -173,7 +174,7 @@ public class Bishop extends Piece {
         return false;
     }
 
-    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
+        public void CalculateAllPossibleMoves(ChessBoard board) {
         //up right
 
         int counter = this.yPos - 1;
@@ -216,6 +217,6 @@ public class Bishop extends Piece {
             }
         }
 
-    }*/
+    }
 }
 
