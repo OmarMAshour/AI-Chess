@@ -248,7 +248,7 @@ public class Queen extends Piece {
                         return true;
                     } //normal move
                     else if (!board.Squares[i][this.xPos].ContainPiece && i == ydespos) {
-                        if (!this.overallCheck(board, ydespos, xdespos)) {
+                        if (this.overallCheck(board, ydespos, xdespos)) {
                             return false;
                         }
 
