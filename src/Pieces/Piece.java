@@ -26,7 +26,7 @@ abstract public class Piece {
     }
 
 
-    /*    abstract public void CalculateAllPossibleMoves(ChessBoard board);
+        abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
     public boolean halelmalekfe5atar(ChessBoard board) {
 
@@ -72,7 +72,7 @@ abstract public class Piece {
         }
         return false;
     }
-     */
+    
     public String getName() {
         return Name;
     }
