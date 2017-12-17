@@ -3,6 +3,8 @@ package Pieces;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.awt.Image;
+import java.awt.Point;
+import java.io.IOException;
 import java.util.*;
 //chess pieces model
 
@@ -26,7 +28,7 @@ abstract public class Piece {
     }
 
 
-    /*    abstract public void CalculateAllPossibleMoves(ChessBoard board);
+        abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
     public boolean halelmalekfe5atar(ChessBoard board) {
 
@@ -72,7 +74,7 @@ abstract public class Piece {
         }
         return false;
     }
-     */
+    
     public String getName() {
         return Name;
     }

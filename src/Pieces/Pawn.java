@@ -6,6 +6,7 @@
 package Pieces;
 
 import ai.chess.ChessBoard;
+import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,9 +39,9 @@ public class Pawn extends Piece {
     }
 
 
-    /*    public void CalculateAllPossibleMoves(ChessBoard board) {
+       public void CalculateAllPossibleMoves(ChessBoard board) {
         //black move
-        if (this.color == Piece.Black) {
+        if (this.color == PieceColor.Black) {
             //first move (2 moves)
             if (this.canMoveTwice && !board.Squares[this.yPos + 1][this.xPos].ContainPiece && !board.Squares[this.yPos + 2][this.xPos].ContainPiece) {
                 this.availableDes.add(new Points(yPos + 2, xPos));
@@ -70,7 +71,7 @@ public class Pawn extends Piece {
             }
         }
     }
-     */
+    
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception {
         //black move
         if (this.color == PieceColor.Black) {
