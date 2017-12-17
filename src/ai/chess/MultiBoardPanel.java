@@ -88,8 +88,6 @@ public class MultiBoardPanel extends javax.swing.JPanel {
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
-//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
-//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
                             if(whitePlayerTurn){
@@ -99,15 +97,15 @@ public class MultiBoardPanel extends javax.swing.JPanel {
                             }
                             System.out.println("Pieces numbers: "+chessBoard.pieces.size());
                         }
-
                     } catch (Exception ex) {
-                        System.err.println(ex.getMessage());
-                    } finally { 
+                        Logger.getLogger(MultiBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally{
                         return;
                     }
+
+                    
                 }
-                piecesDrawingTimer.stop();
-                piecesDrawingTimer.start();
+                
 
             }
 
