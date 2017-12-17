@@ -144,12 +144,14 @@ public class GameIntro extends javax.swing.JFrame {
             if (choice == 0) {
 
                 ChessBoard chessBoard = new ChessBoard();
-                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard, true);
+                AIChess.isPlayerWhite = true;
+                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard);
                 GameBoard gb = new GameBoard(boardPanel);
                 gb.setVisible(true);
             } else if (choice == 1) {
                 ChessBoard chessBoard = new ChessBoard();
-                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard, false);
+                AIChess.isPlayerWhite=false;
+                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard);
                 GameBoard gb = new GameBoard(boardPanel);
                 this.setVisible(false);
                 gb.setVisible(true);

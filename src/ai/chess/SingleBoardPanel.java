@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
-
+import static ai.chess.AIChess.*; 
 /**
  *
  * @author omarashour
@@ -27,14 +27,14 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     public ChessBoard chessBoard;
 
     private Timer piecesDrawingTimer;
-    private boolean isPlayerWhite;
+   
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
 
-    public SingleBoardPanel(ChessBoard chessBoard, boolean isPlayerWhite) {
+    public SingleBoardPanel(ChessBoard chessBoard) {
         initComponents();
         this.chessBoard = chessBoard;
-        this.isPlayerWhite = isPlayerWhite;
+       
         piecesDrawingTimer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
