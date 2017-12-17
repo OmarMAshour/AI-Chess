@@ -5,7 +5,6 @@
  */
 package ai.chess;
 
-
 import Pieces.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.Collections;
  *
  * @author root
  */
-
 public class ChessBoard {
 
     //attributes
@@ -72,14 +70,14 @@ public class ChessBoard {
         pieces.add(bi1);
         pieces.add(k1);
         pieces.add(r1);
-        
+
         //initializing black soldiers
         for (int i = 0; i < 8; i++) {
             Pawn p = new Pawn(1, i, PieceColor.Black, 1);
             pieces.add(p);
             this.Squares[1][i].ContainPiece = true;
         }
-        
+
         //initializing white soldiers
         for (int i = 0; i < 8; i++) {
             Pawn p = new Pawn(6, i, PieceColor.White, 1);
@@ -151,6 +149,57 @@ public class ChessBoard {
             this.pieces.get(i).availableDes.clear();
         }
     }
+  public boolean checkMate(boolean isPlayerWhite) {
+        //white move
+        int counter = 0;
+        King tmpKing = null;
+        boolean checked = false;
+        PieceColor req;
+
+        req = (isPlayerWhite) ? PieceColor.White : PieceColor.Black;
+
+        //get king
+        for (int i = 0; i < this.pieces.size(); i++) {
+            if (this.pieces.get(i).priority == 10 && this.pieces.get(i).color == req) {
+                tmpKing = (King) this.pieces.get(i);
+                break;
+            }
+        }
+        //cal all pss moves for all black
+        for (int i = 0; i < this.pieces.size(); i++) {
+            if (tmpKing.color != this.pieces.get(i).color) {
+                this.pieces.get(i).CalculateAllPossibleMoves(this);
+            }
+        }
+        tmpKing.CalculateAllPossibleMoves(this);
+        counter = tmpKing.availableDes.size();
+        // compare all moves
+        for (int i = 0; i < this.pieces.size(); i++) {
+            checked = false;
+            if (this.pieces.get(i).color == req) {
+                continue;
+            } else {
+                for (int j = 0; j < this.pieces.get(i).availableDes.size(); j++) {
+                    if (checked) {
+                        break;
+                    }
+                    for (int k = 0; k < tmpKing.availableDes.size(); k++) {
+                        if (this.pieces.get(i).availableDes.get(j).yPos == tmpKing.availableDes.get(k).yPos
+                                && this.pieces.get(i).availableDes.get(j).xPos == tmpKing.availableDes.get(k).xPos) {
+                            counter--;
+                            checked = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+        if (counter == 0) {
+            return true;
+        }
+        return false;
+    }
+  
 
 }
-
