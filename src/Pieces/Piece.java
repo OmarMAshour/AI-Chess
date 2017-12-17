@@ -23,7 +23,7 @@ abstract public class Piece {
     public Image whiteImage;
     public ArrayList<Points> availableDes;
     public String Name;
-
+    public int value;
     //piece motion
     //change xpos w ypos if possible
     abstract public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception;
@@ -34,6 +34,7 @@ abstract public class Piece {
 
     abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
+    
     public boolean halelmalekfe5atar(ChessBoard board) {
 
         int kingXpos = -1, kingYpos = -1;

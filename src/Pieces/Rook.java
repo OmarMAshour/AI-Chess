@@ -16,6 +16,7 @@ public class Rook extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/rookWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Rook";
+        this.value=10;
     }
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
         if (ydespos == this.yPos) {

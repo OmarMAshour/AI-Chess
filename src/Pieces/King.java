@@ -19,6 +19,7 @@ public class King extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name="King";
+        this.value=200;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
