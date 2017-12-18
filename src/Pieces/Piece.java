@@ -68,25 +68,6 @@ abstract public class Piece {
                 }
             }
         }
-/*      if (p.xPos == -1 && p.yPos == -1) {
-            return false;
-        }
-        //calcuate kol ele m3 el malek possible moves
-        for (int i = 0; i < board.pieces.size(); i++) {
-            if (board.pieces.get(i).color == this.color) {
-                board.pieces.get(i).CalculateAllPossibleMoves(board);
-            }
-        }
-
-        for (int i = 0; i < board.pieces.size(); i++) {
-            for (int j = 0; j < board.pieces.get(i).availableDes.size(); j++) {
-                if (board.pieces.get(i).availableDes.get(j).xPos == p.xPos
-                        && board.pieces.get(i).availableDes.get(j).yPos == p.yPos) {
-                        //indicate b sora ma eno momkn da bs ele yet7arak
-                }
-            }
-        }
-*/
         return false;
 
     }
@@ -106,10 +87,10 @@ abstract public class Piece {
         this.CalculateAllPossibleMoves(tmpBoard);
         boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard);
         if (fe5atar) {
-            System.out.println("Overall returned true");
+         //   System.out.println("Overall returned true");
             return true;
         }
-        System.out.println("Overall returned false");
+      //  System.out.println("Overall returned false");
         return false;
     }
 }

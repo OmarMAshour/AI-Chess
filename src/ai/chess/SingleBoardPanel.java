@@ -14,7 +14,8 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
-import static ai.chess.AIChess.*; 
+import static ai.chess.AIChess.*;
+
 /**
  *
  * @author omarashour
@@ -27,15 +28,23 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     public ChessBoard chessBoard;
 
     private Timer piecesDrawingTimer;
-   
+
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
+    private boolean AIWhiteFirstTurn = true;
+    private BoardController boardController = new BoardController();
+    private boolean canPlayerPlay;
 
     public SingleBoardPanel(ChessBoard chessBoard) {
         initComponents();
+        if (isPlayerWhite) {
+            canPlayerPlay = true;
+        } else {
+            canPlayerPlay = false;
+        }
         this.chessBoard = chessBoard;
-       
-        piecesDrawingTimer = new Timer(1000, new ActionListener() {
+
+        piecesDrawingTimer = new Timer(1, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaint();
@@ -47,14 +56,26 @@ public class SingleBoardPanel extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e); //To change body of generated methods, choose Tools | Templates.
+
+                if (!isPlayerWhite && AIWhiteFirstTurn) {
+                    try {
+                        AIWhiteFirstTurn = false;
+                        setChessBoard(boardController.BoardToDraw(getChessBoard()));
+                        canPlayerPlay = true;
+                        return;
+                    } catch (Exception ex) {
+                        Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(canPlayerPlay){
                 int clickedX = e.getX();
                 int clickedY = e.getY();
-                
+
                 int pieceX = (clickedX - 10) / 60;
                 int pieceY = (clickedY - 10) / 60;
 
-                System.out.println("Mouse Clicked!!!!! x= "+pieceX+" y= "+pieceY);
-                
+                System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
                     if (isPlayerWhite) {
@@ -73,32 +94,41 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                         }
                     }
                 }
-
-//                //in case that the playe just clicked on a piece
-//                if (selectedPieceIndex != -1 && !playerSelectedOneOfHisPieces) {
-//                    playerSelectedOneOfHisPieces = true;
-//
-//                    return;
-//                }
                 //in case that the player clicked on a piece before and now is taking the next action
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
-                        if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
-//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = false;
-//                            chessBoard.Squares[chessBoard.pieces.get(selectedPieceIndex).yPos][chessBoard.pieces.get(selectedPieceIndex).xPos].ContainPiece = true;
+                        boolean check = chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard);
+                        if (check) {
+                            canPlayerPlay=false;
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
+                            System.err.println("5ARAAAAAAAAA");
                         }
 
                     } catch (Exception ex) {
                         System.err.println(ex.getMessage());
                     } finally {
+                        try {
+                            //                        canPlayerPlay = true;
+                         //   
+                        } catch (Exception ex) {
+                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         return;
                     }
                 }
 
             }
-
+                if(!canPlayerPlay){
+                    try {
+                        setChessBoard(boardController.BoardToDraw(chessBoard));
+                        canPlayerPlay=true;
+                    } catch (Exception ex) {
+                        Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+//            }
         });
     }
 
@@ -112,15 +142,22 @@ public class SingleBoardPanel extends javax.swing.JPanel {
 //                g.drawImage(piece.whiteImage, (piece.xPos * 60) + 10, (piece.yPos * 60) + 10, 60, 60, null);
 //            }
 //        }
-        
-        
-        for(int i =0;i<chessBoard.pieces.size();i++){
+
+        for (int i = 0; i < chessBoard.pieces.size(); i++) {
             if (chessBoard.pieces.get(i).color == PieceColor.Black) {
                 g.drawImage(chessBoard.pieces.get(i).blackImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             } else if (chessBoard.pieces.get(i).color == PieceColor.White) {
                 g.drawImage(chessBoard.pieces.get(i).whiteImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             }
         }
+    }
+
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
+    public void setChessBoard(ChessBoard board) {
+        this.chessBoard = board;
     }
 
     /**

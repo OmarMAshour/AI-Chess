@@ -158,7 +158,7 @@ public class Bishop extends Piece {
         int counter = this.yPos - 1;
         
         for (int i = this.xPos + 1; i < 8; i++) {
-             System.out.println("Counter : "+counter+" "+"i : "+i+" " );
+          //   System.out.println("Counter : "+counter+" "+"i : "+i+" " );
             if (counter >= 0 && !board.Squares[counter][i].ContainPiece) {
                 this.availableDes.add(new Points(counter, i));
                 counter--;

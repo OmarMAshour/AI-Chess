@@ -48,7 +48,7 @@ public class Pawn extends Piece {
             } //KILL!!!!!!!
             else if (this.yPos - 1 >= 0 && this.xPos + 1 < 8 && board.Squares[this.yPos - 1][this.xPos + 1].ContainPiece && board.getPiece(this.yPos - 1, this.xPos + 1).color != this.color) {
                 this.availableDes.add(new Points(yPos - 1, xPos + 1));
-            } else if (this.yPos - 1 >= 0 && this.yPos - 1 >= 0 && board.Squares[this.yPos - 1][this.xPos - 1].ContainPiece && board.getPiece(this.yPos - 1, this.xPos - 1).color != this.color) {
+            } else if (this.yPos - 1 >= 0 && this.xPos - 1 >= 0 && board.Squares[this.yPos - 1][this.xPos - 1].ContainPiece && board.getPiece(this.yPos - 1, this.xPos - 1).color != this.color) {
                 this.availableDes.add(new Points(yPos - 1, xPos - 1));
             }
         }
@@ -98,7 +98,7 @@ public class Pawn extends Piece {
                 }
 
                 this.canMoveTwice = false;
-                System.out.println(board.getPiece(ydespos, xdespos));
+               // System.out.println(board.getPiece(ydespos, xdespos));
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 this.yPos = ydespos;
@@ -150,7 +150,7 @@ public class Pawn extends Piece {
                 this.canMoveTwice = false;
                 Piece p = board.getPiece(ydespos, xdespos);
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
-                System.out.println("3dadhom  = "+board.pieces.size());
+               // System.out.println("3dadhom  = "+board.pieces.size());
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 this.yPos = ydespos;
                 this.xPos = xdespos;
