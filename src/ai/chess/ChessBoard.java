@@ -9,6 +9,8 @@ import Pieces.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -100,8 +102,8 @@ public class ChessBoard {
         this.Squares[7][2].ContainPiece = true;
         bi1 = new Bishop(7, 5, PieceColor.White, 3);
         this.Squares[7][5].ContainPiece = true;
-       Q = new Queen(7, 3, PieceColor.White, 9);
-       this.Squares[7][3].ContainPiece = true;
+        Q = new Queen(7, 3, PieceColor.White, 9);
+        this.Squares[7][3].ContainPiece = true;
         K = new King(7, 4, PieceColor.White, 10);
         this.Squares[7][4].ContainPiece = true;
         pieces.add(r);
@@ -115,15 +117,10 @@ public class ChessBoard {
 
     }
 
-    public ChessBoard(BoardSquare[][] squares, ArrayList<Piece> pieces) {
-        this.Squares = squares;
-        this.pieces = pieces;
-    }
-
-    //view Board Status
-    public void viewBoard() {
-
-    }
+//    public ChessBoard(BoardSquare[][] squares, ArrayList<Piece> pieces) {
+//        this.Squares = squares;
+//        this.pieces = pieces;
+//    }
 
     public Piece getPiece(int ydespos, int xdespos) {
         for (int i = 0; i < this.pieces.size(); i++) {
@@ -146,7 +143,7 @@ public class ChessBoard {
                 }
             }
             //Collections.copy(desBoard.pieces, this.pieces);
-            desBoard.pieces = new ArrayList<>();
+            desBoard.pieces.clear();
             for (int i = 0; i < this.pieces.size(); i++) {
                 if (this.pieces.get(i).priority == 10) {
                     desBoard.pieces.add(new King(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 10));
@@ -170,13 +167,30 @@ public class ChessBoard {
         return null;
     }
 
-    public void clearAllAvailableMoves() {
-        for (int i = 0; i < this.pieces.size(); i++) {
-            this.pieces.get(i).availableDes.clear();
+    public Piece cpyPiece(Piece p) throws IOException {
+        if (p.priority == 10) {
+            try {
+                return new King(p.yPos, p.xPos, p.color, 10);
+            } catch (IOException ex) {
+                Logger.getLogger(ChessBoard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else if (p.priority == 9) {
+            return new Queen(p.yPos, p.xPos, p.color, 9);
+        } else if (p.priority == 3 && p.Name.equalsIgnoreCase("knight")) {
+            return new Knight(p.yPos, p.xPos, p.color, 3);
+        } else if (p.priority == 3 && p.Name.equalsIgnoreCase("Bishop")) {
+            return new Bishop(p.yPos, p.xPos, p.color, 3);
+        } else if (p.priority == 5) {
+            return new Rook(p.yPos, p.xPos, p.color, 5);
+        } else if (p.priority == 1) {
+            return new Pawn(p.yPos, p.xPos, p.color, 1);
         }
+        return null;
     }
 
-    public boolean checkMate(boolean isPlayerWhite) {
+    
+    /*  public boolean checkMate(boolean isPlayerWhite) {
         //white move
         int counter = 0;
         King tmpKing = null;
@@ -226,6 +240,5 @@ public class ChessBoard {
             return true;
         }
         return false;
-    }
-
+    }*/
 }

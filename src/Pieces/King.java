@@ -17,12 +17,12 @@ public class King extends Piece {
         this.priority = priority;
         this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
-        this.availableDes = new ArrayList<>();
         this.Name="King";
         this.value=200;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
+        ArrayList <Points> AvailableDes = new ArrayList();
         if ((Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(xdespos - this.xPos) == 0)
                 || (Math.abs(this.yPos - ydespos) == 1
@@ -30,7 +30,7 @@ public class King extends Piece {
                 || (Math.abs(this.yPos - ydespos) == 0
                 && Math.abs(xdespos - this.xPos) == 1)) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
-                if (this.overallCheck(board, ydespos, xdespos)) {
+                if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                     return false;
                 }
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
@@ -39,7 +39,7 @@ public class King extends Piece {
                 this.yPos = ydespos;
                 return true;
             } else if (board.Squares[ydespos][xdespos].ContainPiece && board.getPiece(ydespos, xdespos).color != this.color) {
-                if (this.overallCheck(board, ydespos, xdespos)) {
+                if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                     return false;
                 }
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
@@ -53,38 +53,38 @@ public class King extends Piece {
         return false;
     }
 
-    public void CalculateAllPossibleMoves(ChessBoard board) {
+    public void CalculateAllPossibleMoves(ChessBoard board,ArrayList <Points> AvailableDes) {
         //down
         if (this.yPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos].ContainPiece) {
-            this.availableDes.add(new Points(yPos + 1, xPos));
+            AvailableDes.add(new Points(yPos + 1, xPos));
         }
         //up
         if (this.yPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos].ContainPiece) {
-            this.availableDes.add(new Points(yPos - 1, xPos));
+            AvailableDes.add(new Points(yPos - 1, xPos));
         }
         //left
         if (this.xPos - 1 >= 0 && !board.Squares[this.yPos][this.xPos - 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos, xPos - 1));
+            AvailableDes.add(new Points(yPos, xPos - 1));
         }
         //right
         if (this.xPos + 1 < 8 && !board.Squares[this.yPos][this.xPos + 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos, xPos + 1));
+            AvailableDes.add(new Points(yPos, xPos + 1));
         }
         //up right
         if (this.yPos - 1 >= 0 && this.xPos + 1 < 8 && !board.Squares[this.yPos - 1][this.xPos + 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos - 1, xPos + 1));
+            AvailableDes.add(new Points(yPos - 1, xPos + 1));
         }
         //up left
         if (this.yPos - 1 >= 0 && this.xPos - 1 >= 0 && !board.Squares[this.yPos - 1][this.xPos - 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos - 1, xPos - 1));
+            AvailableDes.add(new Points(yPos - 1, xPos - 1));
         }
         //down right
         if (this.yPos + 1 < 8 && this.xPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos + 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos + 1, xPos + 1));
+            AvailableDes.add(new Points(yPos + 1, xPos + 1));
         }
         //down left
         if (this.yPos + 1 < 8 && this.xPos - 1 >= 0 && !board.Squares[this.yPos + 1][this.xPos - 1].ContainPiece) {
-            this.availableDes.add(new Points(yPos + 1, xPos - 1));
+            AvailableDes.add(new Points(yPos + 1, xPos - 1));
         }
     }
 }

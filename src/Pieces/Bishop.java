@@ -16,7 +16,6 @@ public class Bishop extends Piece {
         this.priority = priority;
         this.blackImage = ImageIO.read(new File("src/Images/bishopBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/bishopWhite.png"));
-        this.availableDes = new ArrayList<>();
         this.Name = "Bishop";
         this.value=6;
     }
@@ -24,7 +23,7 @@ public class Bishop extends Piece {
         if (!(Math.abs(ydespos - this.yPos) == Math.abs(xdespos - this.xPos))) {
             return false;
         }
-
+        ArrayList <Points> AvailableDes = new ArrayList();
         //up right
         if (ydespos < this.yPos && xdespos > this.xPos) {
             int counter = this.yPos - 1;
@@ -33,7 +32,7 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -42,8 +41,9 @@ public class Bishop extends Piece {
                     this.yPos = ydespos;
                     this.xPos = xdespos;
                     return true;
-                } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                } 
+                else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -64,7 +64,7 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -74,7 +74,7 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                   if (this.overallCheck(board, ydespos, xdespos)) {
+                   if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -96,7 +96,7 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -106,7 +106,7 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                   if (this.overallCheck(board, ydespos, xdespos)) {
+                   if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -128,7 +128,7 @@ public class Bishop extends Piece {
                     return false;
                 } //KILL!!
                 else if (board.Squares[counter][i].ContainPiece && i == xdespos && board.getPiece(ydespos, xdespos).color != this.color) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -138,7 +138,7 @@ public class Bishop extends Piece {
                     this.xPos = xdespos;
                     return true;
                 } else if (!board.Squares[counter][i].ContainPiece && i == xdespos) {
-                    if (this.overallCheck(board, ydespos, xdespos)) {
+                    if (this.overallCheck(board, ydespos, xdespos,AvailableDes)) {
                         return false;
                     }
 
@@ -153,20 +153,20 @@ public class Bishop extends Piece {
         }
         return false;
     }
-    public void CalculateAllPossibleMoves(ChessBoard board) {
+    public void CalculateAllPossibleMoves(ChessBoard board,ArrayList <Points> AvailableDes) {
         //up right
         int counter = this.yPos - 1;
         
         for (int i = this.xPos + 1; i < 8; i++) {
           //   System.out.println("Counter : "+counter+" "+"i : "+i+" " );
             if (counter >= 0 && !board.Squares[counter][i].ContainPiece) {
-                this.availableDes.add(new Points(counter, i));
+                AvailableDes.add(new Points(counter, i));
                 counter--;
             }
             else if (counter >=0 && board.Squares[counter][i].ContainPiece ) {
-                System.out.println(board.Squares[counter][i].ContainPiece);
+//                System.out.println(board.Squares[counter][i].ContainPiece);
                 if( board.getPiece(counter, i).color != this.color){
-                this.availableDes.add(new Points(counter, i));
+                AvailableDes.add(new Points(counter, i));
                 break;
                 }
             } else {
@@ -177,10 +177,10 @@ public class Bishop extends Piece {
         int counter1 = this.yPos - 1;
         for (int i = this.xPos - 1; i >= 0; i--) {
             if (counter1 >= 0 && !board.Squares[counter1][i].ContainPiece) {
-                this.availableDes.add(new Points(counter1, i));
+                AvailableDes.add(new Points(counter1, i));
                 counter1--;
             } else if (counter1>=0 && board.Squares[counter1][i].ContainPiece && board.getPiece(counter1, i).color != this.color) {
-                this.availableDes.add(new Points(counter1, i));
+                AvailableDes.add(new Points(counter1, i));
                 break;
             } else {
                 break;
@@ -190,10 +190,10 @@ public class Bishop extends Piece {
         int counter2 = this.yPos + 1;
         for (int i = this.xPos + 1; i < 8; i++) {
             if (counter2 < 8 && !board.Squares[counter2][i].ContainPiece) {
-                this.availableDes.add(new Points(counter2, i));
+                AvailableDes.add(new Points(counter2, i));
                 counter2++;
             } else if (counter2 < 8 && board.Squares[counter2][i].ContainPiece && board.getPiece(counter2, i).color != this.color) {
-                this.availableDes.add(new Points(counter2, i));
+                AvailableDes.add(new Points(counter2, i));
                 break;
             } else {
                 break;
@@ -203,10 +203,10 @@ public class Bishop extends Piece {
         int counter3 = this.yPos + 1;
         for (int i = this.xPos - 1; i >= 0; i--) {
             if (counter3 < 8 && !board.Squares[counter3][i].ContainPiece) {
-                this.availableDes.add(new Points(counter3, i));
+                AvailableDes.add(new Points(counter3, i));
                 counter3++;
             } else if (counter3<8 && board.Squares[counter3][i].ContainPiece && board.getPiece(counter3, i).color != this.color) {
-                this.availableDes.add(new Points(counter3, i));
+                AvailableDes.add(new Points(counter3, i));
                 break;
             } else {
                 break;

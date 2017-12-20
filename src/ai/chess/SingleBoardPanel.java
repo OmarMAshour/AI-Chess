@@ -60,7 +60,7 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                 if (!isPlayerWhite && AIWhiteFirstTurn) {
                     try {
                         AIWhiteFirstTurn = false;
-                        setChessBoard(boardController.BoardToDraw(getChessBoard()));
+                       setChessBoard(boardController.BoardToDraw(getChessBoard()));
                         canPlayerPlay = true;
                         return;
                     } catch (Exception ex) {
@@ -103,6 +103,7 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
                             System.err.println("5ARAAAAAAAAA");
+                            
                         }
 
                     } catch (Exception ex) {
@@ -121,7 +122,8 @@ public class SingleBoardPanel extends javax.swing.JPanel {
             }
                 if(!canPlayerPlay){
                     try {
-                        setChessBoard(boardController.BoardToDraw(chessBoard));
+                        ChessBoard tmp =boardController.BoardToDraw(chessBoard); 
+                        setChessBoard(tmp);
                         canPlayerPlay=true;
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -157,6 +159,7 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     }
 
     public void setChessBoard(ChessBoard board) {
+        this.chessBoard=null;
         this.chessBoard = board;
     }
 

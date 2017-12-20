@@ -6,7 +6,7 @@ public class BoardAndValueCollector {
     public int Value;
 
     public BoardAndValueCollector(ChessBoard board, int Value) {
-        this.board = board;
+        this.board = board.copyBoard();
         this.Value = Value;
     }
     
