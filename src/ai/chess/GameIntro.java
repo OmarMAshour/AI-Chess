@@ -5,6 +5,7 @@
  */
 package ai.chess;
 
+import static ai.chess.AIChess.singleBoardPanel;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
@@ -145,14 +146,14 @@ public class GameIntro extends javax.swing.JFrame {
 
                 ChessBoard chessBoard = new ChessBoard();
                 AIChess.isPlayerWhite = true;
-                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard);
-                GameBoard gb = new GameBoard(boardPanel);
+                singleBoardPanel = new SingleBoardPanel(chessBoard);
+                GameBoard gb = new GameBoard(singleBoardPanel);
                 gb.setVisible(true);
             } else if (choice == 1) {
                 ChessBoard chessBoard = new ChessBoard();
                 AIChess.isPlayerWhite=false;
-                SingleBoardPanel boardPanel = new SingleBoardPanel(chessBoard);
-                GameBoard gb = new GameBoard(boardPanel);
+                singleBoardPanel = new SingleBoardPanel(chessBoard);
+                GameBoard gb = new GameBoard(singleBoardPanel);
                 this.setVisible(false);
                 gb.setVisible(true);
             } else {

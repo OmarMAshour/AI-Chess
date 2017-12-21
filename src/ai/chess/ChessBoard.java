@@ -100,8 +100,8 @@ public class ChessBoard {
         this.Squares[7][2].ContainPiece = true;
         bi1 = new Bishop(7, 5, PieceColor.White, 3);
         this.Squares[7][5].ContainPiece = true;
-       Q = new Queen(7, 3, PieceColor.White, 9);
-       this.Squares[7][3].ContainPiece = true;
+        Q = new Queen(7, 3, PieceColor.White, 9);
+        this.Squares[7][3].ContainPiece = true;
         K = new King(7, 4, PieceColor.White, 10);
         this.Squares[7][4].ContainPiece = true;
         pieces.add(r);
@@ -146,7 +146,7 @@ public class ChessBoard {
                 }
             }
             //Collections.copy(desBoard.pieces, this.pieces);
-            desBoard.pieces = new ArrayList<>();
+            desBoard.pieces.clear();
             for (int i = 0; i < this.pieces.size(); i++) {
                 if (this.pieces.get(i).priority == 10) {
                     desBoard.pieces.add(new King(this.pieces.get(i).yPos, this.pieces.get(i).xPos, this.pieces.get(i).color, 10));

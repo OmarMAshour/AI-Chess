@@ -5,6 +5,8 @@ import java.math.BigInteger;
 
 public class AIChess {
     public static boolean isPlayerWhite = false;
+    public static boolean AITurn = false;
+    public static SingleBoardPanel singleBoardPanel;
     public static void main(String[] args) throws IOException {
         
         // TODO code application logic here
