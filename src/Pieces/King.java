@@ -1,14 +1,16 @@
 package Pieces;
+
 import Pieces.Piece;
 import Pieces.PieceColor;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class King extends Piece {
+public class King extends Piece implements Serializable {
 
     public King(int ypos, int xpos, PieceColor color, int priority) throws IOException {
         this.xPos = xpos;
@@ -18,17 +20,29 @@ public class King extends Piece {
         this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
         this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
         this.availableDes = new ArrayList<>();
-        this.Name="King";
-        this.value=200;
+        this.Name = "King";
+        this.value = 200;
+    }
+
+    @Override
+    public void setImages() throws IOException {
+        this.blackImage = ImageIO.read(new File("src/Images/kingBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/kingWhite.png"));
+    }
+
+    public void clearImages() {
+        this.blackImage = null;
+        this.whiteImage = null;
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
         //n4oof 7war el checkmate
-        boolean b1 = (xdespos<8 || xdespos >=0);
-        boolean b2 = (ydespos<8 || ydespos >=0);
-        if(!(b1&&b2))
+        boolean b1 = (xdespos < 8 || xdespos >= 0);
+        boolean b2 = (ydespos < 8 || ydespos >= 0);
+        if (!(b1 && b2)) {
             return false;
-        
+        }
+
         if ((Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(xdespos - this.xPos) == 0)
                 || (Math.abs(this.yPos - ydespos) == 1

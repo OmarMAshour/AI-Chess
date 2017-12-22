@@ -1,6 +1,8 @@
 package ai.chess;
 
-public class Points {
+import java.io.Serializable;
+
+public class Points implements Serializable{
     public int xPos;
     public int yPos;
 

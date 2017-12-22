@@ -15,13 +15,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import static ai.chess.AIChess.*;
+import java.io.Serializable;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author omarashour
  */
-public class SingleBoardPanel extends javax.swing.JPanel {
+public class SingleBoardPanel extends JPanel implements Serializable{
 
     /**
      * Creates new form SingleBoardPanel
@@ -35,7 +37,14 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     private boolean AIWhiteFirstTurn = true;
     private BoardController boardController;
     private boolean canPlayerPlay;
+    
+    public String className = "Single";
 
+    public String getClassName() {
+        return className;
+    }
+    
+    
     public SingleBoardPanel(ChessBoard chessBoard) {
         initComponents();
         if (isPlayerWhite) {

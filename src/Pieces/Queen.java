@@ -1,14 +1,16 @@
-package Pieces ;
+package Pieces;
+
 import Pieces.Piece;
 import Pieces.PieceColor;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class Queen extends Piece {
+public class Queen extends Piece implements Serializable {
 
     public Queen(int ypos, int xpos, PieceColor color, int priority) throws IOException {
         this.xPos = xpos;
@@ -19,17 +21,26 @@ public class Queen extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Queen";
-        this.value=20;
+        this.value = 20;
+    }
+
+    public void setImages() throws IOException {
+        this.blackImage = ImageIO.read(new File("src/Images/queenBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/queenWhite.png"));
+    }
+
+    public void clearImages() {
+        this.blackImage = null;
+        this.whiteImage = null;
     }
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
-        
+
         //right
         for (int i = this.xPos + 1; i < 8; i++) {
             if (!board.Squares[this.yPos][i].ContainPiece) {
                 this.availableDes.add(new Points(this.yPos, i));
-            } 
-            else if (board.Squares[this.yPos][i].ContainPiece && board.getPiece(this.yPos, i).color != this.color) {
+            } else if (board.Squares[this.yPos][i].ContainPiece && board.getPiece(this.yPos, i).color != this.color) {
                 this.availableDes.add(new Points(this.yPos, i));
                 break;
             } else {
@@ -75,7 +86,7 @@ public class Queen extends Piece {
             if (counter >= 0 && !board.Squares[counter][i].ContainPiece) {
                 this.availableDes.add(new Points(counter, i));
                 counter--;
-            } else if (counter>=0 && board.Squares[counter][i].ContainPiece && board.getPiece(counter, i).color != this.color) {
+            } else if (counter >= 0 && board.Squares[counter][i].ContainPiece && board.getPiece(counter, i).color != this.color) {
                 this.availableDes.add(new Points(counter, i));
                 break;
             } else {
@@ -88,7 +99,7 @@ public class Queen extends Piece {
             if (counter1 >= 0 && !board.Squares[counter1][i].ContainPiece) {
                 this.availableDes.add(new Points(counter1, i));
                 counter1--;
-            } else if (counter1>=0 && board.Squares[counter1][i].ContainPiece && board.getPiece(counter1, i).color != this.color) {
+            } else if (counter1 >= 0 && board.Squares[counter1][i].ContainPiece && board.getPiece(counter1, i).color != this.color) {
                 this.availableDes.add(new Points(counter1, i));
                 break;
             } else {
@@ -101,7 +112,7 @@ public class Queen extends Piece {
             if (counter2 < 8 && !board.Squares[counter2][i].ContainPiece) {
                 this.availableDes.add(new Points(counter2, i));
                 counter2++;
-            } else if (counter2<8 && board.Squares[counter2][i].ContainPiece && board.getPiece(counter2, i).color != this.color) {
+            } else if (counter2 < 8 && board.Squares[counter2][i].ContainPiece && board.getPiece(counter2, i).color != this.color) {
                 this.availableDes.add(new Points(counter2, i));
                 break;
             } else {
@@ -114,7 +125,7 @@ public class Queen extends Piece {
             if (counter3 < 8 && !board.Squares[counter3][i].ContainPiece) {
                 this.availableDes.add(new Points(counter3, i));
                 counter3++;
-            } else if (counter3<8 && board.Squares[counter3][i].ContainPiece && board.getPiece(counter3, i).color != this.color) {
+            } else if (counter3 < 8 && board.Squares[counter3][i].ContainPiece && board.getPiece(counter3, i).color != this.color) {
                 this.availableDes.add(new Points(counter3, i));
                 break;
             } else {
@@ -125,10 +136,11 @@ public class Queen extends Piece {
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
-        boolean b1 = (xdespos<8 || xdespos >=0);
-        boolean b2 = (ydespos<8 || ydespos >=0);
-        if(!(b1&&b2))
+        boolean b1 = (xdespos < 8 || xdespos >= 0);
+        boolean b2 = (ydespos < 8 || ydespos >= 0);
+        if (!(b1 && b2)) {
             return false;
+        }
         //x dir 
         if (ydespos == this.yPos) {
             //right

@@ -8,6 +8,7 @@ package ai.chess;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author omarashour
  */
-public class GameIntro extends javax.swing.JFrame {
+public class GameIntro extends javax.swing.JFrame implements Serializable{
 
     /**
      * Creates new form GameIntro
@@ -42,6 +43,7 @@ public class GameIntro extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         startBtn1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        startBtn2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,9 +70,9 @@ public class GameIntro extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(55, 217, 25));
         jLabel4.setText("الشقاوة فينا بس ربنا هادينا");
 
-        startBtn1.setFont(new java.awt.Font("AlHor", 3, 24)); // NOI18N
-        startBtn1.setForeground(new java.awt.Color(30, 26, 21));
-        startBtn1.setText("معادى ؟؟");
+        startBtn1.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
+        startBtn1.setForeground(new java.awt.Color(255, 0, 204));
+        startBtn1.setText("Load Game");
         startBtn1.setToolTipText("");
         startBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +89,16 @@ public class GameIntro extends javax.swing.JFrame {
             }
         });
 
+        startBtn2.setFont(new java.awt.Font("AlHor", 3, 24)); // NOI18N
+        startBtn2.setForeground(new java.awt.Color(30, 26, 21));
+        startBtn2.setText("معادى ؟؟");
+        startBtn2.setToolTipText("");
+        startBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startBtn2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,21 +107,21 @@ public class GameIntro extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(115, 115, 115)
+                        .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
                 .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(146, 146, 146))
         );
         layout.setVerticalGroup(
@@ -121,14 +133,15 @@ public class GameIntro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(startBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(startBtn)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addContainerGap())
+                .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(startBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4))
         );
 
         pack();
@@ -166,7 +179,9 @@ public class GameIntro extends javax.swing.JFrame {
 
     private void startBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBtn1ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+        LoadFrame loadframe = new LoadFrame();
+        System.err.println("hiiii");
+        loadframe.setVisible(true);
     }//GEN-LAST:event_startBtn1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -184,6 +199,11 @@ public class GameIntro extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void startBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startBtn2ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_startBtn2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -196,5 +216,6 @@ public class GameIntro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton startBtn;
     private javax.swing.JButton startBtn1;
+    private javax.swing.JButton startBtn2;
     // End of variables declaration//GEN-END:variables
 }

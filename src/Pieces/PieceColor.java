@@ -5,10 +5,12 @@
  */
 package Pieces;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
  */
-public enum PieceColor {
+public enum PieceColor implements Serializable{
     Black, White
 };

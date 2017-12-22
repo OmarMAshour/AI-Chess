@@ -5,6 +5,8 @@
  */
 package ai.chess;
 
+import java.io.Serializable;
+
 /**
  *
  * @author root
@@ -13,7 +15,7 @@ enum BoardSquareColor {
     Black, White
 };
 
-public class BoardSquare {
+public class BoardSquare implements Serializable{
 
     public BoardSquareColor color;
     public boolean ContainPiece;

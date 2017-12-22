@@ -1,12 +1,15 @@
 package Pieces;
+
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-public class Rook extends Piece {
+public class Rook extends Piece implements Serializable {
+
     public Rook(int ypos, int xpos, PieceColor color, int priority) throws IOException {
         this.yPos = ypos;
         this.xPos = xpos;
@@ -16,13 +19,25 @@ public class Rook extends Piece {
         this.whiteImage = ImageIO.read(new File("src/Images/rookWhite.png"));
         this.availableDes = new ArrayList<>();
         this.Name = "Rook";
-        this.value=10;
+        this.value = 10;
     }
+
+    public void setImages() throws IOException {
+        this.blackImage = ImageIO.read(new File("src/Images/rookBlack.png"));
+        this.whiteImage = ImageIO.read(new File("src/Images/rookWhite.png"));
+    }
+
+    public void clearImages() {
+        this.blackImage = null;
+        this.whiteImage = null;
+    }
+
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
-        boolean b1 = (xdespos<8 || xdespos >=0);
-        boolean b2 = (ydespos<8 || ydespos >=0);
-        if(!(b1&&b2))
+        boolean b1 = (xdespos < 8 || xdespos >= 0);
+        boolean b2 = (ydespos < 8 || ydespos >= 0);
+        if (!(b1 && b2)) {
             return false;
+        }
         if (ydespos == this.yPos) {
             //right
             if (xdespos > this.xPos) {
@@ -161,6 +176,7 @@ public class Rook extends Piece {
 
         return false;
     }
+
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
 

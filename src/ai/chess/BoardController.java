@@ -4,8 +4,9 @@ import Pieces.*;
 import java.util.*;
 import ai.chess.*;
 import static ai.chess.AIChess.isPlayerWhite;
+import java.io.Serializable;
 
-public class BoardController {
+public class BoardController implements Serializable {
 
     public ArrayList<BoardAndValueCollector> BoardArrayList;
     PieceColor AIPieceColor = PieceColor.Black;
