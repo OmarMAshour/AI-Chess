@@ -251,7 +251,7 @@ public class ChessBoard {
                }
                else{
                    int sizek= this.pieces.get(j).availableDes.size();
-                   for(int k=0;i<sizek;k++){
+                   for(int k=0;k<sizek;k++){
                        if(CanReachKing.get(i).yPos==this.pieces.get(j).availableDes.get(k).yPos && CanReachKing.get(i).xPos ==this.pieces.get(j).availableDes.get(k).xPos ){
                            return true;
                        }
