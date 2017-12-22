@@ -197,8 +197,8 @@ public class ChessBoard {
         //white move
         int counter = 0;
         King tmpKing = null;
-        boolean checked = false;
         PieceColor req = pc;
+        ArrayList <Points> CanReachKing = new ArrayList ();
         //get king
         int sizei = this.pieces.size();
         for (int i = 0; i < sizei; i++) {
@@ -209,40 +209,50 @@ public class ChessBoard {
         }
         //cal all possible moves for all opponents
         for (int i = 0; i < sizei; i++) {
-            if (tmpKing.color != this.pieces.get(i).color) {
+           
                 this.pieces.get(i).CalculateAllPossibleMoves(this);
-            }
+            
         }
         tmpKing.CalculateAllPossibleMoves(this);
         counter = tmpKing.availableDes.size();
         // compare all moves
         for (int i = 0; i < sizei; i++) {
-            checked = false;
+            
             if (this.pieces.get(i).color == req) {
                 continue;
             } 
             else {
                 int sizej = this.pieces.get(i).availableDes.size();
                 for (int j = 0; j < sizej; j++) {
-                    if (checked) {
-                        break;
-                    }
                     int sizek = tmpKing.availableDes.size();
                     for (int k = 0; k < sizek; k++) {
-                        if (this.pieces.get(k).color!=tmpKing.color && this.pieces.get(k).priority!=tmpKing.priority) {
-                            continue;
-                        }
                         if (this.pieces.get(i).availableDes.get(j).yPos == tmpKing.availableDes.get(k).yPos
                                 && 
                                 this.pieces.get(i).availableDes.get(j).xPos == tmpKing.availableDes.get(k).xPos) {
+                            CanReachKing.add(new Points (this.pieces.get(i).yPos,this.pieces.get(i).xPos));
                             counter--;
-                            checked = true;
-                            break;
                         }
                     }
                 }
             }
 
+        }
+        if(CanReachKing.size()==1){
+        for (int i=0;i<CanReachKing.size();i++){
+           for(int j=0;j<sizei;j++){
+               if(tmpKing.color==this.pieces.get(j).color){
+                   continue;
+               }
+               else{
+                   int sizek= this.pieces.get(j).availableDes.size();
+                   for(int k=0;i<sizek;k++){
+                       if(CanReachKing.get(i).yPos==this.pieces.get(j).availableDes.get(k).yPos && CanReachKing.get(i).xPos ==this.pieces.get(j).availableDes.get(k).xPos ){
+                           return true;
+                       }
+                   }
+               }
+           }
+        }
         }
         if (counter == 0 && tmpKing.availableDes.size() != 0) {
             return true;

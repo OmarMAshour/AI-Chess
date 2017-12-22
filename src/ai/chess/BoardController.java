@@ -43,10 +43,10 @@ public class BoardController {
                 }
             }
             //In case the king is checked will return suitable value based upon its AI or Player 
-            if (piece.halelmalekfe5atar(board) && piece.color == AIPieceColor && !PlayerKingFirstCheck) {
+            if (piece.halelmalekfe5atar(board,board) && piece.color == AIPieceColor && !PlayerKingFirstCheck) {
                 value += 200;
                 PlayerKingFirstCheck = true;
-            } else if (piece.halelmalekfe5atar(board) && piece.color != AIPieceColor && !AIKingFirstCheck) {
+            } else if (piece.halelmalekfe5atar(board,board) && piece.color != AIPieceColor && !AIKingFirstCheck) {
                 value -= 200;
                 AIKingFirstCheck = true;
             }
