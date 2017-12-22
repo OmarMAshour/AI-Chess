@@ -199,6 +199,7 @@ public class ChessBoard {
         King tmpKing = null;
         PieceColor req = pc;
         ArrayList <Points> CanReachKing = new ArrayList ();
+        ArrayList <Piece> WhoCanHelp = new ArrayList ();
         //get king
         int sizei = this.pieces.size();
         for (int i = 0; i < sizei; i++) {
@@ -210,6 +211,9 @@ public class ChessBoard {
         //cal all possible moves for all opponents
         for (int i = 0; i < sizei; i++) {
                 this.pieces.get(i).CalculateAllPossibleMoves(this);
+                if(this.pieces.get(i).color==tmpKing.color){
+                    WhoCanHelp.add(this.pieces.get(i));
+                }
         }
         tmpKing.CalculateAllPossibleMoves(this);
         counter = tmpKing.availableDes.size();
@@ -243,7 +247,16 @@ public class ChessBoard {
             }
 
         }
+        
         if(CanReachKing.size()==1){
+            for(int i=0;i<WhoCanHelp.size();i++){
+            for (int j=0;j<WhoCanHelp.get(i).availableDes.size();j++){
+                if(WhoCanHelp.get(i).availableDes.get(j).yPos==CanReachKing.get(0).yPos &&
+                      WhoCanHelp.get(i).availableDes.get(j).xPos==CanReachKing.get(0).xPos  ){
+                    return false;
+                }
+            }
+        }
         for (int i=0;i<CanReachKing.size();i++){
            for(int j=0;j<sizei;j++){
                if(tmpKing.color==this.pieces.get(j).color){
