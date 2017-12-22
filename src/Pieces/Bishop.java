@@ -164,7 +164,7 @@ public class Bishop extends Piece {
                 counter--;
             }
             else if (counter >=0 && board.Squares[counter][i].ContainPiece ) {
-                System.out.println(board.Squares[counter][i].ContainPiece);
+            //    System.out.println(board.Squares[counter][i].ContainPiece);
                 if( board.getPiece(counter, i).color != this.color){
                 this.availableDes.add(new Points(counter, i));
                 break;

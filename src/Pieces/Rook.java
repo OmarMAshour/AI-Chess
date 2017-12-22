@@ -19,6 +19,10 @@ public class Rook extends Piece {
         this.value=10;
     }
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
+        boolean b1 = (xdespos<8 || xdespos >=0);
+        boolean b2 = (ydespos<8 || ydespos >=0);
+        if(!(b1&&b2))
+            return false;
         if (ydespos == this.yPos) {
             //right
             if (xdespos > this.xPos) {

@@ -24,6 +24,10 @@ public class Knight extends Piece {
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
+        boolean b1 = (xdespos<8 || xdespos >=0);
+        boolean b2 = (ydespos<8 || ydespos >=0);
+        if(!(b1&&b2))
+            return false;
         if ((Math.abs(this.yPos - ydespos) == 2
                 && Math.abs(this.xPos - xdespos) == 1)
                 || (Math.abs(this.yPos - ydespos) == 1
@@ -32,7 +36,6 @@ public class Knight extends Piece {
                 if (this.overallCheck(board, ydespos, xdespos)) {
                     return false;
                 }
-
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 board.Squares[ydespos][xdespos].ContainPiece = true;
                 this.yPos = ydespos;
@@ -43,7 +46,6 @@ public class Knight extends Piece {
                 if (this.overallCheck(board, ydespos, xdespos)) {
                     return false;
                 }
-
                 board.pieces.remove(board.getPiece(ydespos, xdespos));
                 board.Squares[this.yPos][this.xPos].ContainPiece = false;
                 this.yPos = ydespos;

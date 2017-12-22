@@ -23,8 +23,8 @@ public class Queen extends Piece {
     }
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
+        
         //right
-
         for (int i = this.xPos + 1; i < 8; i++) {
             if (!board.Squares[this.yPos][i].ContainPiece) {
                 this.availableDes.add(new Points(this.yPos, i));
@@ -125,7 +125,10 @@ public class Queen extends Piece {
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
-
+        boolean b1 = (xdespos<8 || xdespos >=0);
+        boolean b2 = (ydespos<8 || ydespos >=0);
+        if(!(b1&&b2))
+            return false;
         //x dir 
         if (ydespos == this.yPos) {
             //right

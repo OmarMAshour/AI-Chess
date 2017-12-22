@@ -23,6 +23,12 @@ public class King extends Piece {
     }
 
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws IOException {
+        //n4oof 7war el checkmate
+        boolean b1 = (xdespos<8 || xdespos >=0);
+        boolean b2 = (ydespos<8 || ydespos >=0);
+        if(!(b1&&b2))
+            return false;
+        
         if ((Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(xdespos - this.xPos) == 0)
                 || (Math.abs(this.yPos - ydespos) == 1

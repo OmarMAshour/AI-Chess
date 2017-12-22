@@ -55,6 +55,10 @@ public class Pawn extends Piece {
     }
     @Override
     public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception {
+        boolean b1 = (xdespos<8 || xdespos >=0);
+        boolean b2 = (ydespos<8 || ydespos >=0);
+        if(!(b1&&b2))
+            return false;
         //black move
         if (this.color == PieceColor.Black) {
             //first move (2 moves)

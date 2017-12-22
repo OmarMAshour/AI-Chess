@@ -1,16 +1,11 @@
 package Pieces;
 
-import java.math.*;
 import ai.chess.*;
 import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 //chess pieces model
 
 abstract public class Piece {
@@ -24,6 +19,7 @@ abstract public class Piece {
     public ArrayList<Points> availableDes;
     public String Name;
     public int value;
+
     //piece motion
     //change xpos w ypos if possible
     abstract public boolean move(int xdespos, int ydespos, ChessBoard board) throws Exception;
@@ -34,16 +30,17 @@ abstract public class Piece {
 
     abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
-    
     public boolean halelmalekfe5atar(ChessBoard board) {
 
         int kingXpos = -1, kingYpos = -1;
         Points p = new Points(-1, -1);
         boolean found = false;
+        King tmpKing = null;
         for (int i = 0; i < board.pieces.size(); i++) {
             if (board.pieces.get(i).priority == 10 && board.pieces.get(i).color == this.color) {
                 kingXpos = board.pieces.get(i).xPos;
                 kingYpos = board.pieces.get(i).yPos;
+                tmpKing = (King) board.getPiece(board.pieces.get(i).yPos, board.pieces.get(i).xPos);
             }
         }
 
@@ -52,8 +49,6 @@ abstract public class Piece {
                 board.pieces.get(i).CalculateAllPossibleMoves(board);
             }
         }
-
-        Point tmpKingPos = new Point(kingYpos, kingXpos);
         for (int i = 0; i < board.pieces.size(); i++) {
             if (found) {
                 break;
@@ -63,10 +58,12 @@ abstract public class Piece {
                     p.yPos = board.pieces.get(i).yPos;
                     p.xPos = board.pieces.get(i).xPos;
                     found = true;
-                    return true;
-                 
+                     return true;
+
                 }
+
             }
+            board.pieces.get(i).availableDes.clear();
         }
         return false;
 
@@ -75,11 +72,9 @@ abstract public class Piece {
     public boolean overallCheck(ChessBoard board, int ydespos, int xdespos) throws IOException {
         ChessBoard tmpBoard = board.copyBoard();
         tmpBoard.Squares[this.yPos][this.xPos].ContainPiece = false;
-        
-        if(tmpBoard.Squares[ydespos][xdespos].ContainPiece){
+        if (tmpBoard.Squares[ydespos][xdespos].ContainPiece) {
             tmpBoard.pieces.remove(tmpBoard.getPiece(ydespos, xdespos));
         }
-        
         tmpBoard.Squares[ydespos][xdespos].ContainPiece = true;
         Piece tmpPiece = tmpBoard.getPiece(this.yPos, this.xPos);
         tmpPiece.yPos = ydespos;
@@ -87,10 +82,9 @@ abstract public class Piece {
         this.CalculateAllPossibleMoves(tmpBoard);
         boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard);
         if (fe5atar) {
-         //   System.out.println("Overall returned true");
             return true;
         }
-      //  System.out.println("Overall returned false");
+
         return false;
     }
 }

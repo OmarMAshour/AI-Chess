@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import static ai.chess.AIChess.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,7 +33,7 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
     private boolean AIWhiteFirstTurn = true;
-    private BoardController boardController = new BoardController();
+    private BoardController boardController;
     private boolean canPlayerPlay;
 
     public SingleBoardPanel(ChessBoard chessBoard) {
@@ -43,6 +44,7 @@ public class SingleBoardPanel extends javax.swing.JPanel {
             canPlayerPlay = false;
         }
         this.chessBoard = chessBoard;
+        boardController = new BoardController();
 
         piecesDrawingTimer = new Timer(1, new ActionListener() {
             @Override
@@ -67,62 +69,63 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if(canPlayerPlay){
-                int clickedX = e.getX();
-                int clickedY = e.getY();
+                if (canPlayerPlay) {
 
-                int pieceX = (clickedX - 10) / 60;
-                int pieceY = (clickedY - 10) / 60;
+                   
+                    int clickedX = e.getX();
+                    int clickedY = e.getY();
 
-                System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+                    int pieceX = (clickedX - 10) / 60;
+                    int pieceY = (clickedY - 10) / 60;
 
-                //by this whenever the player choose one of his own pieces he will get the available options to move within them
-                for (int i = 0; i < chessBoard.pieces.size(); i++) {
-                    if (isPlayerWhite) {
-                        if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
-                            playerSelectedOneOfHisPieces = true;
-                            selectedPieceIndex = i;
-                            //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
-                            return;
-                        }
-                    } else if (!isPlayerWhite) {
-                        if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
-                            playerSelectedOneOfHisPieces = true;
-                            selectedPieceIndex = i;
-                            //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
-                            return;
+                    System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+
+                    //by this whenever the player choose one of his own pieces he will get the available options to move within them
+                    for (int i = 0; i < chessBoard.pieces.size(); i++) {
+                        if (isPlayerWhite) {
+                            if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
+                                playerSelectedOneOfHisPieces = true;
+                                selectedPieceIndex = i;
+                                //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                return;
+                            }
+                        } else if (!isPlayerWhite) {
+                            if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
+                                playerSelectedOneOfHisPieces = true;
+                                selectedPieceIndex = i;
+                                //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                return;
+                            }
                         }
                     }
-                }
-                //in case that the player clicked on a piece before and now is taking the next action
-                if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
-                    try {
-                        boolean check = chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard);
-                        if (check) {
-                            canPlayerPlay=false;
-                            selectedPieceIndex = -1;
-                            playerSelectedOneOfHisPieces = false;
-                            System.err.println("5ARAAAAAAAAA");
-                        }
-
-                    } catch (Exception ex) {
-                        System.err.println(ex.getMessage());
-                    } finally {
+                    //in case that the player clicked on a piece before and now is taking the next action
+                    if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                         try {
-                            //                        canPlayerPlay = true;
-                         //   
-                        } catch (Exception ex) {
-                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        return;
-                    }
-                }
+                            boolean check = chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard);
+                            if (check) {
+                                canPlayerPlay = false;
+                                selectedPieceIndex = -1;
+                                playerSelectedOneOfHisPieces = false;
+                            }
 
-            }
-                if(!canPlayerPlay){
+                        } catch (Exception ex) {
+                            System.err.println(ex.getMessage());
+                        } finally {
+                            try {
+                                //                        canPlayerPlay = true;
+                                //   
+                            } catch (Exception ex) {
+                                Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            return;
+                        }
+                    }
+
+                }
+                if (!canPlayerPlay) {
                     try {
-                        setChessBoard(boardController.BoardToDraw(chessBoard));
-                        canPlayerPlay=true;
+                       setChessBoard(boardController.BoardToDraw(chessBoard));
+                        canPlayerPlay = true;
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -157,7 +160,11 @@ public class SingleBoardPanel extends javax.swing.JPanel {
     }
 
     public void setChessBoard(ChessBoard board) {
-        this.chessBoard = board;
+        try {
+            board.copyBoard2(this.chessBoard);
+        } catch (Exception e) {
+        }
+
     }
 
     /**
