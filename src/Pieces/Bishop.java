@@ -155,6 +155,9 @@ public class Bishop extends Piece {
     }
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //up right
+        if(!this.availableDes.isEmpty()){
+        this.availableDes.clear();
+        }
         int counter = this.yPos - 1;
         
         for (int i = this.xPos + 1; i < 8; i++) {

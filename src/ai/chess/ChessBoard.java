@@ -209,21 +209,24 @@ public class ChessBoard {
         }
         //cal all possible moves for all opponents
         for (int i = 0; i < sizei; i++) {
-           
                 this.pieces.get(i).CalculateAllPossibleMoves(this);
-            
         }
         tmpKing.CalculateAllPossibleMoves(this);
         counter = tmpKing.availableDes.size();
         // compare all moves
         for (int i = 0; i < sizei; i++) {
-            
+            if(counter==0){
+                break;
+            }
             if (this.pieces.get(i).color == req) {
                 continue;
             } 
             else {
                 int sizej = this.pieces.get(i).availableDes.size();
                 for (int j = 0; j < sizej; j++) {
+                    if(counter==0){
+                        break;
+                    }
                     int sizek = tmpKing.availableDes.size();
                     for (int k = 0; k < sizek; k++) {
                         if (this.pieces.get(i).availableDes.get(j).yPos == tmpKing.availableDes.get(k).yPos
@@ -231,6 +234,9 @@ public class ChessBoard {
                                 this.pieces.get(i).availableDes.get(j).xPos == tmpKing.availableDes.get(k).xPos) {
                             CanReachKing.add(new Points (this.pieces.get(i).yPos,this.pieces.get(i).xPos));
                             counter--;
+                            if(counter==0){
+                                break;
+                            }
                         }
                     }
                 }

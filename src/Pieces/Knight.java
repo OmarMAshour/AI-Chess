@@ -58,6 +58,9 @@ public class Knight extends Piece {
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //2 up 1 right
+        if(!this.availableDes.isEmpty()){
+        this.availableDes.clear();
+        }
         if (this.xPos + 1 < 8 && this.yPos + 2 < 8 && !board.Squares[this.yPos + 2][this.xPos + 1].ContainPiece) {
             this.availableDes.add(new Points(yPos + 2, xPos + 1));
         } else if (this.xPos + 1 < 8 && this.yPos + 2 < 8) {

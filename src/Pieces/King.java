@@ -60,7 +60,10 @@ public class King extends Piece {
     }
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
-        //down
+        //down.
+        if(!this.availableDes.isEmpty()){
+        this.availableDes.clear();
+        }
         if (this.yPos + 1 < 8 && !board.Squares[this.yPos + 1][this.xPos].ContainPiece) {
             this.availableDes.add(new Points(yPos + 1, xPos));
         }
