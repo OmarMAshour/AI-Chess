@@ -200,6 +200,7 @@ public class ChessBoard implements Serializable{
         King tmpKing = null;
         PieceColor req = pc;
         ArrayList <Points> CanReachKing = new ArrayList ();
+        ArrayList <Piece> WhoCanHelp = new ArrayList ();
         //get king
         int sizei = this.pieces.size();
         for (int i = 0; i < sizei; i++) {
@@ -210,21 +211,27 @@ public class ChessBoard implements Serializable{
         }
         //cal all possible moves for all opponents
         for (int i = 0; i < sizei; i++) {
-           
                 this.pieces.get(i).CalculateAllPossibleMoves(this);
-            
+                if(this.pieces.get(i).color==tmpKing.color){
+                    WhoCanHelp.add(this.pieces.get(i));
+                }
         }
         tmpKing.CalculateAllPossibleMoves(this);
         counter = tmpKing.availableDes.size();
         // compare all moves
         for (int i = 0; i < sizei; i++) {
-            
+            if(counter==0){
+                break;
+            }
             if (this.pieces.get(i).color == req) {
                 continue;
             } 
             else {
                 int sizej = this.pieces.get(i).availableDes.size();
                 for (int j = 0; j < sizej; j++) {
+                    if(counter==0){
+                        break;
+                    }
                     int sizek = tmpKing.availableDes.size();
                     for (int k = 0; k < sizek; k++) {
                         if (this.pieces.get(i).availableDes.get(j).yPos == tmpKing.availableDes.get(k).yPos
@@ -232,13 +239,25 @@ public class ChessBoard implements Serializable{
                                 this.pieces.get(i).availableDes.get(j).xPos == tmpKing.availableDes.get(k).xPos) {
                             CanReachKing.add(new Points (this.pieces.get(i).yPos,this.pieces.get(i).xPos));
                             counter--;
+                            if(counter==0){
+                                break;
+                            }
                         }
                     }
                 }
             }
 
         }
+        
         if(CanReachKing.size()==1){
+            for(int i=0;i<WhoCanHelp.size();i++){
+            for (int j=0;j<WhoCanHelp.get(i).availableDes.size();j++){
+                if(WhoCanHelp.get(i).availableDes.get(j).yPos==CanReachKing.get(0).yPos &&
+                      WhoCanHelp.get(i).availableDes.get(j).xPos==CanReachKing.get(0).xPos  ){
+                    return false;
+                }
+            }
+        }
         for (int i=0;i<CanReachKing.size();i++){
            for(int j=0;j<sizei;j++){
                if(tmpKing.color==this.pieces.get(j).color){
@@ -246,7 +265,7 @@ public class ChessBoard implements Serializable{
                }
                else{
                    int sizek= this.pieces.get(j).availableDes.size();
-                   for(int k=0;i<sizek;k++){
+                   for(int k=0;k<sizek;k++){
                        if(CanReachKing.get(i).yPos==this.pieces.get(j).availableDes.get(k).yPos && CanReachKing.get(i).xPos ==this.pieces.get(j).availableDes.get(k).xPos ){
                            return true;
                        }
@@ -255,7 +274,7 @@ public class ChessBoard implements Serializable{
            }
         }
         }
-        if (counter == 0 && tmpKing.availableDes.size() != 0) {
+        if (counter == 0 && tmpKing.availableDes.size() != 0 ) {
             return true;
         }
         return false;

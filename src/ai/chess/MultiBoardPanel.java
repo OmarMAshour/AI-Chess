@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -68,6 +69,13 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
                     if (whitePlayerTurn) {
+                         
+                         if (chessBoard.checkMate(PieceColor.White)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                            System.exit(0);
+                        }
+                    
+                    
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
                             playerSelectedOneOfHisPieces = true;
                             selectedPieceIndex = i;
@@ -75,6 +83,10 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                             return;
                         }
                     } else if (!whitePlayerTurn) {
+                          if (chessBoard.checkMate(PieceColor.Black)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                            System.exit(0);
+                        }
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
                             playerSelectedOneOfHisPieces = true;
                             selectedPieceIndex = i;
@@ -82,6 +94,7 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                             return;
                         }
                     }
+                    
                 }
 
 //                //in case that the playe just clicked on a piece

@@ -38,6 +38,9 @@ public class Pawn extends Piece implements Serializable {
     @Override
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //black move
+        if(!this.availableDes.isEmpty()){
+        this.availableDes.clear();
+        }
         if (this.color == PieceColor.Black) {
             //first move (2 moves)
             if (this.yPos + 1 < 8 && this.yPos + 2 < 8 && this.canMoveTwice && !board.Squares[this.yPos + 1][this.xPos].ContainPiece && !board.Squares[this.yPos + 2][this.xPos].ContainPiece) {

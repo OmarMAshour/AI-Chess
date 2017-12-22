@@ -71,7 +71,9 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                 if (!isPlayerWhite && AIWhiteFirstTurn) {
                     try {
                         AIWhiteFirstTurn = false;
+                      
                         setChessBoard(boardController.BoardToDraw(getChessBoard()));
+                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                         return;
                     } catch (Exception ex) {
@@ -79,7 +81,19 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                     }
                 }
                 if (canPlayerPlay) {
-
+                    if (isPlayerWhite){
+                         if (chessBoard.checkMate(PieceColor.White)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                            System.exit(0);
+                        }
+                    }
+                     else{
+                             if (chessBoard.checkMate(PieceColor.Black)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                            System.exit(0);
+                        }
+                         }
+                    
                    
                     int clickedX = e.getX();
                     int clickedY = e.getY();
@@ -133,7 +147,21 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                 }
                 if (!canPlayerPlay) {
                     try {
+                        if (isPlayerWhite){
+                         if (chessBoard.checkMate(PieceColor.Black)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                            System.exit(0);
+                        }
+                    }
+                     else{
+                             if (chessBoard.checkMate(PieceColor.White)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                            System.exit(0);
+                        }
+                         }
+                      
                        setChessBoard(boardController.BoardToDraw(chessBoard));
+                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);

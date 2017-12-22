@@ -179,7 +179,9 @@ public class Rook extends Piece implements Serializable {
 
     public void CalculateAllPossibleMoves(ChessBoard board) {
         //right
-
+         if(!this.availableDes.isEmpty()){
+        this.availableDes.clear();
+        }
         for (int i = this.xPos + 1; i < 8; i++) {
             if (!board.Squares[this.yPos][i].ContainPiece) {
                 this.availableDes.add(new Points(this.yPos, i));

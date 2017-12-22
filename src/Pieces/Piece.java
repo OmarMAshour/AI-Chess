@@ -32,7 +32,8 @@ abstract public class Piece implements Serializable{
     abstract public void CalculateAllPossibleMoves(ChessBoard board);
     abstract public void setImages () throws IOException;
     abstract public void clearImages();
-    public boolean halelmalekfe5atar(ChessBoard board,ChessBoard prevBoard) {
+
+    public boolean halelmalekfe5atar(ChessBoard board) {
 
         int kingXpos = -1, kingYpos = -1;
         Points p = new Points(-1, -1);
@@ -60,17 +61,6 @@ abstract public class Piece implements Serializable{
                     p.yPos = board.pieces.get(i).yPos;
                     p.xPos = board.pieces.get(i).xPos;
                     found = true;
-                     if (tmpKing.color == PieceColor.Black) {
-                        if (prevBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
-                    } else if (tmpKing.color == PieceColor.White) {
-                        if (prevBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
-                        }
-                    }
                      return true;
 
                 }
@@ -93,9 +83,8 @@ abstract public class Piece implements Serializable{
         tmpPiece.yPos = ydespos;
         tmpPiece.xPos = xdespos;
         this.CalculateAllPossibleMoves(tmpBoard);
-        boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard,board);
+        boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard);
         if (fe5atar) {
-            
             return true;
         }
 
