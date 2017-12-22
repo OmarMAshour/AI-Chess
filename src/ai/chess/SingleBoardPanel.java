@@ -70,7 +70,19 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                     }
                 }
                 if (canPlayerPlay) {
-
+                    if (isPlayerWhite){
+                         if (chessBoard.checkMate(PieceColor.White)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                            System.exit(0);
+                        }
+                    }
+                     else{
+                             if (chessBoard.checkMate(PieceColor.Black)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                            System.exit(0);
+                        }
+                         }
+                    
                    
                     int clickedX = e.getX();
                     int clickedY = e.getY();
@@ -124,6 +136,18 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                 }
                 if (!canPlayerPlay) {
                     try {
+                        if (isPlayerWhite){
+                         if (chessBoard.checkMate(PieceColor.Black)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                            System.exit(0);
+                        }
+                    }
+                     else{
+                             if (chessBoard.checkMate(PieceColor.White)) {
+                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                            System.exit(0);
+                        }
+                         }
                        setChessBoard(boardController.BoardToDraw(chessBoard));
                         canPlayerPlay = true;
                     } catch (Exception ex) {

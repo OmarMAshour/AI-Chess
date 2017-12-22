@@ -111,6 +111,7 @@ public class BoardController {
     }
     public ChessBoard BoardToDraw(ChessBoard board) throws Exception {
         board.viewBoard();
+        ChessBoard tobedrawn = null;
         ArrayList <BoardAndValueCollector> SameValues = new ArrayList ();
         System.out.println("Algorithm Started");
         int value = Algorithm(board, true, 0);
@@ -121,7 +122,12 @@ public class BoardController {
             }
         }
         Random r = new Random();
-       ChessBoard tobedrawn = SameValues.get(r.nextInt(SameValues.size()-1)).board;
+        if(SameValues.size()-1>0){
+       tobedrawn = SameValues.get(r.nextInt(SameValues.size()-1)).board;
+        }
+        else{
+            tobedrawn = SameValues.get(0).board;
+        }
        BoardArrayList.clear();
         return tobedrawn;
     }

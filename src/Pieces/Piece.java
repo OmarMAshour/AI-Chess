@@ -58,17 +58,6 @@ abstract public class Piece {
                     p.yPos = board.pieces.get(i).yPos;
                     p.xPos = board.pieces.get(i).xPos;
                     found = true;
-                     if (tmpKing.color == PieceColor.Black) {
-                        if (prevBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
-                    } else if (tmpKing.color == PieceColor.White) {
-                        if (prevBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
-                        }
-                    }
                      return true;
 
                 }
@@ -93,7 +82,6 @@ abstract public class Piece {
         this.CalculateAllPossibleMoves(tmpBoard);
         boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard,board);
         if (fe5atar) {
-            
             return true;
         }
 
