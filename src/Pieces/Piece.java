@@ -4,11 +4,12 @@ import ai.chess.*;
 import java.awt.Image;
 import java.awt.Point;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 import javax.swing.JOptionPane;
 //chess pieces model
 
-abstract public class Piece {
+abstract public class Piece implements Serializable{
 
     public int yPos; //row
     public int xPos; //column
@@ -29,6 +30,8 @@ abstract public class Piece {
     }
 
     abstract public void CalculateAllPossibleMoves(ChessBoard board);
+    abstract public void setImages () throws IOException;
+    abstract public void clearImages();
 
     public boolean halelmalekfe5atar(ChessBoard board) {
 

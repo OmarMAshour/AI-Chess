@@ -2,9 +2,10 @@ package ai.chess;
 
 import Pieces.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ChessBoard {
+public class ChessBoard implements Serializable{
 
     //attributes
     public BoardSquare[][] Squares = new BoardSquare[8][8];

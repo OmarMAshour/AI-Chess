@@ -1,7 +1,9 @@
 package ai.chess;
 
+import java.io.Serializable;
 
-public class BoardAndValueCollector {
+
+public class BoardAndValueCollector implements Serializable{
     public ChessBoard board;
     public int Value;
 

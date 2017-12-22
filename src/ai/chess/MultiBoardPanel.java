@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import javax.swing.JPanel;
  *
  * @author omarashour
  */
-public class MultiBoardPanel extends javax.swing.JPanel {
+public class MultiBoardPanel extends JPanel implements Serializable{
 
     /**
      * Creates new form BoardPanel
@@ -34,16 +35,21 @@ public class MultiBoardPanel extends javax.swing.JPanel {
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
     private boolean whitePlayerTurn;
+    public String className = "Multi";
+
+    public String getClassName() {
+        return className;
+    }
 
     public MultiBoardPanel(ChessBoard chessBoard) {
         initComponents();
         this.chessBoard = chessBoard;
-        this.whitePlayerTurn=true;
+        this.whitePlayerTurn = true;
         piecesDrawingTimer = new Timer(1, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 repaint();
-                
+
             }
         });
         piecesDrawingTimer.start();
@@ -54,12 +60,12 @@ public class MultiBoardPanel extends javax.swing.JPanel {
                 super.mouseClicked(e); //To change body of generated methods, choose Tools | Templates.
                 int clickedX = e.getX();
                 int clickedY = e.getY();
-                
+
                 int pieceX = (clickedX - 10) / 60;
                 int pieceY = (clickedY - 10) / 60;
 
-                System.out.println("Mouse Clicked!!!!! x= "+pieceX+" y= "+pieceY);
-                
+                System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
                     if (whitePlayerTurn) {
@@ -103,22 +109,20 @@ public class MultiBoardPanel extends javax.swing.JPanel {
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;
-                            if(whitePlayerTurn){
-                                whitePlayerTurn=false;
-                            }else if(!whitePlayerTurn){
-                                whitePlayerTurn=true;
+                            if (whitePlayerTurn) {
+                                whitePlayerTurn = false;
+                            } else if (!whitePlayerTurn) {
+                                whitePlayerTurn = true;
                             }
-                            System.out.println("Pieces numbers: "+chessBoard.pieces.size());
+                            System.out.println("Pieces numbers: " + chessBoard.pieces.size());
                         }
                     } catch (Exception ex) {
                         Logger.getLogger(MultiBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally{
+                    } finally {
                         return;
                     }
 
-                    
                 }
-                
 
             }
 
@@ -128,14 +132,14 @@ public class MultiBoardPanel extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g); //To change body of generated methods, choose Tools | Templates.
-         for(int i =0;i<chessBoard.pieces.size();i++){
+        for (int i = 0; i < chessBoard.pieces.size(); i++) {
             if (chessBoard.pieces.get(i).color == PieceColor.Black) {
                 g.drawImage(chessBoard.pieces.get(i).blackImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             } else if (chessBoard.pieces.get(i).color == PieceColor.White) {
                 g.drawImage(chessBoard.pieces.get(i).whiteImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             }
         }
-        
+
 //        paintComponent(g);
     }
 
@@ -150,11 +154,6 @@ public class MultiBoardPanel extends javax.swing.JPanel {
 //            }
 //        }
 //    }
-    
-    
-    
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

@@ -4,40 +4,46 @@
  * and open the template in the editor.
  */
 package ai.chess;
+
 import javax.swing.*;
 import java.awt.*;
+import static ai.chess.AIChess.*;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author omarashour
  */
-public class GameBoard extends javax.swing.JFrame {
+public class GameBoard extends javax.swing.JFrame implements Serializable {
 
     /**
      * Creates new form GameBoard
      */
-    SingleBoardPanel boardPanel;
-    MultiBoardPanel multiBoardPanel;
+    SingleBoardPanel singleBoardPanel=null;
+    MultiBoardPanel multiBoardPanel=null;
+
     public GameBoard(SingleBoardPanel boardPanel) {
         initComponents();
-        
-        this.boardPanel = boardPanel;
+
+        this.singleBoardPanel = boardPanel;
         boardPanel.setBounds(0, 0, 500, 500);
-        add(boardPanel);
+        add(singleBoardPanel);
         this.setLocationRelativeTo(null);
 
     }
-    
-    public GameBoard(MultiBoardPanel multiBoardPanel) {
+
+    public GameBoard(MultiBoardPanel boardPanel) {
         initComponents();
-        
-        this.multiBoardPanel = multiBoardPanel;
-        multiBoardPanel.setBounds(0, 0, 500, 500);
+
+        this.multiBoardPanel = boardPanel;
+        boardPanel.setBounds(0, 0, 500, 500);
         add(multiBoardPanel);
         this.setLocationRelativeTo(null);
 
     }
-
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,27 +54,63 @@ public class GameBoard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        saveButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        saveButton.setText("Save Board");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(508, Short.MAX_VALUE)
+                .addComponent(saveButton)
+                .addGap(178, 178, 178))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(763, Short.MAX_VALUE)
+                .addComponent(saveButton)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        try {
+            // TODO add your handling code here:
+            if (singleBoardPanel!=null) {
+                savedPanelsList.add(new SavedPanel(singleBoardPanel.chessBoard, isPlayerWhite, "Singleplayer"));
+            }
+            
+            if (multiBoardPanel!=null) {
+                savedPanelsList.add(new SavedPanel(multiBoardPanel.chessBoard, isPlayerWhite, "Multiplayer"));
+
+            }
+            PanelsReaderWriter.save();
+//            PanelsReaderWriter.load();
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 }
