@@ -62,7 +62,9 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                 if (!isPlayerWhite && AIWhiteFirstTurn) {
                     try {
                         AIWhiteFirstTurn = false;
+                      
                         setChessBoard(boardController.BoardToDraw(getChessBoard()));
+                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                         return;
                     } catch (Exception ex) {
@@ -148,7 +150,9 @@ public class SingleBoardPanel extends javax.swing.JPanel {
                             System.exit(0);
                         }
                          }
+                      
                        setChessBoard(boardController.BoardToDraw(chessBoard));
+                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);

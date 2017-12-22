@@ -30,7 +30,7 @@ abstract public class Piece {
 
     abstract public void CalculateAllPossibleMoves(ChessBoard board);
 
-    public boolean halelmalekfe5atar(ChessBoard board,ChessBoard prevBoard) {
+    public boolean halelmalekfe5atar(ChessBoard board) {
 
         int kingXpos = -1, kingYpos = -1;
         Points p = new Points(-1, -1);
@@ -80,7 +80,7 @@ abstract public class Piece {
         tmpPiece.yPos = ydespos;
         tmpPiece.xPos = xdespos;
         this.CalculateAllPossibleMoves(tmpBoard);
-        boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard,board);
+        boolean fe5atar = tmpPiece.halelmalekfe5atar(tmpBoard);
         if (fe5atar) {
             return true;
         }

@@ -273,7 +273,7 @@ public class ChessBoard {
            }
         }
         }
-        if (counter == 0 && tmpKing.availableDes.size() != 0) {
+        if (counter == 0 && tmpKing.availableDes.size() != 0 ) {
             return true;
         }
         return false;

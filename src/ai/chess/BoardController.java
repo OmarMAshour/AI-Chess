@@ -10,7 +10,10 @@ public class BoardController {
     public ArrayList<BoardAndValueCollector> BoardArrayList;
     PieceColor AIPieceColor = PieceColor.Black;
     PieceColor PlayerPieceColor = PieceColor.White;
-
+    private int CutOff=0;
+    private int Nnodes=0;
+    private int NPlusOneNodes=0;
+    private int leafnode=0;
     public BoardController() {
         BoardArrayList = new ArrayList();
         if (!isPlayerWhite) {
@@ -18,6 +21,13 @@ public class BoardController {
             PlayerPieceColor = PieceColor.Black;
         }
     }
+    public int GetNNodes(){
+        return Nnodes;
+    }
+    public int GetNPluesOneNodes(){
+        return NPlusOneNodes;
+    }
+   
     public int getBoardValue(ChessBoard board) {
         int value = 0;
         boolean AIKingFirstCheck = false;
@@ -43,10 +53,10 @@ public class BoardController {
                 }
             }
             //In case the king is checked will return suitable value based upon its AI or Player 
-            if (piece.halelmalekfe5atar(board,board) && piece.color == AIPieceColor && !PlayerKingFirstCheck) {
+            if (piece.halelmalekfe5atar(board) && piece.color == AIPieceColor && !PlayerKingFirstCheck) {
                 value += 200;
                 PlayerKingFirstCheck = true;
-            } else if (piece.halelmalekfe5atar(board,board) && piece.color != AIPieceColor && !AIKingFirstCheck) {
+            } else if (piece.halelmalekfe5atar(board) && piece.color != AIPieceColor && !AIKingFirstCheck) {
                 value -= 200;
                 AIKingFirstCheck = true;
             }
@@ -55,7 +65,10 @@ public class BoardController {
     }
     public int Algorithm(ChessBoard board, boolean turn, int depth) throws Exception {
         if (depth == 2) {
-            return this.getBoardValue(board);
+            int val = this.getBoardValue(board);
+            leafnode++;
+            System.out.println("Leaf Node Number : " + leafnode+" Value : "+val);
+            return val;
         }
         int Alpha = Integer.MIN_VALUE;
         int Beta = Integer.MAX_VALUE;
@@ -71,6 +84,12 @@ public class BoardController {
         int sizei = board.pieces.size();
         for (int i = 0; i < sizei; i++) {
             int sizej = board.pieces.get(i).availableDes.size();
+            if(depth==0 ){
+                Nnodes+=sizej;
+            }
+            else{
+                NPlusOneNodes+=sizej;
+            }
             for (int j = 0; j < sizej; j++) {
                 //---------------------------------------------------------
                 //AI turn
@@ -82,6 +101,8 @@ public class BoardController {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
                         if (Value > Beta) {
+                            CutOff++;
+                            System.out.println("Cutoff Number : "+ CutOff);
                             return Value;
                         } else {
                             Alpha = Value;
@@ -98,6 +119,8 @@ public class BoardController {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
                         if (Value < Alpha) {
+                            CutOff++;
+                            System.out.println("Cutoff Number : "+ CutOff);
                             return Value;
                         } else {
                             Beta = Value;
