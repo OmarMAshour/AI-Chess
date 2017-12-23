@@ -11,8 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import static ai.chess.AIChess.savedPanelsList;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+
 import java.util.List;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

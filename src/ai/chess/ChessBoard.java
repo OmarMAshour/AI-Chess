@@ -102,6 +102,43 @@ public class ChessBoard implements Serializable{
         this.Squares = squares;
         this.pieces = pieces;
     }
+     public boolean overallForCheckMate(ChessBoard board, int ydespos, int xdespos,Piece p,King k) throws IOException {
+        ChessBoard tmpBoard = board.copyBoard();
+        for (int i=0;i<tmpBoard.pieces.size();i++){
+            if(k.color != tmpBoard.pieces.get(i).color){
+                tmpBoard.pieces.get(i).CalculateAllPossibleMoves(tmpBoard);
+            }
+        }
+        tmpBoard.Squares[p.yPos][p.xPos].ContainPiece = false;
+        if (tmpBoard.Squares[ydespos][xdespos].ContainPiece) {
+            tmpBoard.pieces.remove(tmpBoard.getPiece(ydespos, xdespos));
+        }
+        tmpBoard.Squares[ydespos][xdespos].ContainPiece = true;
+        Piece tmpPiece = tmpBoard.getPiece(p.yPos, p.xPos);
+        tmpPiece.yPos = ydespos;
+        tmpPiece.xPos = xdespos;
+        boolean fe5atar = board.halelmalekfe5atarForCheckMate(tmpBoard,k);
+        if (fe5atar) {
+            return true;
+        }
+
+        return false;
+    }
+      public boolean halelmalekfe5atarForCheckMate(ChessBoard board,King k) {
+        boolean found=false;
+        for (int i = 0; i < board.pieces.size(); i++) {
+            for (int j = 0; j < board.pieces.get(i).availableDes.size(); j++) {
+                if (board.pieces.get(i).availableDes.get(j).xPos == k.xPos && board.pieces.get(i).availableDes.get(j).yPos == k.yPos) {
+                    found = true;
+                     return true;
+
+                }
+
+            }
+        }
+        return false;
+
+    }
 
     //get reference to the desired piece
     public Piece getPiece(int ydespos, int xdespos) {
@@ -148,7 +185,7 @@ public class ChessBoard implements Serializable{
 
             }
             return desBoard;
-        } catch (Exception e) {
+        } catch (IOException e) {
 
         }
         return null;
@@ -194,8 +231,9 @@ public class ChessBoard implements Serializable{
         }
     }
 
-    public boolean checkMate(PieceColor pc) {
+    public boolean checkMate(PieceColor pc) throws IOException {
         //white move
+
         int counter = 0;
         King tmpKing = null;
         PieceColor req = pc;
@@ -237,7 +275,7 @@ public class ChessBoard implements Serializable{
                         if (this.pieces.get(i).availableDes.get(j).yPos == tmpKing.availableDes.get(k).yPos
                                 && 
                                 this.pieces.get(i).availableDes.get(j).xPos == tmpKing.availableDes.get(k).xPos) {
-                            CanReachKing.add(new Points (this.pieces.get(i).yPos,this.pieces.get(i).xPos));
+                            CanReachKing.add(new Points (this.pieces.get(i).availableDes.get(j).yPos,this.pieces.get(i).availableDes.get(j).xPos));
                             counter--;
                             if(counter==0){
                                 break;
@@ -250,10 +288,21 @@ public class ChessBoard implements Serializable{
         }
         
         if(CanReachKing.size()==1){
+             //Check if any piece can save the king 
             for(int i=0;i<WhoCanHelp.size();i++){
             for (int j=0;j<WhoCanHelp.get(i).availableDes.size();j++){
                 if(WhoCanHelp.get(i).availableDes.get(j).yPos==CanReachKing.get(0).yPos &&
-                      WhoCanHelp.get(i).availableDes.get(j).xPos==CanReachKing.get(0).xPos  ){
+                      WhoCanHelp.get(i).availableDes.get(j).xPos==CanReachKing.get(0).xPos &&  this.pieces.get(i).priority!=tmpKing.priority ){
+                    return false;
+                }
+            }
+        }
+            // check if any piece can interrupt the piece trying to kill the king
+            for(int i=0;i<this.pieces.size();i++){
+            for (int j=0;j<this.pieces.get(i).availableDes.size();j++){
+                int ydespos = this.pieces.get(i).availableDes.get(j).yPos;
+                int xdespos = this.pieces.get(i).availableDes.get(j).xPos;
+                if(!this.overallForCheckMate(this, ydespos, xdespos, this.pieces.get(i), tmpKing) && tmpKing.priority!=this.pieces.get(i).priority){
                     return false;
                 }
             }

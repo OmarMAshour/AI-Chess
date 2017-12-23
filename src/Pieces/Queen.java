@@ -2,6 +2,7 @@ package Pieces;
 
 import Pieces.Piece;
 import Pieces.PieceColor;
+import ai.chess.BoardController;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Queen extends Piece implements Serializable {
 
@@ -145,6 +147,7 @@ public class Queen extends Piece implements Serializable {
             return false;
         }
         //x dir 
+        
         if (ydespos == this.yPos) {
             //right
             if (xdespos > this.xPos) {

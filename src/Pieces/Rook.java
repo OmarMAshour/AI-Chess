@@ -1,5 +1,6 @@
 package Pieces;
 
+import ai.chess.BoardController;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Rook extends Piece implements Serializable {
 
@@ -38,6 +40,7 @@ public class Rook extends Piece implements Serializable {
         if (!(b1 && b2)) {
             return false;
         }
+       
         if (ydespos == this.yPos) {
             //right
             if (xdespos > this.xPos) {

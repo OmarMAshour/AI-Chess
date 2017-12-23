@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,12 +69,8 @@ public class MultiBoardPanel extends JPanel implements Serializable{
 
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
-                    if (whitePlayerTurn) {
-                         
-                         if (chessBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
-                        }
+                   
+                     
                     
                     
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
@@ -82,11 +79,8 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                             //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
                             return;
                         }
-                    } else if (!whitePlayerTurn) {
-                          if (chessBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
+                     else if (!whitePlayerTurn) {
+                      
                         if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
                             playerSelectedOneOfHisPieces = true;
                             selectedPieceIndex = i;
@@ -106,6 +100,19 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                 //in case that the player clicked on a piece before and now is taking the next action
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
+                        if(whitePlayerTurn){
+                             if(chessBoard.checkMate(PieceColor.White)){
+                                JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                System.exit(0);
+                            }
+                        }
+                else{
+                            if(chessBoard.checkMate(PieceColor.Black)){
+                                JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                System.exit(0);
+                            }
+                            
+                        }
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
                             selectedPieceIndex = -1;
                             playerSelectedOneOfHisPieces = false;

@@ -101,7 +101,7 @@ public class BoardController implements Serializable {
                         if (depth == 0) {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
-                        if (Value > Beta) {
+                        if (Value >= Beta) {
                             CutOff++;
                             System.out.println("Cutoff Number : "+ CutOff);
                             return Value;
@@ -119,7 +119,7 @@ public class BoardController implements Serializable {
                         if (depth == 0) {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
-                        if (Value < Alpha) {
+                        if (Value<= Alpha) {
                             CutOff++;
                             System.out.println("Cutoff Number : "+ CutOff);
                             return Value;

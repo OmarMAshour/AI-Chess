@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import static ai.chess.AIChess.*;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -71,6 +72,14 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                 if (!isPlayerWhite && AIWhiteFirstTurn) {
                     try {
                         AIWhiteFirstTurn = false;
+                          try {
+                            if(chessBoard.checkMate(PieceColor.Black)){
+                                JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                System.exit(0);
+                            }               } catch (IOException ex) {
+                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+        
                       
                         setChessBoard(boardController.BoardToDraw(getChessBoard()));
                         System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
@@ -82,17 +91,16 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                 }
                 if (canPlayerPlay) {
                     if (isPlayerWhite){
-                         if (chessBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
+                        
+                        try {
+                            if(chessBoard.checkMate(PieceColor.White)){
+                                JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                System.exit(0);
+                            }               } catch (IOException ex) {
+                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    }
-                     else{
-                             if (chessBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
-                         }
+        
+           
                     
                    
                     int clickedX = e.getX();
@@ -145,34 +153,42 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                     }
 
                 }
+                }
                 if (!canPlayerPlay) {
-                    try {
-                        if (isPlayerWhite){
-                         if (chessBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
-                    }
-                     else{
-                             if (chessBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
-                        }
-                         }
+                    
                       
-                       setChessBoard(boardController.BoardToDraw(chessBoard));
-                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
-                        canPlayerPlay = true;
+                    try {
+                          try {
+                             if(isPlayerWhite){
+                            if(chessBoard.checkMate(PieceColor.Black)){
+                                JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                System.exit(0);
+                            }
+                            else{
+                                 if(chessBoard.checkMate(PieceColor.White)){
+                                JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                System.exit(0);
+                            }
+                            }
+                            }               } catch (IOException ex) {
+                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+        
+                        setChessBoard(boardController.BoardToDraw(chessBoard));
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
+                        canPlayerPlay = true;
+                    
                 }
             }
 //            }
         });
     }
+                
 
-    @Override
+    
     public void paint(Graphics g) {
         super.paint(g); //To change body of generated methods, choose Tools | Templates.
 //        for (Piece piece : chessBoard.pieces) {

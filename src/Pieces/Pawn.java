@@ -1,5 +1,6 @@
 package Pieces;
 
+import ai.chess.BoardController;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class Pawn extends Piece implements Serializable {
 
@@ -78,6 +80,7 @@ public class Pawn extends Piece implements Serializable {
             return false;
         }
         //black move
+        
         if (this.color == PieceColor.Black) {
             //first move (2 moves)
             if (Math.abs(ydespos - this.yPos) == 2
