@@ -8,6 +8,7 @@ package ai.chess;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JPanel;
 
@@ -34,8 +35,8 @@ public class SavedPanel implements Serializable {
         this.board = board;
         this.isPlayerWhite = isPlayerWhite;
         dateTime = df.format(dateobj);
-        this.Type=Type;
-        this.whitePlayerORCanPlayerPlay=bb;
+        this.Type = Type;
+        this.whitePlayerORCanPlayerPlay = bb;
     }
 
 }

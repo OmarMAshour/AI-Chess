@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import static ai.chess.AIChess.*;
+import java.awt.Color;
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -39,6 +41,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
     public boolean canPlayerPlay;
     
     public String className = "Single";
+    private ArrayList<Points> availableMoves = new ArrayList<>();
 
     public String getClassName() {
         return className;
@@ -110,6 +113,9 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                                 playerSelectedOneOfHisPieces = true;
                                 selectedPieceIndex = i;
                                 //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                availableMoves.clear();
+                            chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
+                            availableMoves = chessBoard.pieces.get(i).availableDes;
                                 return;
                             }
                         } else if (!isPlayerWhite) {
@@ -117,6 +123,9 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                                 playerSelectedOneOfHisPieces = true;
                                 selectedPieceIndex = i;
                                 //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                availableMoves.clear();
+                            chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
+                            availableMoves = chessBoard.pieces.get(i).availableDes;
                                 return;
                             }
                         }
@@ -129,6 +138,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                                 canPlayerPlay = false;
                                 selectedPieceIndex = -1;
                                 playerSelectedOneOfHisPieces = false;
+                                availableMoves.clear();
                             }
 
                         } catch (Exception ex) {
@@ -188,6 +198,13 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                 g.drawImage(chessBoard.pieces.get(i).blackImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
             } else if (chessBoard.pieces.get(i).color == PieceColor.White) {
                 g.drawImage(chessBoard.pieces.get(i).whiteImage, (chessBoard.pieces.get(i).xPos * 60) + 10, (chessBoard.pieces.get(i).yPos * 60) + 10, 60, 60, null);
+            }
+        }
+        
+        if (!availableMoves.isEmpty()) {
+            for (Points move : availableMoves) {
+                g.setColor(Color.BLUE);
+                g.drawRect((move.xPos*60)+10, (move.yPos*60)+10, 60, 60);
             }
         }
     }

@@ -65,16 +65,16 @@ public class BoardController implements Serializable {
         }
         return value;
     }
-    public int Algorithm(ChessBoard board, boolean turn, int depth) throws Exception {
-        if (depth == 2) {
+    public int Algorithm(ChessBoard board, boolean turn, int depth,int Value,int Alpha,int Beta) throws Exception {
+        if (depth == 3) {
             int val = this.getBoardValue(board);
             leafnode++;
             verboseStrings.add("Leaf Node Number : " + leafnode+", Utility Value : "+val);
             return val;
         }
-        int Alpha = Integer.MIN_VALUE;
-        int Beta = Integer.MAX_VALUE;
-        int Value = Integer.MIN_VALUE;
+//        int Alpha = Integer.MIN_VALUE;
+//        int Beta = Integer.MAX_VALUE;
+//        int Value = Integer.MIN_VALUE;
         //calculate all possible moves
         for (int i = 0; i < board.pieces.size(); i++) {
             if (turn && board.pieces.get(i).color == AIPieceColor) {
@@ -98,11 +98,11 @@ public class BoardController implements Serializable {
                 if (turn && board.pieces.get(i).color == AIPieceColor) {
                     ChessBoard TmpBoard = board.copyBoard();
                     if (TmpBoard.pieces.get(i).move(board.pieces.get(i).availableDes.get(j).xPos, board.pieces.get(i).availableDes.get(j).yPos, TmpBoard)) {
-                        Value = this.Algorithm(TmpBoard, !turn, depth + 1);
+                        Value = this.Algorithm(TmpBoard, !turn, depth + 1,Value,Alpha,Beta);
                         if (depth == 0) {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
-                        if (Value > Beta) {
+                        if (Value >= Beta) {
                             CutOff++;
                             verboseStrings.add("Cutoff Number : "+ CutOff);
                             return Value;
@@ -116,11 +116,11 @@ public class BoardController implements Serializable {
                 else if (!turn && board.pieces.get(i).color == PlayerPieceColor) {
                     ChessBoard TmpBoard = board.copyBoard();
                     if (TmpBoard.pieces.get(i).move(board.pieces.get(i).availableDes.get(j).xPos, board.pieces.get(i).availableDes.get(j).yPos, TmpBoard)) {
-                        Value = this.Algorithm(TmpBoard, !turn, depth + 1);
+                        Value = this.Algorithm(TmpBoard, !turn, depth + 1,Value,Alpha,Beta);
                         if (depth == 0) {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
-                        if (Value < Alpha) {
+                        if (Value <= Alpha) {
                             CutOff++;
                             verboseStrings.add("Cutoff Number : "+ CutOff);
                             return Value;
@@ -140,7 +140,7 @@ public class BoardController implements Serializable {
         ChessBoard tobedrawn = null;
         ArrayList <BoardAndValueCollector> SameValues = new ArrayList ();
         verboseStrings.add("Algorithm Started");
-        int value = Algorithm(board, true, 0);
+        int value = Algorithm(board, true, 0,Integer.MIN_VALUE,Integer.MIN_VALUE,Integer.MAX_VALUE);
         verboseStrings.add("Algorithm Ended");
         for (int i = 0; i < this.BoardArrayList.size(); i++) {
             if (value == BoardArrayList.get(i).Value) {
