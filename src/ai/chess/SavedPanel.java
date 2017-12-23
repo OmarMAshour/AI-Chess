@@ -21,6 +21,7 @@ public class SavedPanel implements Serializable {
 
     ChessBoard board;
     boolean isPlayerWhite;
+    boolean whitePlayerORCanPlayerPlay;
     DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
     Date dateobj = new Date();
     String dateTime;
@@ -29,11 +30,12 @@ public class SavedPanel implements Serializable {
     public SavedPanel() {
     }
 
-    public SavedPanel(ChessBoard board, boolean isPlayerWhite, String Type) {
+    public SavedPanel(ChessBoard board, boolean isPlayerWhite, String Type, boolean bb) {
         this.board = board;
         this.isPlayerWhite = isPlayerWhite;
         dateTime = df.format(dateobj);
         this.Type=Type;
+        this.whitePlayerORCanPlayerPlay=bb;
     }
 
 }

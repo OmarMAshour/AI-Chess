@@ -119,6 +119,7 @@ public class LoadPanel extends javax.swing.JPanel implements Serializable {
 
         if (sp.Type.equals("Singleplayer")) {
             SingleBoardPanel single = new SingleBoardPanel(sp.board);
+            single.canPlayerPlay=sp.whitePlayerORCanPlayerPlay;
             GameBoard gb = new GameBoard(single);
             gb.setVisible(true);
 
@@ -126,6 +127,7 @@ public class LoadPanel extends javax.swing.JPanel implements Serializable {
 
         if (sp.Type.equals("Multiplayer")) {
             MultiBoardPanel multi = new MultiBoardPanel(sp.board);
+            multi.whitePlayerTurn=sp.whitePlayerORCanPlayerPlay;
             GameBoard gb = new GameBoard(multi);
             gb.setVisible(true);
         }

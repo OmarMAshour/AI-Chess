@@ -8,6 +8,8 @@ package ai.chess;
 import javax.swing.*;
 import java.awt.*;
 import static ai.chess.AIChess.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -22,12 +24,28 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
     /**
      * Creates new form GameBoard
      */
-    SingleBoardPanel singleBoardPanel=null;
-    MultiBoardPanel multiBoardPanel=null;
+    SingleBoardPanel singleBoardPanel = null;
+    MultiBoardPanel multiBoardPanel = null;
+    int verboseCounter = 0;
+
+    private Timer verboseTimer;
 
     public GameBoard(SingleBoardPanel boardPanel) {
         initComponents();
+        verboseTimer = new Timer(1, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
 
+                    verboseTextArea.setText(verboseTextArea.getText() + verboseStrings.get(verboseCounter) + "\n");
+                    verboseCounter++;
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
+        verboseTimer.start();
         this.singleBoardPanel = boardPanel;
         boardPanel.setBounds(0, 0, 500, 500);
         add(singleBoardPanel);
@@ -55,6 +73,8 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
     private void initComponents() {
 
         saveButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        verboseTextArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,19 +85,28 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
             }
         });
 
+        verboseTextArea.setEditable(false);
+        verboseTextArea.setColumns(20);
+        verboseTextArea.setRows(5);
+        jScrollPane1.setViewportView(verboseTextArea);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(508, Short.MAX_VALUE)
-                .addComponent(saveButton)
-                .addGap(178, 178, 178))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveButton))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(763, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
                 .addComponent(saveButton)
                 .addContainerGap())
         );
@@ -88,12 +117,12 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         try {
             // TODO add your handling code here:
-            if (singleBoardPanel!=null) {
-                savedPanelsList.add(new SavedPanel(singleBoardPanel.chessBoard, isPlayerWhite, "Singleplayer"));
+            if (singleBoardPanel != null) {
+                savedPanelsList.add(new SavedPanel(singleBoardPanel.chessBoard, isPlayerWhite, "Singleplayer", singleBoardPanel.canPlayerPlay));
             }
-            
-            if (multiBoardPanel!=null) {
-                savedPanelsList.add(new SavedPanel(multiBoardPanel.chessBoard, isPlayerWhite, "Multiplayer"));
+
+            if (multiBoardPanel != null) {
+                savedPanelsList.add(new SavedPanel(multiBoardPanel.chessBoard, isPlayerWhite, "Multiplayer", multiBoardPanel.whitePlayerTurn));
 
             }
             PanelsReaderWriter.save();
@@ -111,6 +140,8 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton saveButton;
+    private javax.swing.JTextArea verboseTextArea;
     // End of variables declaration//GEN-END:variables
 }

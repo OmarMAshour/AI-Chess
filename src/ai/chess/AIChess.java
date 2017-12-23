@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 public class AIChess {
     public static boolean isPlayerWhite = false;
     public static transient ArrayList<SavedPanel> savedPanelsList= new ArrayList<SavedPanel>();
+    public static ArrayList<String> verboseStrings = new ArrayList<String>();
     public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
         
         // TODO code application logic here

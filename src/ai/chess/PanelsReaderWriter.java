@@ -101,8 +101,9 @@ public class PanelsReaderWriter implements Serializable{
              in = new ObjectInputStream(fis);  
              savedPanelsList = (ArrayList) in.readObject();  
              in.close();  
+         System.err.println("LOADED");
          } catch (IOException ex) {  
-             ex.printStackTrace();  
+             System.out.println("NO Data to be loaded!!");  
          } catch (ClassNotFoundException ex) {  
              ex.printStackTrace();  
          }  
@@ -112,6 +113,5 @@ public class PanelsReaderWriter implements Serializable{
                 piece.setImages();
             }
         }
-         System.err.println("LOADED");
     }
 }

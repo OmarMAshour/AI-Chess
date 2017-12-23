@@ -6,6 +6,7 @@
 package ai.chess;
 
 import Pieces.*;
+import static ai.chess.AIChess.verboseStrings;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -34,7 +35,7 @@ public class MultiBoardPanel extends JPanel implements Serializable{
 
     private boolean playerSelectedOneOfHisPieces = false;
     private int selectedPieceIndex = -1;
-    private boolean whitePlayerTurn;
+    public boolean whitePlayerTurn;
     public String className = "Multi";
 
     public String getClassName() {
@@ -64,7 +65,7 @@ public class MultiBoardPanel extends JPanel implements Serializable{
                 int pieceX = (clickedX - 10) / 60;
                 int pieceY = (clickedY - 10) / 60;
 
-                System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+                verboseStrings.add("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
 
                 //by this whenever the player choose one of his own pieces he will get the available options to move within them
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {

@@ -4,6 +4,7 @@ import Pieces.*;
 import java.util.*;
 import ai.chess.*;
 import static ai.chess.AIChess.isPlayerWhite;
+import static ai.chess.AIChess.verboseStrings;
 import java.io.Serializable;
 
 public class BoardController implements Serializable {
@@ -68,7 +69,7 @@ public class BoardController implements Serializable {
         if (depth == 2) {
             int val = this.getBoardValue(board);
             leafnode++;
-            System.out.println("Leaf Node Number : " + leafnode+" Value : "+val);
+            verboseStrings.add("Leaf Node Number : " + leafnode+", Utility Value : "+val);
             return val;
         }
         int Alpha = Integer.MIN_VALUE;
@@ -103,7 +104,7 @@ public class BoardController implements Serializable {
                         }
                         if (Value > Beta) {
                             CutOff++;
-                            System.out.println("Cutoff Number : "+ CutOff);
+                            verboseStrings.add("Cutoff Number : "+ CutOff);
                             return Value;
                         } else {
                             Alpha = Value;
@@ -121,7 +122,7 @@ public class BoardController implements Serializable {
                         }
                         if (Value < Alpha) {
                             CutOff++;
-                            System.out.println("Cutoff Number : "+ CutOff);
+                            verboseStrings.add("Cutoff Number : "+ CutOff);
                             return Value;
                         } else {
                             Beta = Value;
@@ -134,12 +135,13 @@ public class BoardController implements Serializable {
         return Value;
     }
     public ChessBoard BoardToDraw(ChessBoard board) throws Exception {
+       leafnode=0;
         board.viewBoard();
         ChessBoard tobedrawn = null;
         ArrayList <BoardAndValueCollector> SameValues = new ArrayList ();
-        System.out.println("Algorithm Started");
+        verboseStrings.add("Algorithm Started");
         int value = Algorithm(board, true, 0);
-        System.out.println("Algorithm Ended");
+        verboseStrings.add("Algorithm Ended");
         for (int i = 0; i < this.BoardArrayList.size(); i++) {
             if (value == BoardArrayList.get(i).Value) {
                 SameValues.add(BoardArrayList.get(i));

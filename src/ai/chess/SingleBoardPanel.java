@@ -36,7 +36,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
     private int selectedPieceIndex = -1;
     private boolean AIWhiteFirstTurn = true;
     private BoardController boardController;
-    private boolean canPlayerPlay;
+    public boolean canPlayerPlay;
     
     public String className = "Single";
 
@@ -73,7 +73,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                         AIWhiteFirstTurn = false;
                       
                         setChessBoard(boardController.BoardToDraw(getChessBoard()));
-                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
+                        verboseStrings.add("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                         return;
                     } catch (Exception ex) {
@@ -101,7 +101,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                     int pieceX = (clickedX - 10) / 60;
                     int pieceY = (clickedY - 10) / 60;
 
-                    System.out.println("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
+                    verboseStrings.add("Mouse Clicked!!!!! x= " + pieceX + " y= " + pieceY);
 
                     //by this whenever the player choose one of his own pieces he will get the available options to move within them
                     for (int i = 0; i < chessBoard.pieces.size(); i++) {
@@ -161,7 +161,7 @@ public class SingleBoardPanel extends JPanel implements Serializable{
                          }
                       
                        setChessBoard(boardController.BoardToDraw(chessBoard));
-                        System.out.println("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
+                        verboseStrings.add("Branching Factor : "+ boardController.GetNPluesOneNodes()/boardController.GetNNodes());
                         canPlayerPlay = true;
                     } catch (Exception ex) {
                         Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
