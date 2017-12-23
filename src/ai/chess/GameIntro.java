@@ -40,7 +40,6 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         startBtn = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         startBtn1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         startBtn2 = new javax.swing.JButton();
@@ -66,10 +65,6 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("AlHor", 3, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(55, 217, 25));
-        jLabel4.setText("الشقاوة فينا بس ربنا هادينا");
-
         startBtn1.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
         startBtn1.setForeground(new java.awt.Color(255, 0, 204));
         startBtn1.setText("Load Game");
@@ -89,9 +84,9 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
             }
         });
 
-        startBtn2.setFont(new java.awt.Font("AlHor", 3, 24)); // NOI18N
-        startBtn2.setForeground(new java.awt.Color(30, 26, 21));
-        startBtn2.setText("معادى ؟؟");
+        startBtn2.setFont(new java.awt.Font("Ubuntu", 3, 18)); // NOI18N
+        startBtn2.setForeground(new java.awt.Color(255, 0, 0));
+        startBtn2.setText("Exit");
         startBtn2.setToolTipText("");
         startBtn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,16 +100,9 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(44, 44, 44)
+                .addComponent(jLabel3)
+                .addContainerGap(39, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -123,13 +111,17 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
                     .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(146, 146, 146))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(103, 103, 103))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
@@ -140,8 +132,7 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
                 .addComponent(startBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(startBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4))
+                .addContainerGap())
         );
 
         pack();
@@ -213,7 +204,6 @@ public class GameIntro extends javax.swing.JFrame implements Serializable{
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JButton startBtn;
     private javax.swing.JButton startBtn1;
     private javax.swing.JButton startBtn2;

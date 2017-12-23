@@ -43,10 +43,11 @@ public class Knight extends Piece implements Serializable {
             return false;
         }
         
-        if ((Math.abs(this.yPos - ydespos) == 2
+        System.out.println("x: "+ xdespos + " y: " + ydespos);
+        if (ydespos > -1 && ((Math.abs(this.yPos - ydespos) == 2
                 && Math.abs(this.xPos - xdespos) == 1)
                 || (Math.abs(this.yPos - ydespos) == 1
-                && Math.abs(this.xPos - xdespos) == 2)) {
+                && Math.abs(this.xPos - xdespos) == 2))) {
             if (!board.Squares[ydespos][xdespos].ContainPiece) {
                 if (this.overallCheck(board, ydespos, xdespos)) {
                     return false;

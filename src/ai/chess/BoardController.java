@@ -66,7 +66,7 @@ public class BoardController implements Serializable {
         return value;
     }
     public int Algorithm(ChessBoard board, boolean turn, int depth,int Value,int Alpha,int Beta) throws Exception {
-        if (depth == 3) {
+        if (depth == 2) {
             int val = this.getBoardValue(board);
             leafnode++;
             verboseStrings.add("Leaf Node Number : " + leafnode+", Utility Value : "+val);
