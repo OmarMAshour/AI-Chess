@@ -121,6 +121,7 @@ public class BoardController implements Serializable {
                             this.BoardArrayList.add(new BoardAndValueCollector(TmpBoard, Value));
                         }
                         if (Value <= Alpha) {
+
                             CutOff++;
                             verboseStrings.add("Cutoff Number : "+ CutOff);
                             return Value;

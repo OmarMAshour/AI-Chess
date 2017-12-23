@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -74,33 +75,42 @@ public class MultiBoardPanel extends JPanel implements Serializable {
                 for (int i = 0; i < chessBoard.pieces.size(); i++) {
                     if (whitePlayerTurn) {
 
-                        if (chessBoard.checkMate(PieceColor.White)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
-                            System.exit(0);
-                        }
-
-                        if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
-                            playerSelectedOneOfHisPieces = true;
-                            selectedPieceIndex = i;
-                            //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
-                            availableMoves.clear();
-                            chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
-                            availableMoves = chessBoard.pieces.get(i).availableDes;
-                            return;
+                        try {
+                            if (chessBoard.checkMate(PieceColor.White)) {
+                                JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                System.exit(0);
+                            }
+                            
+                            if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.White) {
+                                playerSelectedOneOfHisPieces = true;
+                                selectedPieceIndex = i;
+                                //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                availableMoves.clear();
+                                chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
+                                availableMoves = chessBoard.pieces.get(i).availableDes;
+                                return;
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(MultiBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else if (!whitePlayerTurn) {
-                        if (chessBoard.checkMate(PieceColor.Black)) {
-                            JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
-                            System.exit(0);
-                        }
-                        if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
-                            playerSelectedOneOfHisPieces = true;
-                            selectedPieceIndex = i;
-                            //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
-                            availableMoves.clear();
-                            chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
-                            availableMoves = chessBoard.pieces.get(i).availableDes;
-                            return;
+                        try {
+                            if (chessBoard.checkMate(PieceColor.Black)) {
+                                JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                System.exit(0);
+                            }
+                            
+                            if (chessBoard.pieces.get(i).xPos == pieceX && chessBoard.pieces.get(i).yPos == pieceY && chessBoard.pieces.get(i).color == PieceColor.Black) {
+                                playerSelectedOneOfHisPieces = true;
+                                selectedPieceIndex = i;
+                                //SHOW THE PLAYER THE AVAILABLE POSITIONS TO MOVE TO
+                                availableMoves.clear();
+                                chessBoard.pieces.get(i).CalculateAllPossibleMoves(chessBoard);
+                                availableMoves = chessBoard.pieces.get(i).availableDes;
+                                return;
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(MultiBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
 
@@ -115,6 +125,19 @@ public class MultiBoardPanel extends JPanel implements Serializable {
                 //in case that the player clicked on a piece before and now is taking the next action
                 if (selectedPieceIndex != -1 && playerSelectedOneOfHisPieces) {
                     try {
+                        if(whitePlayerTurn){
+                             if(chessBoard.checkMate(PieceColor.White)){
+                                JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                System.exit(0);
+                            }
+                        }
+                else{
+                            if(chessBoard.checkMate(PieceColor.Black)){
+                                JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                System.exit(0);
+                            }
+                            
+                        }
                         if (chessBoard.pieces.get(selectedPieceIndex).move(pieceX, pieceY, chessBoard)) {
                             if(!availableMoves.isEmpty()){
                                 availableMoves.clear();

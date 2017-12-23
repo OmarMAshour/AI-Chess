@@ -2,6 +2,7 @@ package Pieces;
 
 import Pieces.Piece;
 import Pieces.PieceColor;
+import ai.chess.BoardController;
 import ai.chess.ChessBoard;
 import ai.chess.Points;
 import java.io.File;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class King extends Piece implements Serializable {
 
@@ -42,6 +44,7 @@ public class King extends Piece implements Serializable {
         if (!(b1 && b2)) {
             return false;
         }
+        
 
         if ((Math.abs(this.yPos - ydespos) == 1
                 && Math.abs(xdespos - this.xPos) == 0)
