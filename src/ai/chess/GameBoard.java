@@ -5,6 +5,7 @@
  */
 package ai.chess;
 
+import Pieces.PieceColor;
 import javax.swing.*;
 import java.awt.*;
 import static ai.chess.AIChess.*;
@@ -55,7 +56,21 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
 
     public GameBoard(MultiBoardPanel boardPanel) {
         initComponents();
+        playAIButton.setVisible(false);
+        verboseTimer = new Timer(1, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
 
+                    verboseTextArea.setText(verboseTextArea.getText() + verboseStrings.get(verboseCounter) + "\n");
+                    verboseCounter++;
+                } catch (Exception ex) {
+
+                }
+            }
+        });
+
+        verboseTimer.start();
         this.multiBoardPanel = boardPanel;
         boardPanel.setBounds(0, 0, 500, 500);
         add(multiBoardPanel);
@@ -75,6 +90,7 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
         saveButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         verboseTextArea = new javax.swing.JTextArea();
+        playAIButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,15 +106,29 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
         verboseTextArea.setRows(5);
         jScrollPane1.setViewportView(verboseTextArea);
 
+        playAIButton.setFont(new java.awt.Font("Ubuntu", 3, 14)); // NOI18N
+        playAIButton.setForeground(new java.awt.Color(255, 51, 51));
+        playAIButton.setText("Play The AI Step");
+        playAIButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playAIButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(508, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveButton))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(playAIButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 365, Short.MAX_VALUE)
+                        .addComponent(saveButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -106,9 +136,11 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 264, Short.MAX_VALUE)
-                .addComponent(saveButton)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(playAIButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,12 +167,56 @@ public class GameBoard extends javax.swing.JFrame implements Serializable {
 //        }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    private void playAIButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playAIButtonActionPerformed
+        // TODO add your handling code here:
+        
+        
+        if (!singleBoardPanel.canPlayerPlay) {
+        playAIButton.setEnabled(false);
+
+                    try {
+                        try {
+                            if (isPlayerWhite) {
+                                if (singleBoardPanel.chessBoard.checkMate(PieceColor.Black)) {
+                                    JOptionPane.showMessageDialog(null, PieceColor.White + " Wins");
+                                    System.exit(0);
+                                } else if (singleBoardPanel.chessBoard.checkMate(PieceColor.White)) {
+                                    JOptionPane.showMessageDialog(null, PieceColor.Black + " Wins");
+                                    System.exit(0);
+                                }
+                            }
+                        } catch (IOException ex) {
+                            Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        singleBoardPanel.availableMoves.clear();
+                        singleBoardPanel.setChessBoard(singleBoardPanel.boardController.BoardToDraw(singleBoardPanel.chessBoard));
+                        verboseStrings.add("Branching Factor : " + singleBoardPanel.boardController.GetNPluesOneNodes() / singleBoardPanel.boardController.GetNNodes());
+                        singleBoardPanel.canPlayerPlay = true;
+
+                    } catch (Exception ex) {
+                        Logger.getLogger(SingleBoardPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    System.out.println("Branching Factor : " + singleBoardPanel.boardController.GetNPluesOneNodes() / singleBoardPanel.boardController.GetNNodes());
+                    singleBoardPanel.canPlayerPlay = true;
+
+                }else{
+            JOptionPane.showMessageDialog(null, "Play your step first !!!");
+        }
+        
+                playAIButton.setEnabled(true);
+
+        
+//        singleBoardPanel.canPlayerPlay=true;
+        
+    }//GEN-LAST:event_playAIButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton playAIButton;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextArea verboseTextArea;
     // End of variables declaration//GEN-END:variables
